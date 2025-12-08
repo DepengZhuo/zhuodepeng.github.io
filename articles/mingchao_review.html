@@ -1,529 +1,886 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>《明朝那些事儿》书评 - 卓德鹏的读书笔记</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   卓德鹏的硬核安利：《明朝那些事儿》
+  </title>
+  <script src="https://res.gemcoder.com/js/reload.js">
+  </script>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <script>
+   tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#8B5CF6',
+        secondary: '#EC4899',
+        accent: '#F59E0B',
+        dark: '#1E293B',
+        light: '#F8FAFC'
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif']
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'slide-up': 'slideUp 0.6s ease-out',
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': {
+            opacity: '0'
+          },
+          '100%': {
+            opacity: '1'
+          }
+        },
+        slideUp: {
+          '0%': {
+            transform: 'translateY(20px)',
+            opacity: '0'
+          },
+          '100%': {
+            transform: 'translateY(0)',
+            opacity: '1'
+          }
         }
-        
-        body {
-            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
-            line-height: 1.8;
-            color: #2c3e50;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-        
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 80px 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '📚';
-            position: absolute;
-            font-size: 200px;
-            opacity: 0.1;
-            top: -50px;
-            right: -30px;
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        .hero h1 {
-            color: white;
-            font-size: 3em;
-            margin-bottom: 20px;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-            animation: slideInDown 0.8s ease-out;
-        }
-        
-        @keyframes slideInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
+      }
+    }
+  }
+};
+  </script>
+  <style type="text/tailwindcss">
+   @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .bg-gradient-custom {
+                background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
             }
-        }
-        
-        .subtitle {
-            color: #f0f0f0;
-            font-size: 1.3em;
-            font-style: italic;
-        }
-        
-        .rating {
-            margin-top: 20px;
-            font-size: 2em;
-        }
-        
-        .content {
-            padding: 60px 40px;
-        }
-        
-        .quote-box {
-            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
-            border-left: 5px solid #e17055;
-            padding: 30px;
-            margin: 30px 0;
-            border-radius: 10px;
-            font-style: italic;
-            font-size: 1.2em;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(253, 203, 110, 0.3);
-        }
-        
-        .quote-box::before {
-            content: '"';
-            font-size: 80px;
-            position: absolute;
-            top: -10px;
-            left: 10px;
-            color: #e17055;
-            opacity: 0.3;
-        }
-        
-        .section {
-            margin: 50px 0;
-        }
-        
-        .section-title {
-            font-size: 2em;
-            color: #667eea;
-            margin-bottom: 25px;
-            position: relative;
-            padding-left: 20px;
-        }
-        
-        .section-title::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 5px;
-            height: 80%;
-            background: linear-gradient(180deg, #667eea, #764ba2);
-            border-radius: 3px;
-        }
-        
-        .character-card {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            padding: 25px;
-            margin: 20px 0;
-            border-radius: 15px;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .character-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .character-card h3 {
-            color: #2d3436;
-            font-size: 1.5em;
-            margin-bottom: 10px;
-        }
-        
-        .character-card .emoji {
-            font-size: 3em;
-            float: left;
-            margin-right: 20px;
-        }
-        
-        .highlight {
-            background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-            padding: 2px 8px;
-            border-radius: 4px;
-            color: #2d3436;
-            font-weight: bold;
-        }
-        
-        .fun-fact {
-            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
-            padding: 25px;
-            margin: 30px 0;
-            border-radius: 15px;
-            border: 3px dashed #667eea;
-        }
-        
-        .fun-fact h4 {
-            color: #667eea;
-            font-size: 1.3em;
-            margin-bottom: 15px;
-        }
-        
-        .timeline {
-            position: relative;
-            padding-left: 50px;
-            margin: 40px 0;
-        }
-        
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(180deg, #667eea, #764ba2);
-        }
-        
-        .timeline-item {
-            position: relative;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            transition: all 0.3s;
-        }
-        
-        .timeline-item:hover {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            transform: translateX(10px);
-        }
-        
-        .timeline-item::before {
-            content: '🎯';
-            position: absolute;
-            left: -45px;
-            top: 20px;
-            width: 30px;
-            height: 30px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2em;
-            box-shadow: 0 0 0 4px #667eea;
-        }
-        
-        .rating-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-        
-        .rating-card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: all 0.3s;
-        }
-        
-        .rating-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .rating-card .icon {
-            font-size: 3em;
-            margin-bottom: 15px;
-        }
-        
-        .rating-card h4 {
-            color: #2d3436;
-            margin-bottom: 10px;
-        }
-        
-        .stars {
-            color: #feca57;
-            font-size: 1.5em;
-        }
-        
-        .conclusion {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-            padding: 40px;
-            border-radius: 20px;
-            margin-top: 50px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(254, 112, 154, 0.3);
-        }
-        
-        .conclusion h2 {
-            color: white;
-            font-size: 2em;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        .back-link {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            margin-top: 30px;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-        
-        .back-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-        
-        .meme-box {
-            background: #f8f9fa;
-            padding: 30px;
-            margin: 30px 0;
-            border-radius: 15px;
-            text-align: center;
-            border: 3px solid #e17055;
-        }
-        
-        .meme-box .emoji-large {
-            font-size: 5em;
-            margin: 20px 0;
-        }
-        
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2em;
+            .card-hover {
+                transition: all 0.3s ease;
             }
-            
-            .content {
-                padding: 30px 20px;
-            }
-            
-            .character-card .emoji {
-                float: none;
-                display: block;
-                margin: 0 auto 15px;
-            }
-            
-            .rating-section {
-                grid-template-columns: 1fr;
+            .card-hover:hover {
+                transform: translateY(-5px);
             }
         }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="hero">
-            <h1>《明朝那些事儿》</h1>
-            <p class="subtitle">当年明月：用网络段子写史书的天才</p>
-            <div class="rating">⭐⭐⭐⭐⭐</div>
+  </style>
+ </head>
+ <body class="bg-gray-50 font-sans text-gray-800">
+  <!-- [MODULE] abc_主内容区域 -->
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+   <!-- [MODULE] d23_书籍推荐页面 -->
+   <div class="animate-fade-in" id="book-recommendation-page">
+    <!-- [MODULE] 33f_书籍推荐页面:页面标题 -->
+    <header class="mb-12 text-center">
+     <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold text-dark mb-4 leading-tight animate-slide-up">
+<span class="bg-gradient-to-r from-purple-600 to-pink-600 text-transparent bg-clip-text drop-shadow-md">
+       《明朝那些事儿》
+      </span>
+     </h1>
+     <p class="text-xl text-gray-600 italic max-w-3xl mx-auto animate-slide-up" style="animation-delay: 0.1s">
+      —— 披着段子手外衣的史诗巨著
+     </p>
+     <div class="mt-8 inline-block bg-purple-100 text-purple-800 px-6 py-3 rounded-full text-lg font-medium animate-slide-up" style="animation-delay: 0.2s">
+      <span class="font-bold">
+       一句话省流：
+      </span>
+      当年明月用"网文"的方式写正史。看完这本书，你的历史老师可能会失业。
+     </div>
+    </header>
+    <!-- [/MODULE] 33f_书籍推荐页面:页面标题 -- 仅包含主标题 -->
+    <!-- [MODULE] 789_书籍推荐页面:书籍介绍 -->
+    <section class="mb-16 animate-slide-up" style="animation-delay: 0.3s">
+     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+      <div class="md:flex">
+       <div class="md:w-1/3">
+        <img alt="《明朝那些事儿》书籍封面" class="w-full h-full object-cover" src="https://design.gemcoder.com/api/searchImage?query=historical book cover with明朝那些事儿 title, traditional chinese style, ancient scroll background, dramatic lighting&amp;width=600&amp;height=800"/>
+       </div>
+       <div class="md:w-2/3 p-8 md:p-10 flex flex-col justify-center">
+        <h2 class="text-2xl font-bold mb-4 text-dark flex items-center">
+         <i class="fas fa-book-open text-purple-500 mr-3 text-3xl">
+         </i>
+         这本书到底什么成分？
+        </h2>
+        <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+         想象一下，如果有个人把严肃的《明史》扔进搅拌机，加入
+         <span class="font-bold text-purple-600">
+          200吨的幽默感
+         </span>
+         、
+         <span class="font-bold text-pink-500">
+          悬疑小说的节奏
+         </span>
+         和
+         <span class="font-bold text-amber-500">
+          职场剧的勾心斗角
+         </span>
+         ，最后搅拌出来的就是这套书。
+        </p>
+        <ul class="space-y-2 mb-6">
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            朱元璋
+           </strong>
+           变成了"从乞丐逆袭到CEO的狠人"；
+          </span>
+         </li>
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            朱棣
+           </strong>
+           变成了"全大明最能打的夺权篡位者"；
+          </span>
+         </li>
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            嘉靖
+           </strong>
+           变成了"沉迷修仙误国二十年的宅男"。
+          </span>
+         </li>
+        </ul>
+        <p class="text-lg text-gray-700 font-medium">
+         阅读时的心路历程通常是这样的：
+        </p>
+        <div class="flex flex-wrap gap-3 mt-4">
+         <span class="bg-gray-100 px-4 py-2 rounded-full text-sm flex items-center">
+          <i class="fas fa-book mr-2 text-blue-500">
+          </i>
+          打开书
+         </span>
+         <span class="bg-gray-100 px-4 py-2 rounded-full text-sm flex items-center">
+          <i class="fas fa-laugh-beam mr-2 text-yellow-500">
+          </i>
+          笑出猪叫
+         </span>
+         <span class="bg-gray-100 px-4 py-2 rounded-full text-sm flex items-center">
+          <i class="fas fa-sad-tear mr-2 text-red-500">
+          </i>
+          猛男落泪
+         </span>
+         <span class="bg-gray-100 px-4 py-2 rounded-full text-sm flex items-center">
+          <i class="fas fa-lightbulb mr-2 text-amber-500">
+          </i>
+          陷入沉思
+         </span>
+         <span class="bg-gray-100 px-4 py-2 rounded-full text-sm flex items-center">
+          <i class="fas fa-bolt mr-2 text-yellow-500">
+          </i>
+          满血复活
+         </span>
         </div>
-        
-        <div class="content">
-            <div class="quote-box">
-                成功只有一个——按照自己的方式，去度过人生。
-                <br><br>
-                <strong>—— 当年明月</strong>
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title">🎭 这本书到底在说啥？</h2>
-                <p>
-                    想象一下，如果你的历史老师突然开始讲段子，把朱元璋说成"放牛娃逆袭CEO"，把朱棣描述成"史上最能打的夺权者"，把嘉靖皇帝说成"修仙爱好者误国二十年"……
-                </p>
-                <p style="margin-top: 15px;">
-                    <span class="highlight">恭喜你！</span>你已经体验到了《明朝那些事儿》的魅力。这是一本<span class="highlight">让你笑着笑着就哭了</span>的历史书，也是一本<span class="highlight">让你哭着哭着又笑了</span>的励志书。
-                </p>
-            </div>
-            
-            <div class="meme-box">
-                <div class="emoji-large">📖 → 🤣 → 😢 → 🤔 → 💪</div>
-                <p style="font-size: 1.2em; color: #2d3436;">
-                    <strong>阅读本书情绪变化示意图</strong>
-                </p>
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title">👑 奇葩皇帝天团</h2>
-                
-                <div class="character-card">
-                    <div class="emoji">🐮</div>
-                    <h3>朱元璋 - 史上最励志打工人</h3>
-                    <p>
-                        从要饭的和尚到九五之尊，这哥们的人生简直是<strong>"开局一个碗，装备全靠抢"</strong>的真实版本。
-                        最可怕的是，他还特别记仇——当年谁欺负过他，登基后一个都跑不掉。
-                    </p>
-                    <p style="margin-top: 10px; color: #e17055; font-weight: bold;">
-                        关键词：暴脾气、工作狂、嗜杀成性但治国一流
-                    </p>
-                </div>
-                
-                <div class="character-card">
-                    <div class="emoji">🗡️</div>
-                    <h3>朱棣 - 最能打的篡位者</h3>
-                    <p>
-                        侄子当皇帝？不行！我来！然后就真的把侄子的皇位抢了。
-                        抢完还不够，还要御驾亲征打蒙古，一打就是五次，简直是<strong>"退休老干部的终极爱好"</strong>。
-                    </p>
-                    <p style="margin-top: 10px; color: #e17055; font-weight: bold;">
-                        关键词：军事天才、永乐盛世、就是名声不太好
-                    </p>
-                </div>
-                
-                <div class="character-card">
-                    <div class="emoji">🧙‍♂️</div>
-                    <h3>嘉靖皇帝 - 二十年不上班的修仙boy</h3>
-                    <p>
-                        这位老哥在位45年，有20年没上过朝。每天就躲在深宫里炼丹、修道、求长生。
-                        大臣们：<strong>"陛下，国家大事……"</strong><br>
-                        嘉靖：<strong>"滚！朕在炼丹呢！"</strong>
-                    </p>
-                    <p style="margin-top: 10px; color: #e17055; font-weight: bold;">
-                        关键词：宅男皇帝、道教狂热粉、政治手腕却一流
-                    </p>
-                </div>
-                
-                <div class="character-card">
-                    <div class="emoji">🪵</div>
-                    <h3>朱由校 - 木工届的遗珠</h3>
-                    <p>
-                        如果不当皇帝，这位天启帝绝对是<strong>鲁班传人</strong>。做的家具精美绝伦，连宫廷工匠都自愧不如。
-                        可惜生错了地方——<strong>别人家孩子做木工是爱好，他做木工是误国</strong>。
-                    </p>
-                    <p style="margin-top: 10px; color: #e17055; font-weight: bold;">
-                        关键词：手艺精湛、魏忠贤当权、大明开始倒计时
-                    </p>
-                </div>
-            </div>
-            
-            <div class="fun-fact">
-                <h4>🎪 冷知识时间</h4>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="margin: 10px 0;">✨ 明朝皇帝的平均寿命只有42岁（还没现代人长）</li>
-                    <li style="margin: 10px 0;">✨ 明朝有3个皇帝被大臣暴打过（皇帝也不好当啊）</li>
-                    <li style="margin: 10px 0;">✨ 朱元璋杀了15万贪官，结果越杀越多（防不胜防）</li>
-                    <li style="margin: 10px 0;">✨ 崇祯皇帝登基时国库只有400两银子（比现在的穷学生还惨）</li>
-                </ul>
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title">⚔️ 明朝兴衰简史</h2>
-                
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <strong>1368年</strong> - 朱元璋建立明朝<br>
-                        要饭的成了皇帝，这就是传说中的"逆袭"
-                    </div>
-                    <div class="timeline-item">
-                        <strong>1402年</strong> - 靖难之役<br>
-                        叔叔抢侄子的位置，理由：我比你能打
-                    </div>
-                    <div class="timeline-item">
-                        <strong>1449年</strong> - 土木堡之变<br>
-                        皇帝被俘虏，明朝差点GG，但奇迹般活了下来
-                    </div>
-                    <div class="timeline-item">
-                        <strong>1566年</strong> - 嘉靖去世<br>
-                        修仙失败，没能长生，白炼了20年丹药
-                    </div>
-                    <div class="timeline-item">
-                        <strong>1644年</strong> - 明朝灭亡<br>
-                        崇祯皇帝煤山自缢，留下遗言：都是大臣们的错
-                    </div>
-                </div>
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title">🌟 为什么这本书值得读？</h2>
-                
-                <div class="rating-section">
-                    <div class="rating-card">
-                        <div class="icon">😂</div>
-                        <h4>有趣程度</h4>
-                        <div class="stars">⭐⭐⭐⭐⭐</div>
-                        <p>比段子手还会讲故事，历史原来可以这么搞笑</p>
-                    </div>
-                    
-                    <div class="rating-card">
-                        <div class="icon">📚</div>
-                        <h4>知识含量</h4>
-                        <div class="stars">⭐⭐⭐⭐⭐</div>
-                        <p>史实严谨，引经据典，绝不胡编乱造</p>
-                    </div>
-                    
-                    <div class="rating-card">
-                        <div class="icon">💡</div>
-                        <h4>启发性</h4>
-                        <div class="stars">⭐⭐⭐⭐⭐</div>
-                        <p>读历史，其实是在读人性和选择</p>
-                    </div>
-                    
-                    <div class="rating-card">
-                        <div class="icon">📖</div>
-                        <h4>可读性</h4>
-                        <div class="stars">⭐⭐⭐⭐⭐</div>
-                        <p>一旦开始就停不下来，比刷剧还上头</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="section">
-                <h2 class="section-title">💭 读完的感悟</h2>
-                <p style="font-size: 1.1em; line-height: 2;">
-                    历史不是冰冷的数字和年份，而是<span class="highlight">一个个鲜活的人</span>，他们有梦想、有野心、有恐惧、有软弱。
-                    他们做出的每一个选择，都在改变着历史的走向。
-                </p>
-                <p style="font-size: 1.1em; line-height: 2; margin-top: 20px;">
-                    朱元璋告诉我们：<strong>出身不重要，重要的是你想成为什么样的人</strong>。<br>
-                    于谦告诉我们：<strong>粉身碎骨浑不怕，要留清白在人间</strong>。<br>
-                    崇祯告诉我们：<strong>有时候努力也救不了局，但至少要努力过</strong>。
-                </p>
-            </div>
-            
-            <div class="meme-box">
-                <h3 style="color: #e17055; margin-bottom: 20px;">🎯 一句话总结</h3>
-                <p style="font-size: 1.3em; line-height: 2;">
-                    这是一本<strong>让你笑中带泪、看完想当历史学家</strong>的神书，<br>
-                    也是一本<strong>让你重新认识"坚持"和"选择"</strong>的人生教科书。
-                </p>
-            </div>
-            
-            <div class="conclusion">
-                <h2>📌 最后的最后</h2>
-                <p style="color: white; font-size: 1.2em; line-height: 2;">
-                    如果你觉得历史书都是枯燥无味的老古董，<br>
-                    那你一定要看看《明朝那些事儿》。<br>
-                    <br>
-                    <strong style="font-size: 1.3em;">它会改变你对历史的所有印象！</strong>
-                </p>
-                <div style="margin-top: 30px; font-size: 1.5em;">
-                    推荐指数：💯/100
-                </div>
-            </div>
-            
-            <div style="text-align: center;">
-                <a href="../index.html" class="back-link">← 返回首页</a>
-            </div>
+       </div>
+      </div>
+     </div>
+    </section>
+    <!-- [/MODULE] 789_书籍推荐页面:书籍介绍 -- 包含书籍封面和内容简介，描述书籍风格和阅读体验 -->
+    <!-- [MODULE] 456_书籍推荐页面:明朝奇葩天团 -->
+    <section class="mb-16 animate-slide-up" style="animation-delay: 0.4s">
+     <h2 class="text-3xl font-bold mb-8 text-center text-dark">
+      <i class="fas fa-users text-purple-500 mr-3">
+      </i>
+      大明朝的"奇葩"天团（部分成员展示）
+     </h2>
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- 朱元璋 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+       <div class="h-48 overflow-hidden">
+        <img alt="朱元璋画像" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" src="https://design.gemcoder.com/api/searchImage?query=portrait of Zhu Yuanzhang, fierce expression, beggar to emperor story, traditional chinese painting style&amp;width=600&amp;height=400"/>
+       </div>
+       <div class="p-6">
+        <div class="flex items-center mb-3">
+         <h3 class="text-xl font-bold text-dark">
+          朱元璋
+         </h3>
+         <span class="ml-2 bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
+          开国皇帝
+         </span>
         </div>
+        <p class="text-lg font-medium text-gray-700 mb-3">
+         地狱开局的通关大神
+        </p>
+        <ul class="space-y-2 text-gray-600">
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            人设：
+           </strong>
+           史上最励志"打工人"
+          </span>
+         </li>
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            经历：
+           </strong>
+           开局一个碗，装备全靠抢。从要饭和尚混到九五之尊
+          </span>
+         </li>
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            副作用：
+           </strong>
+           极度记仇，登基后报复所有欺负过他的人
+          </span>
+         </li>
+        </ul>
+        <div class="mt-4 flex flex-wrap gap-2">
+         <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">
+          #工作狂
+         </span>
+         <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">
+          #暴脾气
+         </span>
+         <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">
+          #屠龙少年终成恶龙
+         </span>
+        </div>
+       </div>
+      </div>
+      <!-- 朱棣 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+       <div class="h-48 overflow-hidden">
+        <img alt="朱棣画像" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" src="https://design.gemcoder.com/api/searchImage?query=portrait of Zhu Di, aggressive warrior emperor, riding horse, ancient Chinese armor&amp;width=600&amp;height=400"/>
+       </div>
+       <div class="p-6">
+        <div class="flex items-center mb-3">
+         <h3 class="text-xl font-bold text-dark">
+          朱棣
+         </h3>
+         <span class="ml-2 bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">
+          永乐大帝
+         </span>
+        </div>
+        <p class="text-lg font-medium text-gray-700 mb-3">
+         退休老干部的战争瘾
+        </p>
+        <ul class="space-y-2 text-gray-600">
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            人设：
+           </strong>
+           史上最强"叔叔"
+          </span>
+         </li>
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            光辉事迹：
+           </strong>
+           侄子建文帝想削藩？不好意思，皇位拿来吧你！
+          </span>
+         </li>
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            爱好：
+           </strong>
+           抢完皇位还不够，五次御驾亲征打蒙古
+          </span>
+         </li>
+        </ul>
+        <div class="mt-4 flex flex-wrap gap-2">
+         <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">
+          #永乐盛世
+         </span>
+         <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">
+          #军事天才
+         </span>
+         <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">
+          #抢侄子棒棒糖
+         </span>
+        </div>
+       </div>
+      </div>
+      <!-- 嘉靖 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+       <div class="h-48 overflow-hidden">
+        <img alt="嘉靖皇帝画像" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" src="https://design.gemcoder.com/api/searchImage?query=portrait of Jiajing Emperor, Taoist priest emperor, alchemy equipment, mystical atmosphere&amp;width=600&amp;height=400"/>
+       </div>
+       <div class="p-6">
+        <div class="flex items-center mb-3">
+         <h3 class="text-xl font-bold text-dark">
+          嘉靖
+         </h3>
+         <span class="ml-2 bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">
+          修仙皇帝
+         </span>
+        </div>
+        <p class="text-lg font-medium text-gray-700 mb-3">
+         居家办公（WFH）的鼻祖
+        </p>
+        <ul class="space-y-2 text-gray-600">
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            人设：
+           </strong>
+           被皇位耽误的炼丹术士
+          </span>
+         </li>
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            战绩：
+           </strong>
+           在位45年，有20年处于"离线状态"
+          </span>
+         </li>
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            名言：
+           </strong>
+           "勿扰，朕在修仙。"（但依然把控朝政）
+          </span>
+         </li>
+        </ul>
+        <div class="mt-4 flex flex-wrap gap-2">
+         <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">
+          #宅男皇帝
+         </span>
+         <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">
+          #道教粉头
+         </span>
+         <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">
+          #权谋大师
+         </span>
+        </div>
+       </div>
+      </div>
+      <!-- 朱由校 -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+       <div class="h-48 overflow-hidden">
+        <img alt="朱由校画像" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" src="https://design.gemcoder.com/api/searchImage?query=portrait of Zhu Youxiao, emperor working as carpenter, holding woodworking tools, traditional Chinese royal clothing&amp;width=600&amp;height=400"/>
+       </div>
+       <div class="p-6">
+        <div class="flex items-center mb-3">
+         <h3 class="text-xl font-bold text-dark">
+          朱由校
+         </h3>
+         <span class="ml-2 bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+          木匠皇帝
+         </span>
+        </div>
+        <p class="text-lg font-medium text-gray-700 mb-3">
+         鲁班的关门弟子
+        </p>
+        <ul class="space-y-2 text-gray-600">
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            人设：
+           </strong>
+           木工届的遗珠，被皇位耽误的手艺人
+          </span>
+         </li>
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            悲剧：
+           </strong>
+           忙着做家具，把国家交给了魏忠贤
+          </span>
+         </li>
+         <li class="flex items-start">
+          <i class="fas fa-check-circle text-green-500 mt-1 mr-2">
+          </i>
+          <span>
+           <strong>
+            结局：
+           </strong>
+           做木工是把大明朝锯了个稀巴烂
+          </span>
+         </li>
+        </ul>
+        <div class="mt-4 flex flex-wrap gap-2">
+         <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">
+          #大国工匠
+         </span>
+         <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">
+          #误国误民
+         </span>
+         <span class="bg-gray-100 text-gray-800 text-xs px-3 py-1 rounded-full">
+          #魏忠贤的工具人
+         </span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+    <!-- [/MODULE] 456_书籍推荐页面:明朝奇葩天团 -- 展示朱元璋、朱棣、嘉靖和朱由校四位明朝皇帝的介绍卡片，包含人物画像、人设、经历和标签 -->
+    <!-- [MODULE] 123_书籍推荐页面:冷知识 -->
+    <section class="mb-16 animate-slide-up" style="animation-delay: 0.5s">
+     <h2 class="text-3xl font-bold mb-8 text-center text-dark">
+      <i class="fas fa-lightbulb text-amber-500 mr-3">
+      </i>
+      大明朝的"冷知识" (Fun Facts)
+     </h2>
+     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-xl shadow-md flex items-start">
+       <div class="bg-red-100 p-3 rounded-full mr-4">
+        <i class="fas fa-heartbeat text-red-500 text-xl">
+        </i>
+       </div>
+       <div>
+        <h3 class="text-lg font-bold mb-2">
+         高危职业
+        </h3>
+        <p class="text-gray-700">
+         明朝皇帝平均寿命只有
+         <span class="font-bold text-red-600">
+          42岁
+         </span>
+         （还没现在的程序员发际线撑得久）。
+        </p>
+       </div>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-md flex items-start">
+       <div class="bg-blue-100 p-3 rounded-full mr-4">
+        <i class="fas fa-gavel text-blue-500 text-xl">
+        </i>
+       </div>
+       <div>
+        <h3 class="text-lg font-bold mb-2">
+         皇权旁落
+        </h3>
+        <p class="text-gray-700">
+         历史上竟然有
+         <span class="font-bold text-blue-600">
+          3个皇帝
+         </span>
+         被大臣暴打过（这届老板真难带）。
+        </p>
+       </div>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-md flex items-start">
+       <div class="bg-green-100 p-3 rounded-full mr-4">
+        <i class="fas fa-search-dollar text-green-500 text-xl">
+        </i>
+       </div>
+       <div>
+        <h3 class="text-lg font-bold mb-2">
+         反腐困局
+        </h3>
+        <p class="text-gray-700">
+         朱元璋杀了
+         <span class="font-bold text-green-600">
+          15万
+         </span>
+         贪官，结果贪官像韭菜一样割了一茬又长一茬。
+        </p>
+       </div>
+      </div>
+      <div class="bg-white p-6 rounded-xl shadow-md flex items-start">
+       <div class="bg-yellow-100 p-3 rounded-full mr-4">
+        <i class="fas fa-coins text-yellow-500 text-xl">
+        </i>
+       </div>
+       <div>
+        <h3 class="text-lg font-bold mb-2">
+         最穷CEO
+        </h3>
+        <p class="text-gray-700">
+         崇祯接手公司（登基）时，国库里只有
+         <span class="font-bold text-yellow-600">
+          400两
+         </span>
+         银子。这点钱在当时连个像样的豪宅首付都不够。
+        </p>
+       </div>
+      </div>
+     </div>
+    </section>
+    <!-- [/MODULE] 123_书籍推荐页面:冷知识 -- 包含四个关于明朝的有趣冷知识卡片，分别是高危职业、皇权旁落、反腐困局和最穷CEO -->
+    <!-- [MODULE] 459_书籍推荐页面:大明兴衰史 -->
+    <section class="mb-16 animate-slide-up" style="animation-delay: 0.6s">
+     <h2 class="text-3xl font-bold mb-8 text-center text-dark">
+      <i class="fas fa-history text-purple-500 mr-3">
+      </i>
+      极简版大明兴衰史 (TL;DR)
+     </h2>
+     <div class="relative">
+      <!-- 时间线 -->
+      <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-purple-200">
+      </div>
+      <!-- 时间点 -->
+      <div class="space-y-12 md:space-y-20">
+       <!-- 1368年 -->
+       <div class="md:flex items-center">
+        <div class="md:w-1/2 md:pr-12 md:text-right mb-6 md:mb-0">
+         <div class="bg-white p-6 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold text-purple-600 mb-2">
+           1368年
+          </h3>
+          <p class="text-gray-700">
+           朱元璋建国
+          </p>
+         </div>
+        </div>
+        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-purple-500 border-4 border-white">
+        </div>
+        <div class="md:w-1/2 md:pl-12">
+         <div class="bg-purple-50 p-6 rounded-xl">
+          <p class="text-lg font-medium text-purple-800">
+           "乞丐翻身把歌唱。"
+          </p>
+         </div>
+        </div>
+       </div>
+       <!-- 1402年 -->
+       <div class="md:flex items-center">
+        <div class="md:w-1/2 md:pr-12 order-2 md:order-1">
+         <div class="bg-red-50 p-6 rounded-xl">
+          <p class="text-lg font-medium text-red-800">
+           "叔叔打侄子，暴力夺权。"
+          </p>
+         </div>
+        </div>
+        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-red-500 border-4 border-white">
+        </div>
+        <div class="md:w-1/2 md:pl-12 md:text-left mb-6 md:mb-0 order-1 md:order-2">
+         <div class="bg-white p-6 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold text-red-600 mb-2">
+           1402年
+          </h3>
+          <p class="text-gray-700">
+           靖难之役
+          </p>
+         </div>
+        </div>
+       </div>
+       <!-- 1449年 -->
+       <div class="md:flex items-center">
+        <div class="md:w-1/2 md:pr-12 md:text-right mb-6 md:mb-0">
+         <div class="bg-white p-6 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold text-blue-600 mb-2">
+           1449年
+          </h3>
+          <p class="text-gray-700">
+           土木堡之变
+          </p>
+         </div>
+        </div>
+        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-blue-500 border-4 border-white">
+        </div>
+        <div class="md:w-1/2 md:pl-12">
+         <div class="bg-blue-50 p-6 rounded-xl">
+          <p class="text-lg font-medium text-blue-800">
+           "皇帝出国旅游被抓了（差点团灭）。"
+          </p>
+         </div>
+        </div>
+       </div>
+       <!-- 1566年 -->
+       <div class="md:flex items-center">
+        <div class="md:w-1/2 md:pr-12 order-2 md:order-1">
+         <div class="bg-yellow-50 p-6 rounded-xl">
+          <p class="text-lg font-medium text-yellow-800">
+           "修仙失败，丹药白吃了。"
+          </p>
+         </div>
+        </div>
+        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-yellow-500 border-4 border-white">
+        </div>
+        <div class="md:w-1/2 md:pl-12 md:text-left mb-6 md:mb-0 order-1 md:order-2">
+         <div class="bg-white p-6 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold text-yellow-600 mb-2">
+           1566年
+          </h3>
+          <p class="text-gray-700">
+           嘉靖去世
+          </p>
+         </div>
+        </div>
+       </div>
+       <!-- 1644年 -->
+       <div class="md:flex items-center">
+        <div class="md:w-1/2 md:pr-12 md:text-right mb-6 md:mb-0">
+         <div class="bg-white p-6 rounded-xl shadow-md">
+          <h3 class="text-xl font-bold text-gray-600 mb-2">
+           1644年
+          </h3>
+          <p class="text-gray-700">
+           崇祯煤山自缢
+          </p>
+         </div>
+        </div>
+        <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-gray-500 border-4 border-white">
+        </div>
+        <div class="md:w-1/2 md:pl-12">
+         <div class="bg-gray-50 p-6 rounded-xl">
+          <p class="text-lg font-medium text-gray-800">
+           "诸臣误我！"（甩锅也是一种艺术）
+          </p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+    <!-- [/MODULE] 459_书籍推荐页面:大明兴衰史 -- 以时间线形式展示明朝重要历史节点：1368年朱元璋建国、1402年靖难之役、1449年土木堡之变、1566年嘉靖去世和1644年崇祯自缢 -->
+    <!-- [MODULE] 678_书籍推荐页面:读后感悟 -->
+    <section class="mb-16 animate-slide-up" style="animation-delay: 0.7s">
+     <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl shadow-xl p-8 md:p-12 text-white">
+      <h2 class="text-3xl font-bold mb-6 text-center">
+       <i class="fas fa-quote-left mr-3">
+       </i>
+       读完后的"贤者模式"
+      </h2>
+      <div class="max-w-3xl mx-auto">
+       <p class="text-xl mb-8 leading-relaxed">
+        这本书最大的魔力在于，它剥去了历史书中那些冰冷的年份和生硬的定性，让你看到一个个
+        <span class="font-bold text-yellow-300">
+         活生生的人
+        </span>
+        。
+       </p>
+       <div class="space-y-6 mb-10">
+        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
+         <p class="font-bold mb-2">
+          <i class="fas fa-user-circle mr-2">
+          </i>
+          朱元璋教会我们：
+         </p>
+         <p class="text-lg">
+          <span class="font-medium text-yellow-300">
+           出身不重要，野心和执行力才重要。
+          </span>
+         </p>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
+         <p class="font-bold mb-2">
+          <i class="fas fa-user-circle mr-2">
+          </i>
+          于谦教会我们：
+         </p>
+         <p class="text-lg">
+          <span class="font-medium text-yellow-300">
+           即便粉身碎骨，也要守住心中的底线。
+          </span>
+         </p>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl">
+         <p class="font-bold mb-2">
+          <i class="fas fa-user-circle mr-2">
+          </i>
+          崇祯教会我们：
+         </p>
+         <p class="text-lg">
+          <span class="font-medium text-yellow-300">
+           有时候努力真的救不了局，但至少你得努力过。
+          </span>
+         </p>
+        </div>
+       </div>
+       <div class="bg-white/20 backdrop-blur-sm p-8 rounded-xl border-l-4 border-yellow-400">
+        <p class="text-2xl font-bold italic text-center mb-4">
+         "成功只有一个
+&mdash;
+&mdash;
+按照自己的方式，去度过人生。"
+        </p>
+        <p class="text-right text-lg">
+         &mdash;
+&mdash;
+当年明月
+        </p>
+       </div>
+      </div>
+     </div>
+    </section>
+    <!-- [/MODULE] 678_书籍推荐页面:读后感悟 -- 包含书籍魔力的描述，朱元璋、于谦和崇祯的人生启示，以及当年明月的名言引用 -->
+    <!-- [MODULE] 901_书籍推荐页面:总结与建议 -->
+    <section class="animate-slide-up" style="animation-delay: 0.8s">
+     <div class="bg-white rounded-2xl shadow-xl p-8 md:p-10">
+      <h2 class="text-3xl font-bold mb-8 text-center text-dark">
+       <i class="fas fa-star text-yellow-500 mr-3">
+       </i>
+       最后的总结
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+       <div class="text-center">
+        <div class="inline-block bg-yellow-100 p-6 rounded-full mb-4">
+         <i class="fas fa-laugh-beam text-4xl text-yellow-500">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">
+         有趣指数
+        </h3>
+        <div class="flex justify-center text-yellow-500 text-2xl">
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+         <i class="fas fa-star">
+         </i>
+        </div>
+        <p class="mt-2 text-gray-600">
+         (比刷抖音还上头)
+        </p>
+       </div>
+       <div class="text-center">
+        <div class="inline-block bg-green-100 p-6 rounded-full mb-4">
+         <i class="fas fa-thumbs-up text-4xl text-green-500">
+         </i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">
+         推荐指数
+        </h3>
+        <div class="text-2xl font-bold text-green-600">
+         💯/100
+        </div>
+       </div>
+      </div>
+      <div class="bg-gray-50 p-8 rounded-xl mb-10">
+       <p class="text-lg text-gray-700 leading-relaxed">
+        如果你觉得历史枯燥，请读这本书；如果你觉得人生艰难，更要读这本书。
+        <span class="font-bold text-purple-600">
+         它不只是一本历史书，更是一本关于人性、选择和坚持的教科书。
+        </span>
+       </p>
+      </div>
+      <div class="text-center">
+       <h3 class="text-2xl font-bold mb-6 text-dark">
+        下一步建议
+       </h3>
+       <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <button class="bg-purple-500 hover:bg-purple-600 text-white font-medium py-3 px-8 rounded-full transition duration-300 flex items-center justify-center" id="generate-markdown-btn">
+         <i class="fas fa-table mr-2">
+         </i>
+         生成Markdown表格
+        </button>
+        <button class="bg-pink-500 hover:bg-pink-600 text-white font-medium py-3 px-8 rounded-full transition duration-300 flex items-center justify-center" id="extract-philosophy-btn">
+         <i class="fas fa-brain mr-2">
+         </i>
+         提取职场生存哲学
+        </button>
+       </div>
+      </div>
+     </div>
+    </section>
+    <!-- [/MODULE] 901_书籍推荐页面:总结与建议 -- 包含有趣指数、推荐指数评分，书籍价值总结，以及生成Markdown表格和提取职场生存哲学两个按钮 -->
+   </div>
+   <!-- [/MODULE] d23_书籍推荐页面 -- 完整的《明朝那些事儿》书籍推荐内容，包含书籍介绍、主要人物、历史事件、读后感悟和总结建议 -->
+  </main>
+  <!-- [/MODULE] abc_主内容区域 -- 包含完整的书籍推荐页面内容 -->
+  <!-- [MODULE] 777_模态框区域 -->
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="modal">
+   <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+    <div class="p-6 border-b flex justify-between items-center">
+     <h3 class="text-2xl font-bold text-dark" id="modal-title">
+     </h3>
+     <button class="text-gray-500 hover:text-gray-700" id="close-modal">
+      <i class="fas fa-times text-xl">
+      </i>
+     </button>
     </div>
-</body>
+    <div class="p-6" id="modal-content">
+     <!-- 模态框内容将通过JavaScript动态填充 -->
+    </div>
+   </div>
+  </div>
+  <!-- [/MODULE] 777_模态框区域 -- 用于展示生成的Markdown表格或职场生存哲学内容的模态框 -->
+  <!-- [JSMOD] eft_交互功能 -->
+  <script id="interaction-script">
+   // 页面加载时初始化
+document.addEventListener('DOMContentLoaded', function () {
+  // 获取DOM元素
+  var modal = document.getElementById('modal');
+  var modalTitle = document.getElementById('modal-title');
+  var modalContent = document.getElementById('modal-content');
+  var closeModal = document.getElementById('close-modal');
+  var generateMarkdownBtn = document.getElementById('generate-markdown-btn');
+  var extractPhilosophyBtn = document.getElementById('extract-philosophy-btn');
+
+  // 关闭模态框
+  closeModal.addEventListener('click', function () {
+    modal.classList.add('hidden');
+  });
+
+  // 点击模态框外部关闭
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) {
+      modal.classList.add('hidden');
+    }
+  });
+
+  // 生成Markdown表格按钮点击事件
+  generateMarkdownBtn.addEventListener('click', function () {
+    modalTitle.textContent = '《明朝那些事儿》核心内容概览表';
+
+    // 生成Markdown表格内容
+    var markdownContent = "<div class=\"bg-gray-900 text-gray-200 p-6 rounded-lg font-mono text-sm overflow-x-auto\">\n                        <pre>\n| \u5386\u53F2\u65F6\u671F | \u5173\u952E\u4EBA\u7269 | \u6838\u5FC3\u4E8B\u4EF6 | \u5386\u53F2\u610F\u4E49 |\n|---------|---------|---------|---------|\n| 1368\u5E74 | \u6731\u5143\u748B | \u660E\u671D\u5EFA\u7ACB | \u7ED3\u675F\u5143\u671D\u7EDF\u6CBB\uFF0C\u6C49\u4EBA\u91CD\u65B0\u638C\u6743 |\n| 1402\u5E74 | \u6731\u68E3 | \u9756\u96BE\u4E4B\u5F79 | \u7687\u6743\u66F4\u8FED\uFF0C\u5F00\u542F\u6C38\u4E50\u76DB\u4E16 |\n| 1449\u5E74 | \u6731\u7941\u9547 | \u571F\u6728\u5821\u4E4B\u53D8 | \u660E\u671D\u7531\u76DB\u8F6C\u8870\u7684\u8F6C\u6298\u70B9 |\n| 1521-1567\u5E74 | \u6731\u539A\u719C(\u5609\u9756) | \u5609\u9756\u4E2D\u5174\u4E0E\u6020\u653F | \u660E\u671D\u4E2D\u8870\uFF0C\u6743\u81E3\u5F00\u59CB\u5D1B\u8D77 |\n| 1620-1627\u5E74 | \u6731\u7531\u6821(\u5929\u542F) | \u9B4F\u5FE0\u8D24\u4E13\u6743 | \u660E\u671D\u653F\u6CBB\u8150\u8D25\uFF0C\u52A0\u901F\u706D\u4EA1 |\n| 1644\u5E74 | \u6731\u7531\u68C0(\u5D07\u796F) | \u7164\u5C71\u81EA\u7F22 | \u660E\u671D\u706D\u4EA1 |\n### \u4E3B\u8981\u4EBA\u7269\u6027\u683C\u7279\u70B9\n| \u4EBA\u7269 | \u6027\u683C\u7279\u70B9 | \u6267\u653F\u98CE\u683C | \u5386\u53F2\u8BC4\u4EF7 |\n|------|---------|---------|---------|\n| \u6731\u5143\u748B | \u591A\u7591\u3001\u72E0\u8FA3\u3001\u52E4\u653F | \u9AD8\u5EA6\u96C6\u6743\uFF0C\u4E25\u5211\u5CFB\u6CD5 | \u5960\u5B9A\u660E\u671D\u57FA\u7840\uFF0C\u4F46\u6740\u622E\u8FC7\u91CD |\n| \u6731\u68E3 | \u96C4\u624D\u5927\u7565\u3001\u597D\u5927\u559C\u529F | \u5F00\u62D3\u8FDB\u53D6\uFF0C\u4E94\u5F81\u8499\u53E4 | \u5F00\u521B\u76DB\u4E16\uFF0C\u4F46\u8017\u8D39\u6C11\u529B |\n| \u5609\u9756 | \u806A\u660E\u3001\u504F\u6267\u3001\u81EA\u79C1 | \u6C89\u8FF7\u4FEE\u4ED9\uFF0C\u9065\u63A7\u671D\u653F | \u524D\u671F\u4E2D\u5174\uFF0C\u540E\u671F\u6020\u653F\u8BEF\u56FD |\n| \u6731\u7531\u6821 | \u624B\u827A\u7CBE\u6E5B\u3001\u653F\u6CBB\u767D\u75F4 | \u4E0D\u7406\u671D\u653F\uFF0C\u91CD\u7528\u5BA6\u5B98 | \u52A0\u901F\u660E\u671D\u706D\u4EA1\u7684\u6728\u5320\u7687\u5E1D |\n                        </pre>\n                    </div>\n                    <p class=\"mt-4 text-gray-600\">\n                        \u4EE5\u4E0A\u662F\u300A\u660E\u671D\u90A3\u4E9B\u4E8B\u513F\u300B\u7684\u6838\u5FC3\u5185\u5BB9\u6982\u89C8\u8868\uFF0C\u901A\u8FC7\u8868\u683C\u5F62\u5F0F\u6E05\u6670\u5C55\u793A\u4E86\u660E\u671D\u91CD\u8981\u5386\u53F2\u65F6\u671F\u3001\u4EBA\u7269\u548C\u4E8B\u4EF6\u53CA\u5176\u5386\u53F2\u610F\u4E49\u3002\n                    </p>";
+    modalContent.innerHTML = markdownContent;
+    modal.classList.remove('hidden');
+  });
+
+  // 提取职场生存哲学按钮点击事件
+  extractPhilosophyBtn.addEventListener('click', function () {
+    modalTitle.textContent = '《明朝那些事儿》中的职场生存哲学';
+
+    // 生成职场生存哲学内容
+    var philosophyContent = "<div class=\"space-y-6\">\n                        <div class=\"bg-purple-50 p-6 rounded-xl\">\n                            <h4 class=\"text-xl font-bold text-purple-700 mb-3\">1. \u6731\u5143\u748B\uFF1A\u4ECE\u5E95\u5C42\u9006\u88AD\u7684\u804C\u573A\u6CD5\u5219</h4>\n                            <ul class=\"space-y-2 text-gray-700\">\n                                <li class=\"flex items-start\">\n                                    <i class=\"fas fa-check-circle text-purple-500 mt-1 mr-2\"></i>\n                                    <span><strong>\u8D77\u70B9\u4E0D\u91CD\u8981\uFF0C\u7EC8\u70B9\u624D\u91CD\u8981</strong>\uFF1A\u4ECE\u4E5E\u4E10\u5230\u7687\u5E1D\uFF0C\u8BC1\u660E\u51FA\u8EAB\u4E0D\u80FD\u51B3\u5B9A\u4E00\u5207</span>\n                                </li>\n                                <li class=\"flex items-start\">\n                                    <i class=\"fas fa-check-circle text-purple-500 mt-1 mr-2\"></i>\n                                    <span><strong>\u6267\u884C\u529B\u662F\u7B2C\u4E00\u751F\u4EA7\u529B</strong>\uFF1A\u60F3\u5230\u5C31\u505A\uFF0C\u5FEB\u901F\u884C\u52A8\u624D\u80FD\u6293\u4F4F\u673A\u9047</span>\n                                </li>\n                                <li class=\"flex items-start\">\n                                    <i class=\"fas fa-check-circle text-purple-500 mt-1 mr-2\"></i>\n                                    <span><strong>\u56E2\u961F\u5EFA\u8BBE\u81F3\u5173\u91CD\u8981</strong>\uFF1A\u5584\u7528\u4EBA\u624D\uFF0C\u6253\u9020\u6838\u5FC3\u56E2\u961F\u662F\u6210\u529F\u5173\u952E</span>\n                                </li>\n                            </ul>\n                        </div>\n                        <div class=\"bg-blue-50 p-6 rounded-xl\">\n                            <h4 class=\"text-xl font-bold text-blue-700 mb-3\">2. \u6731\u68E3\uFF1A\u6743\u529B\u6597\u4E89\u4E2D\u7684\u751F\u5B58\u667A\u6167</h4>\n                            <ul class=\"space-y-2 text-gray-700\">\n                                <li class=\"flex items-start\">\n                                    <i class=\"fas fa-check-circle text-blue-500 mt-1 mr-2\"></i>\n                                    <span><strong>\u9690\u5FCD\u4E0E\u7206\u53D1\u7684\u5E73\u8861</strong>\uFF1A\u65F6\u673A\u672A\u6210\u719F\u65F6\u61C2\u5F97\u86F0\u4F0F\uFF0C\u673A\u4F1A\u6765\u4E34\u65F6\u679C\u65AD\u51FA\u51FB</span>\n                                </li>\n                                <li class=\"flex items-start\">\n                                    <i class=\"fas fa-check-circle text-blue-500 mt-1 mr-2\"></i>\n                                    <span><strong>\u521B\u9020\u81EA\u5DF1\u7684\"\u5408\u6CD5\u6027\"</strong>\uFF1A\u593A\u6743\u540E\u8FC5\u901F\u5EFA\u7ACB\u529F\u7EE9\uFF0C\u5DE9\u56FA\u5730\u4F4D</span>\n                                </li>\n                                <li class=\"flex items-start\">\n                                    <i class=\"fas fa-check-circle text-blue-500 mt-1 mr-2\"></i>\n                                    <span><strong>\u6301\u7EED\u8BC1\u660E\u81EA\u5DF1\u7684\u4EF7\u503C</strong>\uFF1A\u4E94\u5F81\u8499\u53E4\uFF0C\u7F16\u7E82\u300A\u6C38\u4E50\u5927\u5178\u300B\uFF0C\u7528\u6210\u5C31\u8BF4\u8BDD</span>\n                                </li>\n                            </ul>\n                        </div>\n                        <div class=\"bg-yellow-50 p-6 rounded-xl\">\n                            <h4 class=\"text-xl font-bold text-yellow-700 mb-3\">3. \u5609\u9756\uFF1A\u9065\u63A7\u7BA1\u7406\u7684\u827A\u672F\u4E0E\u98CE\u9669</h4>\n                            <ul class=\"space-y-2 text-gray-700\">\n                                <li class=\"flex items-start\">\n                                    <i class=\"fas fa-check-circle text-yellow-500 mt-1 mr-2\"></i>\n                                    <span><strong>\u4FDD\u6301\u4FE1\u606F\u6E20\u9053\u7545\u901A</strong>\uFF1A\u5373\u4F7F\u4E0D\u4E0A\u671D\uFF0C\u4E5F\u8981\u638C\u63E1\u6838\u5FC3\u4FE1\u606F</span>\n                                </li>\n                                <li class=\"flex items-start\">\n                                    <i class=\"fas fa-check-circle text-yellow-500 mt-1 mr-2\"></i>\n                                    <span><strong>\u6743\u529B\u5236\u8861\u7684\u91CD\u8981\u6027</strong>\uFF1A\u5229\u7528\u5927\u81E3\u95F4\u7684\u77DB\u76FE\uFF0C\u7EF4\u6301\u81EA\u5DF1\u7684\u7EDF\u6CBB</span>\n                                </li>\n                                <li class=\"flex items-start\">\n                                    <i class=\"fas fa-exclamation-circle text-yellow-500 mt-1 mr-2\"></i>\n                                    <span><strong>\u98CE\u9669\u8B66\u793A</strong>\uFF1A\u8FC7\u5EA6\u653E\u6743\u548C\u6C89\u8FF7\u526F\u4E1A\u6700\u7EC8\u4F1A\u5BFC\u81F4\u5931\u63A7</span>\n                                </li>\n                            </ul>\n                        </div>\n                        <div class=\"bg-green-50 p-6 rounded-xl\">\n                            <h4 class=\"text-xl font-bold text-green-700 mb-3\">4. \u5F53\u5E74\u660E\u6708\u7684\u7EC8\u6781\u804C\u573A\u54F2\u5B66</h4>\n                            <p class=\"text-gray-700 italic mb-4\">\n                                \"\u6210\u529F\u53EA\u6709\u4E00\u4E2A\u2014\u2014\u6309\u7167\u81EA\u5DF1\u7684\u65B9\u5F0F\uFF0C\u53BB\u5EA6\u8FC7\u4EBA\u751F\u3002\"\n                            </p>\n                            <ul class=\"space-y-2 text-gray-700\">\n                                <li class=\"flex items-start\">\n                                    <i class=\"fas fa-check-circle text-green-500 mt-1 mr-2\"></i>\n                                    <span>\u575A\u6301\u81EA\u6211\uFF0C\u4E0D\u968F\u6CE2\u9010\u6D41</span>\n                                </li>\n                                <li class=\"flex items-start\">\n                                    <i class=\"fas fa-check-circle text-green-500 mt-1 mr-2\"></i>\n                                    <span>\u5386\u53F2\u603B\u662F\u76F8\u4F3C\u7684\uFF0C\u4ECE\u5386\u53F2\u4E2D\u5B66\u4E60\u7ECF\u9A8C</span>\n                                </li>\n                                <li class=\"flex items-start\">\n                                    <i class=\"fas fa-check-circle text-green-500 mt-1 mr-2\"></i>\n                                    <span>\u4EBA\u6027\u590D\u6742\uFF0C\u6CA1\u6709\u7EDD\u5BF9\u7684\u597D\u574F\uFF0C\u53EA\u6709\u7ACB\u573A\u548C\u9009\u62E9</span>\n                                </li>\n                            </ul>\n                        </div>\n                    </div>";
+    modalContent.innerHTML = philosophyContent;
+    modal.classList.remove('hidden');
+  });
+
+  // 添加卡片悬停动画效果
+  var cards = document.querySelectorAll('.card-hover');
+  cards.forEach(function (card) {
+    card.addEventListener('mouseenter', function () {
+      card.style.transform = 'translateY(-5px)';
+      card.style.boxShadow = '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
+    });
+    card.addEventListener('mouseleave', function () {
+      card.style.transform = 'translateY(0)';
+      card.style.boxShadow = '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)';
+    });
+  });
+});
+  </script>
+  <!-- [/JSMOD] eft_交互功能 -- 实现模态框的显示与隐藏，处理生成Markdown表格和提取职场生存哲学按钮的点击事件，添加卡片悬停动画效果 -->
+ </body>
 </html>
