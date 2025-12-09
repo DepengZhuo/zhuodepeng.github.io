@@ -1,0 +1,774 @@
+<html lang='zh-CN'>
+        <head >
+        <meta charset='UTF-8'/>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+<title >Noir & Gold • 黑金影集</title>
+<meta name='description' content='黑金风照片墙 — Noir & Gold Gallery。将旅途、日常与记忆以黑与金的质感呈现，支持自定义图片与简短文案。'/>
+<script src='https://res.gemcoder.com/js/reload.js'></script>
+<script src='https://cdn.tailwindcss.com'></script>
+<link href='https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css' rel='stylesheet'/>
+<script >tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        gold: {
+          light: '#d4af37',
+          DEFAULT: '#b8860b',
+          dark: '#856600'
+        },
+        noir: {
+          light: '#333333',
+          DEFAULT: '#1a1a1a',
+          dark: '#0a0a0a'
+        }
+      },
+      fontFamily: {
+        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif']
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
+        '26': '6.5rem',
+        '72': '18rem',
+        '80': '20rem',
+        '88': '22rem',
+        '96': '24rem'
+      },
+      boxShadow: {
+        'gold': '0 0 15px rgba(184, 134, 11, 0.5)',
+        'gold-sm': '0 0 8px rgba(184, 134, 11, 0.3)'
+      }
+    }
+  }
+};</script>
+<style type='text/tailwindcss'>
+        @layer utilities {
+            .text-shadow-gold {
+                text-shadow: 0 0 8px rgba(184, 134, 11, 0.5);
+            }
+            .bg-gradient-noir-gold {
+                background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #333333 100%);
+            }
+            .transition-transform-opacity {
+                transition-property: transform, opacity;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .content-auto {
+                content-visibility: auto;
+            }
+        }
+    </style>
+    </head>
+<body class='bg-noir text-gray-200 min-h-screen font-sans'>
+        <!-- [MODULE] a7g_主内容区域 -->
+<div class='flex flex-col min-h-screen'>
+        <!-- [MODULE] b3f_页面头部 -->
+<header class='relative overflow-hidden bg-noir-dark border-b border-gold/30'>
+        <div class='absolute inset-0 bg-gradient-noir-gold opacity-90'>
+        </div>
+<div class='container mx-auto px-4 py-8 md:py-12 relative z-10'>
+        <!-- [MODULE] c5d_页面标题区域 -->
+<div class='text-center max-w-3xl mx-auto'>
+        <h1 class='text-[clamp(2rem,5vw,3.5rem)] font-serif font-bold text-white mb-3 tracking-wider'>
+        <span class='text-gold'>
+        Noir
+    </span>
+&
+<span class='text-gold'>
+        Gold
+    </span>
+<span class='block text-[clamp(1.5rem,3vw,2.5rem)] mt-1'>
+        黑金影集
+    </span>
+    </h1>
+<p class='text-[clamp(1rem,2vw,1.25rem)] text-gray-300 italic mb-6'>
+        优雅 · 稳重 · 永恒光彩
+    </p>
+<p class='text-gray-400 max-w-xl mx-auto mb-8'>
+        黑色的静谧，金色的温度。把瞬间打磨成一件有质感的收藏。
+    </p>
+<!-- [MODULE] d2e_页面标题区域:主CTA按钮组 -->
+<div class='flex flex-wrap justify-center gap-4'>
+        <button id='add-photo-btn' class='px-6 py-3 bg-gold text-noir-dark font-medium rounded-sm hover:bg-gold-light transition-all duration-300 flex items-center gap-2 shadow-gold-sm hover:shadow-gold'>
+        <i class='fas fa-plus'>
+        </i>
+<span >
+        添加照片
+    </span>
+    </button>
+<button id='export-btn' class='px-6 py-3 bg-transparent border border-gold text-gold font-medium rounded-sm hover:bg-gold/10 transition-all duration-300 flex items-center gap-2'>
+        <i class='fas fa-download'>
+        </i>
+<span >
+        导出页面
+    </span>
+    </button>
+<button id='browse-all-btn' class='px-6 py-3 bg-transparent border border-gray-600 text-gray-300 font-medium rounded-sm hover:bg-gray-800/50 transition-all duration-300 flex items-center gap-2'>
+        <i class='fas fa-th-large'>
+        </i>
+<span >
+        浏览全部
+    </span>
+    </button>
+    </div>
+<!-- [/MODULE] d2e_页面标题区域:主CTA按钮组 -- 包含添加照片、导出页面、浏览全部三个主要操作按钮 -->
+<p class='text-gray-500 text-xs mt-6'>
+        将图片放入
+<code class='bg-noir px-1 py-0.5 text-gold'>
+        images/
+    </code>
+文件夹，并在图片标签中填写相对路径（例如：
+<code class='bg-noir px-1 py-0.5 text-gold'>
+        images/photo1.jpg
+    </code>
+）。
+    </p>
+    </div>
+<!-- [/MODULE] c5d_页面标题区域 -- 包含页面标题、副标题、顶部描述和主CTA按钮组 -->
+    </div>
+<div class='h-1 w-full bg-gradient-to-r from-transparent via-gold to-transparent opacity-60'>
+        </div>
+    </header>
+<!-- [/MODULE] b3f_页面头部 -- 包含页面标题、副标题、顶部描述和主CTA按钮组 -->
+<!-- [MODULE] e8h_主内容区 -->
+<main class='flex-grow container mx-auto px-4 py-12'>
+        <!-- [MODULE] f1j_主内容区:栏目标签 -->
+<div class='mb-12'>
+        <h2 class='text-xl font-serif text-white mb-6 flex items-center'>
+        <span class='h-px flex-grow bg-gray-700 mr-4'>
+        </span>
+浏览分类
+<span class='h-px flex-grow bg-gray-700 ml-4'>
+        </span>
+    </h2>
+<div class='flex flex-wrap gap-3'>
+        <button class='tag-btn px-4 py-1.5 bg-gold/10 text-gold rounded-full text-sm hover:bg-gold/20 transition-all duration-300 active'>
+        全部
+    </button>
+<button class='tag-btn px-4 py-1.5 bg-gray-800/50 text-gray-300 rounded-full text-sm hover:bg-gray-700/50 transition-all duration-300'>
+        旅途
+    </button>
+<button class='tag-btn px-4 py-1.5 bg-gray-800/50 text-gray-300 rounded-full text-sm hover:bg-gray-700/50 transition-all duration-300'>
+        日常
+    </button>
+<button class='tag-btn px-4 py-1.5 bg-gray-800/50 text-gray-300 rounded-full text-sm hover:bg-gray-700/50 transition-all duration-300'>
+        记忆
+    </button>
+<button class='tag-btn px-4 py-1.5 bg-gray-800/50 text-gray-300 rounded-full text-sm hover:bg-gray-700/50 transition-all duration-300'>
+        夜色
+    </button>
+<button class='tag-btn px-4 py-1.5 bg-gray-800/50 text-gray-300 rounded-full text-sm hover:bg-gray-700/50 transition-all duration-300'>
+        人像
+    </button>
+<button class='tag-btn px-4 py-1.5 bg-gray-800/50 text-gray-300 rounded-full text-sm hover:bg-gray-700/50 transition-all duration-300'>
+        风景
+    </button>
+<button class='tag-btn px-4 py-1.5 bg-gray-800/50 text-gray-300 rounded-full text-sm hover:bg-gray-700/50 transition-all duration-300'>
+        街拍
+    </button>
+<button class='tag-btn px-4 py-1.5 bg-gray-800/50 text-gray-300 rounded-full text-sm hover:bg-gray-700/50 transition-all duration-300'>
+        美食
+    </button>
+    </div>
+    </div>
+<!-- [/MODULE] f1j_主内容区:栏目标签 -- 包含全部、旅途、日常等多个分类标签，点击可筛选照片 -->
+<!-- [MODULE] g9k_主内容区:照片墙 -->
+<div id='photo-gallery' class='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16'>
+        <!-- 照片卡片示例1 -->
+<!-- [MODULE] h2l_主内容区:照片墙:照片卡片1 -->
+<div class='photo-card group bg-noir-light rounded-sm overflow-hidden border border-gray-800 hover:border-gold/50 transition-all duration-500 transform hover:-translate-y-1'>
+        <div class='relative overflow-hidden aspect-[4/3]'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/bbee45cba35c4bfe2c63975b30b28214.png' alt='午夜的灯火' class='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'/>
+<div class='absolute top-3 left-3'>
+        <span class='bg-gold text-noir-dark text-xs px-2 py-1 font-medium'>
+        夜色
+    </span>
+    </div>
+<div class='absolute inset-0 bg-gradient-to-t from-noir-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end'>
+        <div class='p-4 w-full'>
+        <button class='view-photo-btn w-full py-2 bg-gold/90 text-noir-dark text-sm font-medium hover:bg-gold transition-colors duration-300'>
+        查看大图
+    </button>
+    </div>
+    </div>
+    </div>
+<div class='p-4'>
+        <div class='flex justify-between items-start mb-2'>
+        <h3 class='text-white font-medium text-lg'>
+        午夜的灯火
+    </h3>
+<span class='text-gray-500 text-sm'>
+        2025-12-09
+    </span>
+    </div>
+<p class='text-gray-400 text-sm'>
+        一瞬安静，便成永恒。
+    </p>
+    </div>
+    </div>
+<!-- [/MODULE] h2l_主内容区:照片墙:照片卡片1 -- 包含照片预览、分类标签、标题、日期和描述，悬停显示查看大图按钮 -->
+<!-- 照片卡片示例2 -->
+<!-- [MODULE] i3m_主内容区:照片墙:照片卡片2 -->
+<div class='photo-card group bg-noir-light rounded-sm overflow-hidden border border-gray-800 hover:border-gold/50 transition-all duration-500 transform hover:-translate-y-1'>
+        <div class='relative overflow-hidden aspect-[4/3]'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/48df379f1dad39a1eb0b02d73864ebdc.png' alt='巷尾的咖啡香' class='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'/>
+<div class='absolute top-3 left-3'>
+        <span class='bg-gold text-noir-dark text-xs px-2 py-1 font-medium'>
+        日常
+    </span>
+    </div>
+<div class='absolute inset-0 bg-gradient-to-t from-noir-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end'>
+        <div class='p-4 w-full'>
+        <button class='view-photo-btn w-full py-2 bg-gold/90 text-noir-dark text-sm font-medium hover:bg-gold transition-colors duration-300'>
+        查看大图
+    </button>
+    </div>
+    </div>
+    </div>
+<div class='p-4'>
+        <div class='flex justify-between items-start mb-2'>
+        <h3 class='text-white font-medium text-lg'>
+        巷尾的咖啡香
+    </h3>
+<span class='text-gray-500 text-sm'>
+        2025-11-23
+    </span>
+    </div>
+<p class='text-gray-400 text-sm'>
+        光影碎成记忆，暖了整段路。
+    </p>
+    </div>
+    </div>
+<!-- [/MODULE] i3m_主内容区:照片墙:照片卡片2 -- 包含照片预览、分类标签、标题、日期和描述，悬停显示查看大图按钮 -->
+<!-- 照片卡片示例3 -->
+<!-- [MODULE] j4n_主内容区:照片墙:照片卡片3 -->
+<div class='photo-card group bg-noir-light rounded-sm overflow-hidden border border-gray-800 hover:border-gold/50 transition-all duration-500 transform hover:-translate-y-1'>
+        <div class='relative overflow-hidden aspect-[4/3]'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/6d4ed2441520bb7f8db4b9e0000ee744.png' alt='初雪的温度' class='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'/>
+<div class='absolute top-3 left-3'>
+        <span class='bg-gold text-noir-dark text-xs px-2 py-1 font-medium'>
+        风景
+    </span>
+    </div>
+<div class='absolute inset-0 bg-gradient-to-t from-noir-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end'>
+        <div class='p-4 w-full'>
+        <button class='view-photo-btn w-full py-2 bg-gold/90 text-noir-dark text-sm font-medium hover:bg-gold transition-colors duration-300'>
+        查看大图
+    </button>
+    </div>
+    </div>
+    </div>
+<div class='p-4'>
+        <div class='flex justify-between items-start mb-2'>
+        <h3 class='text-white font-medium text-lg'>
+        初雪的温度
+    </h3>
+<span class='text-gray-500 text-sm'>
+        2025-12-01
+    </span>
+    </div>
+<p class='text-gray-400 text-sm'>
+        风很冷，心却被热可可填满。
+    </p>
+    </div>
+    </div>
+<!-- [/MODULE] j4n_主内容区:照片墙:照片卡片3 -- 包含照片预览、分类标签、标题、日期和描述，悬停显示查看大图按钮 -->
+<!-- 照片卡片示例4 -->
+<!-- [MODULE] k5o_主内容区:照片墙:照片卡片4 -->
+<div class='photo-card group bg-noir-light rounded-sm overflow-hidden border border-gray-800 hover:border-gold/50 transition-all duration-500 transform hover:-translate-y-1'>
+        <div class='relative overflow-hidden aspect-[4/3]'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/258b4fa8791792ffeab652c09c155003.png' alt='海边的散步' class='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'/>
+<div class='absolute top-3 left-3'>
+        <span class='bg-gold text-noir-dark text-xs px-2 py-1 font-medium'>
+        旅途
+    </span>
+    </div>
+<div class='absolute inset-0 bg-gradient-to-t from-noir-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end'>
+        <div class='p-4 w-full'>
+        <button class='view-photo-btn w-full py-2 bg-gold/90 text-noir-dark text-sm font-medium hover:bg-gold transition-colors duration-300'>
+        查看大图
+    </button>
+    </div>
+    </div>
+    </div>
+<div class='p-4'>
+        <div class='flex justify-between items-start mb-2'>
+        <h3 class='text-white font-medium text-lg'>
+        海边的散步
+    </h3>
+<span class='text-gray-500 text-sm'>
+        2025-11-15
+    </span>
+    </div>
+<p class='text-gray-400 text-sm'>
+        他/她在镜头里笑成了黄金。
+    </p>
+    </div>
+    </div>
+<!-- [/MODULE] k5o_主内容区:照片墙:照片卡片4 -- 包含照片预览、分类标签、标题、日期和描述，悬停显示查看大图按钮 -->
+<!-- 照片卡片示例5 -->
+<!-- [MODULE] l6p_主内容区:照片墙:照片卡片5 -->
+<div class='photo-card group bg-noir-light rounded-sm overflow-hidden border border-gray-800 hover:border-gold/50 transition-all duration-500 transform hover:-translate-y-1'>
+        <div class='relative overflow-hidden aspect-[4/3]'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/90373b1d6de1a56112878b6e77260759.png' alt='老照片的光泽' class='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'/>
+<div class='absolute top-3 left-3'>
+        <span class='bg-gold text-noir-dark text-xs px-2 py-1 font-medium'>
+        记忆
+    </span>
+    </div>
+<div class='absolute inset-0 bg-gradient-to-t from-noir-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end'>
+        <div class='p-4 w-full'>
+        <button class='view-photo-btn w-full py-2 bg-gold/90 text-noir-dark text-sm font-medium hover:bg-gold transition-colors duration-300'>
+        查看大图
+    </button>
+    </div>
+    </div>
+    </div>
+<div class='p-4'>
+        <div class='flex justify-between items-start mb-2'>
+        <h3 class='text-white font-medium text-lg'>
+        老照片的光泽
+    </h3>
+<span class='text-gray-500 text-sm'>
+        2025-10-22
+    </span>
+    </div>
+<p class='text-gray-400 text-sm'>
+        时光在相纸上留下金色痕迹。
+    </p>
+    </div>
+    </div>
+<!-- [/MODULE] l6p_主内容区:照片墙:照片卡片5 -- 包含照片预览、分类标签、标题、日期和描述，悬停显示查看大图按钮 -->
+<!-- 照片卡片示例6 -->
+<!-- [MODULE] m7q_主内容区:照片墙:照片卡片6 -->
+<div class='photo-card group bg-noir-light rounded-sm overflow-hidden border border-gray-800 hover:border-gold/50 transition-all duration-500 transform hover:-translate-y-1'>
+        <div class='relative overflow-hidden aspect-[4/3]'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/7b39e572959655c3e0ab5a584c7fa668.png' alt='街角的陌生歌声' class='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'/>
+<div class='absolute top-3 left-3'>
+        <span class='bg-gold text-noir-dark text-xs px-2 py-1 font-medium'>
+        街拍
+    </span>
+    </div>
+<div class='absolute inset-0 bg-gradient-to-t from-noir-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end'>
+        <div class='p-4 w-full'>
+        <button class='view-photo-btn w-full py-2 bg-gold/90 text-noir-dark text-sm font-medium hover:bg-gold transition-colors duration-300'>
+        查看大图
+    </button>
+    </div>
+    </div>
+    </div>
+<div class='p-4'>
+        <div class='flex justify-between items-start mb-2'>
+        <h3 class='text-white font-medium text-lg'>
+        街角的陌生歌声
+    </h3>
+<span class='text-gray-500 text-sm'>
+        2025-11-30
+    </span>
+    </div>
+<p class='text-gray-400 text-sm'>
+        路灯一盏，故事一段。
+    </p>
+    </div>
+    </div>
+<!-- [/MODULE] m7q_主内容区:照片墙:照片卡片6 -- 包含照片预览、分类标签、标题、日期和描述，悬停显示查看大图按钮 -->
+<!-- 照片卡片示例7 -->
+<!-- [MODULE] n8r_主内容区:照片墙:照片卡片7 -->
+<div class='photo-card group bg-noir-light rounded-sm overflow-hidden border border-gray-800 hover:border-gold/50 transition-all duration-500 transform hover:-translate-y-1'>
+        <div class='relative overflow-hidden aspect-[4/3]'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/986a363a0a780cce4d2dffb69e8061f2.png' alt='暮色下的城市剪影' class='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'/>
+<div class='absolute top-3 left-3'>
+        <span class='bg-gold text-noir-dark text-xs px-2 py-1 font-medium'>
+        风景
+    </span>
+    </div>
+<div class='absolute inset-0 bg-gradient-to-t from-noir-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end'>
+        <div class='p-4 w-full'>
+        <button class='view-photo-btn w-full py-2 bg-gold/90 text-noir-dark text-sm font-medium hover:bg-gold transition-colors duration-300'>
+        查看大图
+    </button>
+    </div>
+    </div>
+    </div>
+<div class='p-4'>
+        <div class='flex justify-between items-start mb-2'>
+        <h3 class='text-white font-medium text-lg'>
+        暮色下的城市剪影
+    </h3>
+<span class='text-gray-500 text-sm'>
+        2025-12-05
+    </span>
+    </div>
+<p class='text-gray-400 text-sm'>
+        建筑与光影共舞，勾勒城市轮廓。
+    </p>
+    </div>
+    </div>
+<!-- [/MODULE] n8r_主内容区:照片墙:照片卡片7 -- 包含照片预览、分类标签、标题、日期和描述，悬停显示查看大图按钮 -->
+<!-- 照片卡片示例8 -->
+<!-- [MODULE] o9s_主内容区:照片墙:照片卡片8 -->
+<div class='photo-card group bg-noir-light rounded-sm overflow-hidden border border-gray-800 hover:border-gold/50 transition-all duration-500 transform hover:-translate-y-1'>
+        <div class='relative overflow-hidden aspect-[4/3]'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/c0f085a571b7c0776dbffb5899d80b39.png' alt='柴米油盐里的暖' class='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'/>
+<div class='absolute top-3 left-3'>
+        <span class='bg-gold text-noir-dark text-xs px-2 py-1 font-medium'>
+        美食
+    </span>
+    </div>
+<div class='absolute inset-0 bg-gradient-to-t from-noir-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end'>
+        <div class='p-4 w-full'>
+        <button class='view-photo-btn w-full py-2 bg-gold/90 text-noir-dark text-sm font-medium hover:bg-gold transition-colors duration-300'>
+        查看大图
+    </button>
+    </div>
+    </div>
+    </div>
+<div class='p-4'>
+        <div class='flex justify-between items-start mb-2'>
+        <h3 class='text-white font-medium text-lg'>
+        柴米油盐里的暖
+    </h3>
+<span class='text-gray-500 text-sm'>
+        2025-11-20
+    </span>
+    </div>
+<p class='text-gray-400 text-sm'>
+        烟火气中的金色时光。
+    </p>
+    </div>
+    </div>
+<!-- [/MODULE] o9s_主内容区:照片墙:照片卡片8 -- 包含照片预览、分类标签、标题、日期和描述，悬停显示查看大图按钮 -->
+    </div>
+<!-- [/MODULE] g9k_主内容区:照片墙 -- 展示多个照片卡片，每个卡片包含照片预览、分类标签、标题、日期和描述 -->
+<!-- [MODULE] p0t_主内容区:空状态提示 (默认隐藏) -->
+<div id='empty-state' class='hidden text-center py-20'>
+        <div class='max-w-md mx-auto'>
+        <div class='w-24 h-24 mx-auto mb-6 text-gray-700'>
+        <i class='fas fa-camera text-6xl'>
+        </i>
+    </div>
+<h3 class='text-white text-2xl font-medium mb-3'>
+        你的影集还空着。
+    </h3>
+<p class='text-gray-400 mb-8'>
+        试试“添加照片” → 把第一张记忆放进来，让页面开始发光。
+    </p>
+<button id='empty-add-photo-btn' class='px-6 py-3 bg-gold text-noir-dark font-medium rounded-sm hover:bg-gold-light transition-all duration-300 flex items-center gap-2 shadow-gold-sm hover:shadow-gold mx-auto'>
+        <i class='fas fa-plus'>
+        </i>
+<span >
+        添加第一张照片
+    </span>
+    </button>
+    </div>
+    </div>
+<!-- [/MODULE] p0t_主内容区:空状态提示 -- 当没有任何照片时显示，提示用户添加第一张照片 -->
+    </main>
+<!-- [/MODULE] e8h_主内容区 -- 包含栏目标签、照片墙和空状态提示 -->
+<!-- [MODULE] q1u_页脚 -->
+<footer class='bg-noir-dark border-t border-gray-800 py-8'>
+        <div class='container mx-auto px-4'>
+        <div class='flex flex-col md:flex-row justify-between items-center'>
+        <div class='mb-4 md:mb-0'>
+        <p class='text-gray-500 text-sm'>
+        设计 · Noir & Gold Gallery
+    </p>
+<p class='text-gray-600 text-xs'>
+        ©
+<span id='current-year'>
+        2025
+    </span>
+• 所有视觉与文字由你收藏
+    </p>
+    </div>
+<div class='flex gap-4'>
+        <a href='javascript:void(0);' class='text-gray-500 hover:text-gold transition-colors duration=300'>
+        <i class='fab fa-instagram'>
+        </i>
+    </a>
+<a href='javascript:void(0);' class='text-gray-500 hover:text-gold transition-colors duration=300'>
+        <i class='fab fa-pinterest-p'>
+        </i>
+    </a>
+<a href='javascript:void(0);' class='text-gray-500 hover:text-gold transition-colors duration=300'>
+        <i class='fab fa-flickr'>
+        </i>
+    </a>
+<a href='javascript:void(0);' class='text-gray-500 hover:text-gold transition-colors duration=300'>
+        <i class='fas fa-share-alt'>
+        </i>
+    </a>
+    </div>
+    </div>
+<div class='mt-8 pt-6 border-t border-gray-800 text-center'>
+        <p class='text-gray-600 text-xs italic'>
+        把日常过成收藏。黑金，是为平凡镀上的仪式感。
+    </p>
+    </div>
+    </div>
+    </footer>
+<!-- [/MODULE] q1u_页脚 -- 包含版权信息、社交媒体链接和可选小文案 -->
+<!-- [MODULE] r2v_灯箱弹窗 (大图预览) -->
+<div id='lightbox' class='fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4'>
+        <button id='close-lightbox' class='absolute top-6 right-6 text-white text-2xl hover:text-gold transition-colors duration-300 z-10'>
+        <i class='fas fa-times'>
+        </i>
+    </button>
+<div class='lightbox-content max-w-6xl w-full max-h-[90vh] flex flex-col md:flex-row gap-8 items-center'>
+        <div class='md:w-2/3 relative'>
+        <img id='lightbox-img' src alt='大图预览' class='max-h-[70vh] max-w-full object-contain mx-auto'/>
+    </div>
+<div class='md:w-1/3 text-left text-gray-300'>
+        <div class='mb-2'>
+        <span id='lightbox-tag' class='bg-gold text-noir-dark text-xs px-2 py-1 font-medium'>
+        标签
+    </span>
+    </div>
+<h2 id='lightbox-title' class='text-white text-2xl font-medium mb-2'>
+        照片标题
+    </h2>
+<p id='lightbox-date' class='text-gray-500 text-sm mb-4'>
+        2025-12-09
+    </p>
+<p id='lightbox-caption' class='text-gray-400 mb-6'>
+        照片描述文字将显示在这里，描述这张照片的故事和记忆。
+    </p>
+<div class='flex gap-3'>
+        <button id='prev-photo' class='px-4 py-2 bg-gray-800 text-gray-300 rounded-sm hover:bg-gray-700 transition-colors duration-300'>
+        <i class='fas fa-chevron-left'>
+        </i>
+上一张
+    </button>
+<button id='next-photo' class='px-4 py-2 bg-gray-800 text-gray-300 rounded-sm hover:bg-gray-700 transition-colors duration-300'>
+        下一张
+<i class='fas fa-chevron-right'>
+        </i>
+    </button>
+    </div>
+    </div>
+    </div>
+    </div>
+<!-- [/MODULE] r2v_灯箱弹窗 -- 点击照片卡片的查看大图按钮后显示，展示照片大图、标题、日期、描述和导航按钮 -->
+<!-- [MODULE] s3w_导出提示弹窗 -->
+<div id='export-toast' class='fixed bottom-6 right-6 bg-gold text-noir-dark px-6 py-3 rounded-sm shadow-gold transform translate-y-20 opacity-0 transition-all duration-500 flex items-center gap-3 z-50'>
+        <i class='fas fa-check-circle'>
+        </i>
+<span >
+        已生成单文件 HTML，准备下载。
+    </span>
+    </div>
+<!-- [/MODULE] s3w_导出提示弹窗 -- 点击导出按钮后显示，提示用户HTML文件已生成 -->
+    </div>
+<!-- [/MODULE] a7g_主内容区域 -->
+<!-- [JSMOD] t4x_页面初始化与年份更新 -->
+<script id='page-initialization'>// 页面加载时初始化渲染
+document.addEventListener('DOMContentLoaded', function () {
+  // 设置当前年份
+  var currentYearElement = document.getElementById('current-year');
+  if (currentYearElement) {
+    currentYearElement.textContent = new Date().getFullYear();
+  }
+
+  // 初始化灯箱功能
+  initLightbox();
+
+  // 初始化标签筛选功能
+  initTagFiltering();
+
+  // 初始化按钮事件
+  initButtonEvents();
+});</script>
+<!-- [/JSMOD] t4x_页面初始化与年份更新 -- 设置当前年份，初始化灯箱、标签筛选和按钮事件 -->
+<!-- [JSMOD] u5y_灯箱功能 -->
+<script id='lightbox-functionality'>function initLightbox() {
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightbox-img');
+  var lightboxTitle = document.getElementById('lightbox-title');
+  var lightboxDate = document.getElementById('lightbox-date');
+  var lightboxCaption = document.getElementById('lightbox-caption');
+  var lightboxTag = document.getElementById('lightbox-tag');
+  var closeLightbox = document.getElementById('close-lightbox');
+  var prevPhotoBtn = document.getElementById('prev-photo');
+  var nextPhotoBtn = document.getElementById('next-photo');
+  var viewPhotoBtns = document.querySelectorAll('.view-photo-btn');
+  var photoCards = document.querySelectorAll('.photo-card');
+  var currentPhotoIndex = 0;
+
+  // 打开灯箱
+  function openLightbox(index) {
+    if (!photoCards[index]) return;
+    currentPhotoIndex = index;
+    var card = photoCards[index];
+    var img = card.querySelector('img');
+    var title = card.querySelector('h3').textContent;
+    var date = card.querySelector('.text-gray-500.text-sm').textContent;
+    var caption = card.querySelector('p.text-gray-400').textContent;
+    var tag = card.querySelector('.bg-gold').textContent;
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightboxTitle.textContent = title;
+    lightboxDate.textContent = date;
+    lightboxCaption.textContent = caption;
+    lightboxTag.textContent = tag;
+
+    // 显示灯箱并阻止页面滚动
+    lightbox.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // 关闭灯箱
+  function closeLightboxModal() {
+    lightbox.classList.add('hidden');
+    document.body.style.overflow = ''; // 恢复页面滚动
+  }
+
+  // 上一张照片
+  function showPrevPhoto() {
+    currentPhotoIndex = (currentPhotoIndex - 1 + photoCards.length) % photoCards.length;
+    openLightbox(currentPhotoIndex);
+  }
+
+  // 下一张照片
+  function showNextPhoto() {
+    currentPhotoIndex = (currentPhotoIndex + 1) % photoCards.length;
+    openLightbox(currentPhotoIndex);
+  }
+
+  // 为每张照片的查看按钮添加点击事件
+  viewPhotoBtns.forEach(function (btn, index) {
+    btn.addEventListener('click', function () {
+      openLightbox(index);
+    });
+  });
+
+  // 为照片卡片添加点击事件（除了按钮外的区域）
+  photoCards.forEach(function (card, index) {
+    card.addEventListener('click', function (e) {
+      // 如果点击的不是按钮，则打开灯箱
+      if (!e.target.closest('button')) {
+        openLightbox(index);
+      }
+    });
+  });
+
+  // 关闭灯箱事件
+  closeLightbox.addEventListener('click', closeLightboxModal);
+
+  // 点击灯箱背景关闭
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) {
+      closeLightboxModal();
+    }
+  });
+
+  // 键盘导航
+  document.addEventListener('keydown', function (e) {
+    if (!lightbox.classList.contains('hidden')) {
+      if (e.key === 'Escape') {
+        closeLightboxModal();
+      } else if (e.key === 'ArrowLeft') {
+        showPrevPhoto();
+      } else if (e.key === 'ArrowRight') {
+        showNextPhoto();
+      }
+    }
+  });
+
+  // 前后导航按钮
+  prevPhotoBtn.addEventListener('click', showPrevPhoto);
+  nextPhotoBtn.addEventListener('click', showNextPhoto);
+}</script>
+<!-- [/JSMOD] u5y_灯箱功能 -- 实现照片大图预览功能，支持键盘导航和触摸滑动 -->
+<!-- [JSMOD] v6z_标签筛选功能 -->
+<script id='tag-filtering'>function initTagFiltering() {
+  var tagButtons = document.querySelectorAll('.tag-btn');
+  var photoCards = document.querySelectorAll('.photo-card');
+  tagButtons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      // 移除所有标签按钮的active状态
+      tagButtons.forEach(function (btn) {
+        return btn.classList.remove('active', 'bg-gold/10', 'text-gold');
+      });
+      tagButtons.forEach(function (btn) {
+        return btn.classList.add('bg-gray-800/50', 'text-gray-300');
+      });
+
+      // 添加当前标签按钮的active状态
+      button.classList.add('active', 'bg-gold/10', 'text-gold');
+      button.classList.remove('bg-gray-800/50', 'text-gray-300');
+      var tagText = button.textContent.trim();
+
+      // 筛选照片卡片
+      photoCards.forEach(function (card) {
+        var cardTag = card.querySelector('.bg-gold')?.textContent.trim();
+        if (tagText === '全部' || cardTag === tagText) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+}</script>
+<!-- [/JSMOD] v6z_标签筛选功能 -- 实现按标签筛选照片的功能 -->
+<!-- [JSMOD] w7a_按钮事件处理 -->
+<script id='button-events'>function initButtonEvents() {
+  // 添加照片按钮
+  var addPhotoBtns = [document.getElementById('add-photo-btn'), document.getElementById('empty-add-photo-btn')];
+  addPhotoBtns.forEach(function (btn) {
+    if (btn) {
+      btn.addEventListener('click', function () {
+        alert('此功能将打开文件选择器，允许您上传照片。在实际应用中，这里会实现文件上传功能。');
+        // 实际应用中，这里会打开文件选择器或照片上传表单
+      });
+    }
+  });
+
+  // 导出按钮
+  var exportBtn = document.getElementById('export-btn');
+  var exportToast = document.getElementById('export-toast');
+  if (exportBtn && exportToast) {
+    exportBtn.addEventListener('click', function () {
+      // 显示导出提示
+      exportToast.classList.remove('translate-y-20', 'opacity-0');
+
+      // 3秒后隐藏提示
+      setTimeout(function () {
+        exportToast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    });
+  }
+
+  // 浏览全部按钮
+  var browseAllBtn = document.getElementById('browse-all-btn');
+  if (browseAllBtn) {
+    browseAllBtn.addEventListener('click', function () {
+      // 滚动到照片墙
+      var photoGallery = document.getElementById('photo-gallery');
+      if (photoGallery) {
+        photoGallery.scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
+
+      // 重置标签筛选为"全部"
+      var allTagBtn = document.querySelector('.tag-btn.active');
+      if (allTagBtn && allTagBtn.textContent.trim() !== '全部') {
+        var firstTagBtn = document.querySelector('.tag-btn');
+        if (firstTagBtn) {
+          firstTagBtn.click();
+        }
+      }
+    });
+  }
+}</script>
+<!-- [/JSMOD] w7a_按钮事件处理 -- 处理添加照片、导出页面和浏览全部按钮的点击事件 -->
+    </body>
+    </html>
