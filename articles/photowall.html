@@ -1,0 +1,555 @@
+<html lang='zh-CN'>
+        <head >
+        <meta charset='UTF-8'/>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+<title >Ins风照片墙</title>
+<script src='https://res.gemcoder.com/js/reload.js'></script>
+<script src='https://cdn.tailwindcss.com'></script>
+<link href='https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css' rel='stylesheet'/>
+<script >tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#f8f5f2',
+        secondary: '#e5ddd5',
+        accent: '#d4c2ae',
+        text: '#333333',
+        lightText: '#888888'
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif']
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
+        '26': '6.5rem',
+        '30': '7.5rem',
+        '34': '8.5rem',
+        '38': '9.5rem',
+        '42': '10.5rem',
+        '46': '11.5rem',
+        '50': '12.5rem',
+        '54': '13.5rem',
+        '58': '14.5rem',
+        '62': '15.5rem'
+      }
+    }
+  }
+};</script>
+<style type='text/tailwindcss'>
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .photo-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                grid-gap: 1.5rem;
+                grid-auto-flow: dense;
+            }
+            .photo-item:hover .photo-overlay {
+                opacity: 1;
+            }
+            .photo-item:hover img {
+                transform: scale(1.03);
+                filter: brightness(0.9);
+            }
+        }
+    </style>
+    </head>
+<body class='bg-primary text-text font-sans'>
+        <!-- [MODULE] a1b_页面容器 -->
+<div class='min-h-screen flex flex-col'>
+        <!-- [MODULE] c2d_顶部导航 -->
+<header class='py-6 px-4 md:px-8 flex justify-between items-center border-b border-secondary'>
+        <h1 class='text-2xl md:text-3xl font-light tracking-wider'>
+        Memories
+    </h1>
+<div class='flex items-center space-x-4'>
+        <button class='p-2 rounded-full hover:bg-secondary transition-colors duration-300'>
+        <i class='fas fa-search text-lightText'>
+        </i>
+    </button>
+<button class='p-2 rounded-full hover:bg-secondary transition-colors duration-300'>
+        <i class='fas fa-heart text-lightText'>
+        </i>
+    </button>
+<button class='p-2 rounded-full hover:bg-secondary transition-colors duration-300'>
+        <i class='fas fa-user text-lightText'>
+        </i>
+    </button>
+    </div>
+    </header>
+<!-- [/MODULE] c2d_顶部导航 -- 包含网站标题和搜索、收藏、用户按钮 -->
+<!-- [MODULE] e3f_照片墙内容区 -->
+<main class='flex-grow py-8 px-4 md:px-8'>
+        <!-- [MODULE] g4h_照片墙标题 -->
+<div class='mb-8 text-center'>
+        <h2 class='text-xl md:text-2xl font-light mb-2'>
+        My Photo Wall
+    </h2>
+<p class='text-lightText text-sm md:text-base max-w-2xl mx-auto'>
+        Capturing moments, preserving memories. An collection of life's beautiful instants.
+    </p>
+    </div>
+<!-- [/MODULE] g4h_照片墙标题 -- 包含主标题和副标题描述 -->
+<!-- [MODULE] i5j_照片网格 -->
+<div class='photo-grid'>
+        <!-- [MODULE] k6l_照片项1 -->
+<div class='photo-item group relative overflow-hidden rounded-lg shadow-sm transform transition-all duration-300' style='grid-row: span 2;'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/2e86e775912ff8f8b5d65082e75b6d9e.png' alt='海边日落' class='w-full h-full object-cover transition-transform duration-700'/>
+<div class='photo-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4'>
+        <span class='text-white text-sm font-light mb-1'>
+        June 15, 2023
+    </span>
+<p class='text-white text-base font-light'>
+        Golden hour by the sea
+    </p>
+<div class='flex items-center mt-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100'>
+        <button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-heart'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-comment'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-bookmark'>
+        </i>
+    </button>
+    </div>
+    </div>
+    </div>
+<!-- [/MODULE] k6l_照片项1 -- 海边日落照片，包含日期和文案信息，悬停显示互动按钮 -->
+<!-- [MODULE] m7n_照片项2 -->
+<div class='photo-item group relative overflow-hidden rounded-lg shadow-sm transform transition-all duration-300'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/c18e57cf1cc2329c71be70b99e75f6e1.png' alt='咖啡馆' class='w-full h-full object-cover transition-transform duration-700'/>
+<div class='photo-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4'>
+        <span class='text-white text-sm font-light mb-1'>
+        May 22, 2023
+    </span>
+<p class='text-white text-base font-light'>
+        Morning ritual
+    </p>
+<div class='flex items-center mt-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100'>
+        <button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-heart'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-comment'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-bookmark'>
+        </i>
+    </button>
+    </div>
+    </div>
+    </div>
+<!-- [/MODULE] m7n_照片项2 -- 咖啡馆照片，包含日期和文案信息，悬停显示互动按钮 -->
+<!-- [MODULE] o8p_照片项3 -->
+<div class='photo-item group relative overflow-hidden rounded-lg shadow-sm transform transition-all duration-300' style='grid-column: span 2;'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/0234a4ea6dc86ed818e5c17fd9dc0ad1.png' alt='城市街道' class='w-full h-full object-cover transition-transform duration-700'/>
+<div class='photo-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4'>
+        <span class='text-white text-sm font-light mb-1'>
+        April 8, 2023
+    </span>
+<p class='text-white text-base font-light'>
+        Wandering through colorful streets
+    </p>
+<div class='flex items-center mt-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100'>
+        <button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-heart'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-comment'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-bookmark'>
+        </i>
+    </button>
+    </div>
+    </div>
+    </div>
+<!-- [/MODULE] o8p_照片项3 -- 城市街道照片，包含日期和文案信息，悬停显示互动按钮 -->
+<!-- [MODULE] q9r_照片项4 -->
+<div class='photo-item group relative overflow-hidden rounded-lg shadow-sm transform transition-all duration-300'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/91917a1bfdeaa5fc369facbab89e3b4b.png' alt='鲜花' class='w-full h-full object-cover transition-transform duration-700'/>
+<div class='photo-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4'>
+        <span class='text-white text-sm font-light mb-1'>
+        March 20, 2023
+    </span>
+<p class='text-white text-base font-light'>
+        Spring blooms at home
+    </p>
+<div class='flex items-center mt-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100'>
+        <button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-heart'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-comment'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-bookmark'>
+        </i>
+    </button>
+    </div>
+    </div>
+    </div>
+<!-- [/MODULE] q9r_照片项4 -- 鲜花照片，包含日期和文案信息，悬停显示互动按钮 -->
+<!-- [MODULE] s0t_照片项5 -->
+<div class='photo-item group relative overflow-hidden rounded-lg shadow-sm transform transition-all duration-300' style='grid-row: span 1.5;'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/e3ebfdfab73c970b9b30fe97080d4013.png' alt='森林' class='w-full h-full object-cover transition-transform duration-700'/>
+<div class='photo-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4'>
+        <span class='text-white text-sm font-light mb-1'>
+        February 12, 2023
+    </span>
+<p class='text-white text-base font-light'>
+        Morning mist in the woods
+    </p>
+<div class='flex items-center mt-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100'>
+        <button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-heart'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-comment'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-bookmark'>
+        </i>
+    </button>
+    </div>
+    </div>
+    </div>
+<!-- [/MODULE] s0t_照片项5 -- 森林照片，包含日期和文案信息，悬停显示互动按钮 -->
+<!-- [MODULE] u1v_照片项6 -->
+<div class='photo-item group relative overflow-hidden rounded-lg shadow-sm transform transition-all duration-300' style='grid-column: span 1.5;'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/995d52896b24fd0d2986fc4ca8c53c55.png' alt='陶瓷碗与水果' class='w-full h-full object-cover transition-transform duration-700'/>
+<div class='photo-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4'>
+        <span class='text-white text-sm font-light mb-1'>
+        January 5, 2023
+    </span>
+<p class='text-white text-base font-light'>
+        Simple moments at home
+    </p>
+<div class='flex items-center mt-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100'>
+        <button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-heart'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-comment'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-bookmark'>
+        </i>
+    </button>
+    </div>
+    </div>
+    </div>
+<!-- [/MODULE] u1v_照片项6 -- 陶瓷碗与水果照片，包含日期和文案信息，悬停显示互动按钮 -->
+<!-- [MODULE] w2x_照片项7 -->
+<div class='photo-item group relative overflow-hidden rounded-lg shadow-sm transform transition-all duration-300'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/3ae84f586d8ceef94ec019be454833ca.png' alt='海滩道路' class='w-full h-full object-cover transition-transform duration-700'/>
+<div class='photo-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4'>
+        <span class='text-white text-sm font-light mb-1'>
+        December 25, 2022
+    </span>
+<p class='text-white text-base font-light'>
+        Quiet Christmas by the coast
+    </p>
+<div class='flex items-center mt-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100'>
+        <button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-heart'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-comment'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-bookmark'>
+        </i>
+    </button>
+    </div>
+    </div>
+    </div>
+<!-- [/MODULE] w2x_照片项7 -- 海滩道路照片，包含日期和文案信息，悬停显示互动按钮 -->
+<!-- [MODULE] y3z_照片项8 -->
+<div class='photo-item group relative overflow-hidden rounded-lg shadow-sm transform transition-all duration-300' style='grid-row: span 2;'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/922db256b58acd2c84f39272172b1605.png' alt='星空' class='w-full h-full object-cover transition-transform duration-700'/>
+<div class='photo-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4'>
+        <span class='text-white text-sm font-light mb-1'>
+        November 11, 2022
+    </span>
+<p class='text-white text-base font-light'>
+        Endless universe above
+    </p>
+<div class='flex items-center mt-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100'>
+        <button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-heart'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-comment'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-bookmark'>
+        </i>
+    </button>
+    </div>
+    </div>
+    </div>
+<!-- [/MODULE] y3z_照片项8 -- 星空照片，包含日期和文案信息，悬停显示互动按钮 -->
+<!-- [MODULE] b4c_照片项9 -->
+<div class='photo-item group relative overflow-hidden rounded-lg shadow-sm transform transition-all duration-300'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/208a9dc024dec1ef0560b19d2e016a4a.png' alt='秋叶' class='w-full h-full object-cover transition-transform duration-700'/>
+<div class='photo-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4'>
+        <span class='text-white text-sm font-light mb-1'>
+        October 30, 2022
+    </span>
+<p class='text-white text-base font-light'>
+        Fall's colorful goodbye
+    </p>
+<div class='flex items-center mt-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100'>
+        <button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-heart'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-comment'>
+        </i>
+    </button>
+<button class='text-white p-2 hover:text-accent transition-colors'>
+        <i class='fas fa-bookmark'>
+        </i>
+    </button>
+    </div>
+    </div>
+    </div>
+<!-- [/MODULE] b4c_照片项9 -- 秋叶照片，包含日期和文案信息，悬停显示互动按钮 -->
+    </div>
+<!-- [/MODULE] i5j_照片网格 -- 包含9个不同尺寸的照片项，采用不均匀分布的网格布局 -->
+<!-- [MODULE] d5e_加载更多按钮 -->
+<div class='mt-12 text-center'>
+        <button id='load-more' class='px-6 py-3 border border-accent text-accent hover:bg-accent hover:text-white transition-colors duration-300 rounded-full text-sm font-light tracking-wide'>
+        Load More Memories
+    </button>
+    </div>
+<!-- [/MODULE] d5e_加载更多按钮 -- 用于加载更多照片内容 -->
+    </main>
+<!-- [/MODULE] e3f_照片墙内容区 -- 包含照片墙标题、照片网格和加载更多按钮 -->
+<!-- [MODULE] f6g_页脚 -->
+<footer class='py-8 px-4 md:px-8 border-t border-secondary mt-12'>
+        <div class='flex flex-col md:flex-row justify-between items-center'>
+        <p class='text-lightText text-sm mb-4 md:mb-0'>
+        © 2023 Memories. All rights reserved.
+    </p>
+<div class='flex space-x-6'>
+        <a href='javascript:void(0);' class='text-lightText hover:text-accent transition-colors'>
+        <i class='fab fa-instagram'>
+        </i>
+    </a>
+<a href='javascript:void(0);' class='text-lightText hover:text-accent transition-colors'>
+        <i class='fab fa-pinterest'>
+        </i>
+    </a>
+<a href='javascript:void(0);' class='text-lightText hover:text-accent transition-colors'>
+        <i class='fab fa-twitter'>
+        </i>
+    </a>
+<a href='javascript:void(0);' class='text-lightText hover:text-accent transition-colors'>
+        <i class='fab fa-facebook'>
+        </i>
+    </a>
+    </div>
+    </div>
+    </footer>
+<!-- [/MODULE] f6g_页脚 -- 包含版权信息和社交媒体链接 -->
+<!-- [MODULE] g7h_照片查看器模态框 -->
+<div id='photo-modal' class='fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4'>
+        <button id='close-modal' class='absolute top-6 right-6 text-white text-2xl'>
+        <i class='fas fa-times'>
+        </i>
+    </button>
+<div class='max-w-5xl w-full max-h-[90vh] flex items-center justify-center'>
+        <img id='modal-image' src alt='Large photo view' class='max-h-[80vh] max-w-full object-contain'/>
+    </div>
+<div class='absolute bottom-6 left-0 right-0 text-white text-center px-4'>
+        <h3 id='modal-title' class='text-xl font-light mb-1'>
+        </h3>
+<p id='modal-date' class='text-sm text-lightText'>
+        </p>
+    </div>
+    </div>
+<!-- [/MODULE] g7h_照片查看器模态框 -- 点击照片时显示大图查看器，包含关闭按钮和照片信息 -->
+    </div>
+<!-- [/MODULE] a1b_页面容器 -- 包含整个页面的所有内容 -->
+<!-- [JSMOD] h8i_照片墙交互功能 -->
+<script id='photo-gallery-script'>document.addEventListener('DOMContentLoaded', function () {
+  // 获取DOM元素
+  var photoItems = document.querySelectorAll('.photo-item');
+  var modal = document.getElementById('photo-modal');
+  var modalImage = document.getElementById('modal-image');
+  var modalTitle = document.getElementById('modal-title');
+  var modalDate = document.getElementById('modal-date');
+  var closeModal = document.getElementById('close-modal');
+  var loadMoreBtn = document.getElementById('load-more');
+
+  // 照片数据
+  var morePhotos = [{
+    src: "https://design.gemcoder.com/staticResource/echoAiSystemImages/e3f4beb35f9ebd8c03b3d2e82b95f005.png",
+    alt: "马卡龙甜点",
+    date: "September 22, 2022",
+    title: "Sweet moments"
+  }, {
+    src: "https://design.gemcoder.com/staticResource/echoAiSystemImages/b2d0eda72b09c485bc544ee13a05b6fd.png",
+    alt: "海浪",
+    date: "August 5, 2022",
+    title: "Rhythm of the ocean"
+  }, {
+    src: "https://design.gemcoder.com/staticResource/echoAiSystemImages/a0a2652cfd98ed8cca142f7ced7ced27.png",
+    alt: "乡村道路",
+    date: "July 18, 2022",
+    title: "Endless possibilities"
+  }];
+
+  // 打开照片模态框
+  function openModal(photoItem) {
+    var img = photoItem.querySelector('img');
+    var title = photoItem.querySelector('p').textContent;
+    var date = photoItem.querySelector('span').textContent;
+    modalImage.src = img.src;
+    modalImage.alt = img.alt;
+    modalTitle.textContent = title;
+    modalDate.textContent = date;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // 关闭照片模态框
+  function closeModalFunc() {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+
+  // 为每张照片添加点击事件
+  photoItems.forEach(function (item) {
+    item.addEventListener('click', function (e) {
+      // 检查点击的是否是交互按钮，如果是则不打开模态框
+      if (!e.target.closest('button')) {
+        openModal(item);
+      }
+    });
+  });
+
+  // 关闭模态框事件
+  closeModal.addEventListener('click', closeModalFunc);
+
+  // 点击模态框背景关闭
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) {
+      closeModalFunc();
+    }
+  });
+
+  // 键盘ESC关闭模态框
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeModalFunc();
+    }
+  });
+
+  // 加载更多照片
+  loadMoreBtn.addEventListener('click', function () {
+    var photoGrid = document.querySelector('.photo-grid');
+
+    // 显示加载状态
+    loadMoreBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Loading...';
+    loadMoreBtn.disabled = true;
+
+    // 模拟加载延迟
+    setTimeout(function () {
+      morePhotos.forEach(function (photo, index) {
+        // 创建新的照片项
+        var photoItem = document.createElement('div');
+        photoItem.className = 'photo-item group relative overflow-hidden rounded-lg shadow-sm transform transition-all duration-300';
+
+        // 为不同的照片设置不同的网格跨度
+        if (index === 1) {
+          photoItem.style.gridRow = 'span 2';
+        } else if (index === 2) {
+          photoItem.style.gridColumn = 'span 2';
+        }
+
+        // 设置照片内容
+        photoItem.innerHTML = "<img src=\"".concat(photo.src, "\" \n                                 alt=\"").concat(photo.alt, "\" \n                                 class=\"w-full h-full object-cover transition-transform duration-700\">\n                            <div class=\"photo-overlay absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 flex flex-col justify-end p-4\">\n                                <span class=\"text-white text-sm font-light mb-1\">").concat(photo.date, "</span>\n                                <p class=\"text-white text-base font-light\">").concat(photo.title, "</p>\n                                <div class=\"flex items-center mt-2 opacity-0 group-hover:opacity-100 transition-opacity delay-100\">\n                                    <button class=\"text-white p-2 hover:text-accent transition-colors\">\n                                        <i class=\"fas fa-heart\"></i>\n                                    </button>\n                                    <button class=\"text-white p-2 hover:text-accent transition-colors\">\n                                        <i class=\"fas fa-comment\"></i>\n                                    </button>\n                                    <button class=\"text-white p-2 hover:text-accent transition-colors\">\n                                        <i class=\"fas fa-bookmark\"></i>\n                                    </button>\n                                </div>\n                            </div>");
+
+        // 添加到网格
+        photoGrid.appendChild(photoItem);
+
+        // 添加点击事件
+        photoItem.addEventListener('click', function (e) {
+          if (!e.target.closest('button')) {
+            openModal(photoItem);
+          }
+        });
+      });
+
+      // 恢复按钮状态
+      loadMoreBtn.innerHTML = 'Load More Memories';
+      loadMoreBtn.disabled = false;
+
+      // 显示加载完成提示
+      var notification = document.createElement('div');
+      notification.className = 'fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white text-text px-4 py-2 rounded-full shadow-lg text-sm z-40';
+      notification.textContent = 'New memories added!';
+      document.body.appendChild(notification);
+
+      // 3秒后移除提示
+      setTimeout(function () {
+        notification.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+        setTimeout(function () {
+          document.body.removeChild(notification);
+        }, 300);
+      }, 3000);
+    }, 1500);
+  });
+
+  // 为照片项中的互动按钮添加事件
+  document.addEventListener('click', function (e) {
+    var heartBtn = e.target.closest('.fa-heart').parentElement;
+    var commentBtn = e.target.closest('.fa-comment').parentElement;
+    var bookmarkBtn = e.target.closest('.fa-bookmark').parentElement;
+    if (heartBtn) {
+      e.stopPropagation();
+      var icon = heartBtn.querySelector('i');
+      icon.classList.toggle('text-red-500');
+      icon.classList.toggle('text-white');
+    }
+    if (commentBtn) {
+      e.stopPropagation();
+      alert('Comment feature coming soon!');
+    }
+    if (bookmarkBtn) {
+      e.stopPropagation();
+      var _icon = bookmarkBtn.querySelector('i');
+      _icon.classList.toggle('text-accent');
+    }
+  });
+});</script>
+<!-- [/JSMOD] h8i_照片墙交互功能 -- 实现照片点击查看大图、加载更多照片、照片互动按钮（点赞、评论、收藏）等功能 -->
+    </body>
+    </html>
