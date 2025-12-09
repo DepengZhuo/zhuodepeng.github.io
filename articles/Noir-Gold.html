@@ -445,7 +445,40 @@
     </div>
     </div>
 <!-- [/MODULE] o9s_主内容区:照片墙:照片卡片8 -- 包含照片预览、分类标签、标题、日期和描述，悬停显示查看大图按钮 -->
+
+<!-- 照片卡片9 - 你的新照片 -->
+<div class='photo-card group bg-noir-light rounded-sm overflow-hidden border border-gray-800 hover:border-gold/50 transition-all duration-500 transform hover:-translate-y-1'>
+    <div class='relative overflow-hidden aspect-[4/3]'>
+        <img src='../images/4.jpg' alt='照片描述' class='w-full h-full object-cover transition-transform duration-700 group-hover:scale-110'/>
+        <div class='absolute top-3 left-3'>
+            <span class='bg-gold text-noir-dark text-xs px-2 py-1 font-medium'>
+                旅途
+            </span>
+        </div>
+        <div class='absolute inset-0 bg-gradient-to-t from-noir-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end'>
+            <div class='p-4 w-full'>
+                <button class='view-photo-btn w-full py-2 bg-gold/90 text-noir-dark text-sm font-medium hover:bg-gold transition-colors duration-300'>
+                    查看大图
+                </button>
+            </div>
+        </div>
     </div>
+    <div class='p-4'>
+        <div class='flex justify-between items-start mb-2'>
+            <h3 class='text-white font-medium text-lg'>
+                浮光掠金
+            </h3>
+            <span class='text-gray-500 text-sm'>
+                2025-12-09
+            </span>
+        </div>
+        <p class='text-gray-400 text-sm'>
+            这是我的照片描述文字。
+        </p>
+    </div>
+</div>
+        
+</div>
 <!-- [/MODULE] g9k_主内容区:照片墙 -- 展示多个照片卡片，每个卡片包含照片预览、分类标签、标题、日期和描述 -->
 <!-- [MODULE] p0t_主内容区:空状态提示 (默认隐藏) -->
 <div id='empty-state' class='hidden text-center py-20'>
