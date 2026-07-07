@@ -3,398 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Value Dashboard - 价值分析工作台 V3.0</title>
+    <title>Pro Value Dashboard - 机构级价值分析工作台 V4.0</title>
+    
     <script>
-      window.MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']]
-        }
-      };
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <style>
         :root {
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --text-main: #e0e0e0;
-            --text-muted: #888888;
-            --accent: #2962ff;
-            --border: #333333;
-            --green: #00c853;
-            --red: #d50000;
-            --yellow: #ffd600;
+            --bg-color: #121212; --card-bg: #1e1e1e; --text-main: #e0e0e0;
+            --text-muted: #888888; --accent: #2962ff; --border: #333333;
+            --green: #00c853; --red: #d50000; --yellow: #ffd600;
         }
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 20px;
-            font-size: 14px;
+            background-color: var(--bg-color); color: var(--text-main);
+            margin: 0; padding: 20px; font-size: 14px;
         }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 22px;
-            color: #fff;
-        }
-        .toolbar button {
-            background: var(--card-bg);
-            color: var(--text-main);
-            border: 1px solid var(--border);
-            padding: 6px 12px;
-            cursor: pointer;
-            margin-left: 10px;
-            border-radius: 4px;
-        }
-        .toolbar button.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #fff;
-        }
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 450px 1fr; /* 左侧加宽以容纳批注 */
-            gap: 20px;
-        }
-        @media (max-width: 1300px) {
-            .grid-layout { grid-template-columns: 1fr; }
-        }
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        .card-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: var(--accent);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 8px;
-        }
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 12px;
-            border-bottom: 1px dashed #2a2a2a;
-            padding-bottom: 8px;
-        }
-        .input-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .input-row label {
-            color: var(--text-main);
-            font-weight: 500;
-            flex: 1;
-        }
-        .input-row input {
-            background: #2a2a2a;
-            border: 1px solid var(--border);
-            color: #fff;
-            padding: 4px 8px;
-            width: 100px;
-            text-align: right;
-            border-radius: 3px;
-        }
-        .input-row input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-        .hint {
-            font-size: 11px;
-            color: #6c757d;
-            margin-top: 4px;
-            line-height: 1.4;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 10px;
-        }
-        th, td {
-            border: 1px solid var(--border);
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background: #252525;
-            color: var(--text-muted);
-            font-weight: normal;
-        }
-        .score-board {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-            background: #252525;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-        }
-        .score-value {
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .warning-banner {
-            background: rgba(213, 0, 0, 0.2);
-            color: #ff5252;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid var(--red);
-            margin-bottom: 15px;
-            display: none;
-            text-align: left;
-            font-weight: bold;
-        }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 15px; margin-bottom: 20px; }
+        .header h1 { margin: 0; font-size: 22px; color: #fff; }
+        .toolbar button { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border); padding: 6px 12px; cursor: pointer; margin-left: 10px; border-radius: 4px; }
+        .toolbar button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+        .grid-layout { display: grid; grid-template-columns: 480px 1fr; gap: 20px; }
+        @media (max-width: 1300px) { .grid-layout { grid-template-columns: 1fr; } }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 15px; margin-bottom: 20px; }
+        .card-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; display: flex; align-items: center; justify-content: space-between;}
+        
+        /* 表单样式优化 */
+        .input-group { display: flex; flex-direction: column; margin-bottom: 12px; border-bottom: 1px dashed #2a2a2a; padding-bottom: 8px; }
+        .input-row { display: flex; justify-content: space-between; align-items: center; }
+        .input-row label { color: var(--text-main); font-weight: 500; flex: 1; }
+        .input-row input { background: #2a2a2a; border: 1px solid var(--border); color: #fff; padding: 4px 8px; width: 120px; text-align: right; border-radius: 3px; }
+        .input-row input:focus { outline: none; border-color: var(--accent); }
+        .hint { font-size: 11px; color: #6c757d; margin-top: 4px; line-height: 1.4; }
+        
+        /* 标签指示器 */
+        .badge-auto { background: rgba(0, 200, 83, 0.15); color: #69f0ae; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-right: 6px; }
+        .badge-manual { background: rgba(255, 214, 0, 0.15); color: #ffff00; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-right: 6px; }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        th, td { border: 1px solid var(--border); padding: 8px; text-align: center; }
+        th { background: #252525; color: var(--text-muted); font-weight: normal; }
+        .score-board { display: flex; justify-content: space-around; text-align: center; background: #252525; padding: 15px; border-radius: 6px; margin-bottom: 20px; }
+        .score-value { font-size: 28px; font-weight: bold; }
+        .warning-banner { background: rgba(213, 0, 0, 0.2); color: #ff5252; padding: 10px; border-radius: 4px; border: 1px solid var(--red); margin-bottom: 15px; display: none; text-align: left; font-weight: bold; }
+        
         .matrix-cell { font-weight: bold; }
         .bg-green { background-color: rgba(0, 200, 83, 0.2); color: #69f0ae; }
         .bg-yellow { background-color: rgba(255, 214, 0, 0.2); color: #ffff00; }
         .bg-red { background-color: rgba(213, 0, 0, 0.2); color: #ff5252; }
         
-        .risk-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px dashed var(--border);
-        }
-        .tag {
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-        }
+        .risk-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--border); }
+        .tag { padding: 2px 6px; border-radius: 3px; font-size: 12px; font-weight: bold; }
         .tag.safe { background: rgba(0,200,83,0.2); color: #69f0ae; }
         .tag.warn { background: rgba(213,0,0,0.2); color: #ff5252; }
-
-        .lib-table { font-size: 13px; }
-        .lib-table td, .lib-table th { padding: 6px; }
-        .lib-actions button {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            color: var(--text-main);
-            padding: 3px 8px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 12px;
-            margin: 0 2px;
-        }
-        .lib-actions button:hover { border-color: var(--accent); }
-        .lib-actions button.danger:hover { border-color: var(--red); color: #ff5252; }
-        .save-bar { display: flex; justify-content: flex-end; margin-bottom: 12px; }
-        .save-bar button {
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 13px;
-        }
-        .save-bar button:hover { opacity: 0.9; }
-
+        
         .logic-doc h3 { color: var(--accent); font-size: 14px; margin-bottom: 5px; border-left: 3px solid var(--accent); padding-left: 8px;}
         .logic-doc p { font-size: 12px; color: #a0a0a0; line-height: 1.6; margin-top: 0; margin-bottom: 10px; }
-
-        @media print {
-            body { background: #fff !important; color: #000 !important; padding: 0; }
-            .toolbar, .save-bar, .lib-actions, #save_lib_card, .hint { display: none !important; }
-            .card, .score-board {
-                background: #fff !important; border: 1px solid #999 !important; color: #000 !important; break-inside: avoid;
-            }
-            .card-title, .input-row label, .text-muted, td, th { color: #000 !important; }
-            .input-row input { background: #fff !important; color: #000 !important; border: 1px solid #999 !important; }
-            th { background: #eee !important; }
-            .bg-green { background-color: #d5f5e3 !important; color: #000 !important; }
-            .bg-yellow { background-color: #fff8d5 !important; color: #000 !important; }
-            .bg-red { background-color: #fbdada !important; color: #000 !important; }
-            .tag.safe { background: #d5f5e3 !important; color: #000 !important; }
-            .tag.warn { background: #fbdada !important; color: #000 !important; }
-            .warning-banner { background: #fbdada !important; color: #900 !important; border-color: #900 !important; }
-            .grid-layout { grid-template-columns: 1fr !important; }
-        }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>Value Dashboard - 机构级价值分析工作台 V3.0</h1>
+    <h1>Value Dashboard - 机构级全息估值平台 V4.0</h1>
     <div class="toolbar">
         <button class="active">巴菲特/达摩达兰 DCF</button>
         <button onclick="window.print()">🖨️ 生成 PDF 报告</button>
     </div>
 </div>
 
-        <div class="grid-layout">
+<div class="grid-layout">
     <div>
         <div class="card">
             <div class="card-title">
                 ① 基础与市场数据 (亿元/亿股)
-                <button onclick="fetchData()" style="font-size:12px; padding:3px 8px; margin-left:10px; background:#2962ff; color:#fff; border:none; border-radius:3px; cursor:pointer;">
-                    ⚡ 一键抓取最新价
+                <button id="btn_fetch" onclick="fetchFinnhubData()" style="font-size:12px; padding:4px 10px; background:#2962ff; color:#fff; border:none; border-radius:3px; cursor:pointer; display:flex; align-items:center;">
+                    ⚡ 联网拉取公开数据
                 </button>
             </div>
             
             <div class="input-group">
                 <div class="input-row">
                     <label>股票代码 (如 AAPL)</label>
-                    <input type="text" id="i_code" value="AAPL" style="width:140px; text-align:left;" oninput="calc()">
+                    <input type="text" id="i_code" value="AAPL" style="width:140px; text-align:left; background:#333;" oninput="calc()">
                 </div>
             </div>
-        
-        
+            
             <div class="input-group">
-                <div class="input-row"><label>当前股价 (元)</label><input type="number" id="i_price" value="1188" oninput="calc()"></div>
-                <div class="hint">行情软件首页最新价。</div>
+                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>当前股价 (元/美元)</label><input type="number" id="i_price" value="226.00" oninput="calc()"></div>
+                <div class="hint">Finnhub API 提供实时报价。</div>
             </div>
+            
             <div class="input-group">
-                <div class="input-row"><label>总股本</label><input type="number" id="i_shares" value="12.56" oninput="calc()"></div>
-                <div class="hint">途径：F10 -> 概况。公司总共切成了多少份。</div>
+                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>总股本 (百万股)</label><input type="number" id="i_shares" value="15340" oninput="calc()"></div>
+                <div class="hint">注：美股单位通常为 Millions (百万)。A股请换算对应。</div>
             </div>
+            
             <div class="input-group">
-                <div class="input-row"><label>类现金资产合计</label><input type="number" id="i_cash" value="1500" oninput="calc()"></div>
-                <div class="hint">途径：资产负债表（货币资金 + 交易性金融资产）。账上随时能用的活钱。</div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>类现金资产合计</label><input type="number" id="i_cash" value="67000" oninput="calc()"></div>
+                <div class="hint">需查财报。资产负债表：现金 + 短期投资。</div>
             </div>
+            
             <div class="input-group">
-                <div class="input-row"><label>有息负债合计</label><input type="number" id="i_debt" value="100" oninput="calc()"></div>
-                <div class="hint">途径：资产负债表（长短期借款 + 应付债券）。只算要给银行交利息的债，拖欠供应商的货款不算。</div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>有息负债合计</label><input type="number" id="i_debt" value="105000" oninput="calc()"></div>
+                <div class="hint">需查财报。资产负债表：长短期借款 + 应付债券。</div>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-title">② 财务与质量数据</div>
+            <div class="card-title">② 财务与质量数据 (利润表现)</div>
+            
             <div class="input-group">
-                <div class="input-row"><label>ROE 净资产收益率 (%)</label><input type="number" id="i_roe" value="34" oninput="calc()"></div>
-                <div class="hint">途径：F10 -> 财务比率（扣非摊薄）。衡量股东本金的赚钱效率。</div>
+                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>ROE 净资产收益率 (%)</label><input type="number" id="i_roe" value="150" oninput="calc()"></div>
+                <div class="hint">若 API 缺失，请自行查阅 TTM 数据。</div>
             </div>
+            
             <div class="input-group">
-                <div class="input-row"><label>ROIC 投入资本回报率 (%)</label><input type="number" id="i_roic" value="32" oninput="calc()"></div>
-                <div class="hint">途径：理杏仁等专业网站查询。脱离杠杆看这门生意本身的赚钱能力。</div>
+                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>毛利率 (%)</label><input type="number" id="i_margin" value="45" oninput="calc()"></div>
             </div>
+            
             <div class="input-group">
-                <div class="input-row"><label>毛利率 (%)</label><input type="number" id="i_margin" value="92" oninput="calc()"></div>
-                <div class="hint">途径：利润表。卖出一台产品扣除直接制造成本后的利润。</div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>ROIC 投入资本回报率 (%)</label><input type="number" id="i_roic" value="40" oninput="calc()"></div>
             </div>
+            
             <div class="input-group">
-                <div class="input-row"><label>经营现金流净额 OCF</label><input type="number" id="i_ocf" value="615" oninput="calc()"></div>
-                <div class="hint">途径：现金流量表。实打实进账的钱，类比零售柜系统后台剔除刷单后的真实流水。</div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>经营现金流 OCF</label><input type="number" id="i_ocf" value="110000" oninput="calc()"></div>
+                <div class="hint">现金流量表：Operating Cash Flow。</div>
             </div>
+            
             <div class="input-group">
-                <div class="input-row"><label>归母净利润</label><input type="number" id="i_profit" value="823" oninput="calc()"></div>
-                <div class="hint">途径：利润表。分给小股东后，大股东真正赚到的账面利润。</div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>归母净利润</label><input type="number" id="i_profit" value="97000" oninput="calc()"></div>
             </div>
+            
             <div class="input-group">
-                <div class="input-row"><label>资本开支 CAPEX</label><input type="number" id="i_capex" value="50" oninput="calc()"></div>
-                <div class="hint">途径：现金流量表 (购建固定资产支付的现金)。维持生意必须投入的硬成本，就像买新零售柜和租新仓库的钱。</div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>资本开支 CAPEX</label><input type="number" id="i_capex" value="10000" oninput="calc()"></div>
+                <div class="hint">投资维持生意的硬成本（正数）。</div>
             </div>
+            
             <div class="input-group">
-                <div class="input-row"><label>自由现金流 FCF</label><input type="number" id="i_fcf" value="500" oninput="calc()"></div>
-                <div class="hint">公式：OCF - CAPEX。真正能拿来分红或还债的“活钱”。如果为负，说明造血能力破产。</div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>自由现金流 FCF</label><input type="number" id="i_fcf" value="100000" oninput="calc()"></div>
+                <div class="hint">公式：OCF - CAPEX。核心 DCF 折现基数。</div>
             </div>
         </div>
 
         <div class="card">
             <div class="card-title">③ DCF 核心参数 (%)</div>
-            <div class="input-group">
-                <div class="input-row"><label>未来 1-5 年复合增速</label><input type="number" id="i_g1" value="6" oninput="calc()"></div>
-                <div class="hint">前五年利润增长预期。白马股一般填 4-8，科技股可填 10-15，周期股填 0-3。</div>
-            </div>
-            <div class="input-group">
-                <div class="input-row"><label>永续增长率 (勿超GDP)</label><input type="number" id="i_g2" value="2" oninput="calc()"></div>
-                <div class="hint">五年后的永久增长率。物理规律决定极少有企业能长期跑赢通胀，填 0-2 最安全。</div>
-            </div>
-            <div class="input-group">
-                <div class="input-row"><label>折现率 (要求的风险回报)</label><input type="number" id="i_r" value="9" oninput="calc()"></div>
-                <div class="hint">你对这笔投资要求的年化回报。低风险垄断填 8，白马填 9-10，高风险填 12。</div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">③.1 击球区安全边际系数</div>
-            <div class="input-group">
-                <div class="input-row"><label>下限系数 (× 内在价值)</label><input type="number" id="i_buy_low" value="0.75" step="0.05" oninput="calc()"></div>
-            </div>
-            <div class="input-group">
-                <div class="input-row"><label>上限系数 (× 内在价值)</label><input type="number" id="i_buy_high" value="0.85" step="0.05" oninput="calc()"></div>
-                <div class="hint">默认要求内在价值打 75折~85折 才买入。风偏越低，系数应越小。</div>
-            </div>
-        </div>
-
-        <div class="card" id="save_lib_card">
-            <div class="card-title">⑨ 本地股票对比库</div>
-            <div class="save-bar"><button onclick="saveCurrentStock()">💾 保存当前分析</button></div>
-            <table class="lib-table" id="lib_table">
-                <tr><th>代码/名称</th><th>评分</th><th>安全边际</th><th>操作</th></tr>
-                <tr><td colspan="4" style="color:var(--text-muted);">暂无保存记录</td></tr>
-            </table>
-            <div class="hint" style="margin-top:10px;">数据安全保存在你当前浏览器的本地缓存中（localStorage），永不上传，清空浏览器缓存会丢失。</div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>未来 1-5 年复合增速</label><input type="number" id="i_g1" value="8" oninput="calc()"></div></div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>永续增长率 (勿超GDP)</label><input type="number" id="i_g2" value="2" oninput="calc()"></div></div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>折现率 (风险回报)</label><input type="number" id="i_r" value="10" oninput="calc()"></div></div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>击球区下限 (× 价值)</label><input type="number" id="i_buy_low" value="0.75" step="0.05" oninput="calc()"></div></div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>击球区上限 (× 价值)</label><input type="number" id="i_buy_high" value="0.85" step="0.05" oninput="calc()"></div></div>
         </div>
     </div>
 
     <div>
         <div class="score-board">
-            <div>
-                <div style="color:var(--text-muted); margin-bottom:5px;">总市值 (亿元)</div>
-                <div class="score-value" id="out_mcap" style="color:#fff;">-</div>
-            </div>
-            <div>
-                <div style="color:var(--text-muted); margin-bottom:5px;">EV 企业价值 (亿元)</div>
-                <div class="score-value" id="out_ev" style="color:#fff;">-</div>
-            </div>
-            <div>
-                <div style="color:var(--text-muted); margin-bottom:5px;">综合企业质量评分</div>
-                <div class="score-value" id="out_score" style="color:var(--accent);">-</div>
-            </div>
+            <div><div style="color:var(--text-muted); margin-bottom:5px;">总市值 (百万)</div><div class="score-value" id="out_mcap" style="color:#fff;">-</div></div>
+            <div><div style="color:var(--text-muted); margin-bottom:5px;">EV 企业价值 (百万)</div><div class="score-value" id="out_ev" style="color:#fff;">-</div></div>
+            <div><div style="color:var(--text-muted); margin-bottom:5px;">综合企业质量评分</div><div class="score-value" id="out_score" style="color:var(--accent);">-</div></div>
         </div>
         
         <div id="validation_warning" class="warning-banner"></div>
-
-        <div id="quality_warning" class="warning-banner">
-            ⚠️ 警告：该企业综合质量评分低于 60 分，业绩造假或竞争恶化风险极高。不建议使用 DCF 进行估值测算！
-        </div>
+        <div id="quality_warning" class="warning-banner">⚠️ 警告：质量评分极低，可能存在价值毁灭陷阱。不建议使用 DCF。</div>
 
         <div style="display:flex; gap:20px;">
             <div class="card" style="flex:1;">
                 <div class="card-title">④ 利润真实性与质量评价</div>
                 <table style="font-size: 13px;">
-                    <tr><th>分析维度</th><th>计算公式</th><th>指标结果</th></tr>
+                    <tr><th>分析维度</th><th>计算公式</th><th>结果</th></tr>
                     <tr><td>现金转换率</td><td>OCF / 净利润</td><td id="out_cash_conv">-</td></tr>
                     <tr><td>自由现金流率</td><td>FCF / 净利润</td><td id="out_fcf_rate">-</td></tr>
                     <tr><td>资本开支率</td><td>CAPEX / OCF</td><td id="out_capex_rate">-</td></tr>
                 </table>
             </div>
             <div class="card" style="flex:1;">
-                <div class="card-title">⑤ 自动风险扫描 (Risk Scan)</div>
-                <div class="risk-item"><span>净利润转化为现金流能力</span><span id="risk_cash" class="tag">检测中</span></div>
-                <div class="risk-item"><span>资本消耗吞噬利润比例</span><span id="risk_capex" class="tag">检测中</span></div>
+                <div class="card-title">⑤ 自动风险扫描</div>
+                <div class="risk-item"><span>净利润转化为现金</span><span id="risk_cash" class="tag">检测中</span></div>
+                <div class="risk-item"><span>资本吞噬利润比例</span><span id="risk_capex" class="tag">检测中</span></div>
                 <div class="risk-item"><span>杠杆与债务安全度</span><span id="risk_debt" class="tag">检测中</span></div>
                 <div class="risk-item"><span>盈利护城河 (ROIC)</span><span id="risk_roic" class="tag">检测中</span></div>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-title">⑥ 自由现金流折现过程表 (DCF Projection)</div>
+            <div class="card-title">⑥ 自由现金流折现表</div>
             <table id="dcf_table">
-                <tr><th>年份</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Year 4</th><th>Year 5</th><th>永续期 TV</th></tr>
+                <tr><th>年份</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Year 4</th><th>Year 5</th><th>永续 TV</th></tr>
                 <tr id="dcf_fcf"><td>预测 FCF</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
-                <tr id="dcf_pv"><td>折现现值 PV</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                <tr id="dcf_pv"><td>现值 PV</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
             </table>
         </div>
 
         <div style="display:flex; gap:20px;">
             <div class="card" style="flex:1;">
-                <div class="card-title">⑦ 估值敏感性矩阵 (3x3 压力测试)</div>
-                <p style="font-size:12px; color:var(--text-muted); margin-top:-5px;">行列分别为：折现率变动 / 前5年增速变动 (单位：元)</p>
+                <div class="card-title">⑦ 估值敏感性矩阵</div>
                 <table id="matrix_table">
                     <tr><th></th><th id="th_r1">-</th><th id="th_r2">-</th><th id="th_r3">-</th></tr>
                     <tr id="tr_g1"><th>-</th><td class="matrix-cell">-</td><td class="matrix-cell">-</td><td class="matrix-cell">-</td></tr>
@@ -404,99 +207,110 @@
             </div>
 
             <div class="card" style="flex:1;">
-                <div class="card-title">⑧ 终局投资建议 (Conclusion)</div>
+                <div class="card-title">⑧ 终局投资建议</div>
                 <div style="font-size:16px; margin-bottom:10px; display:flex; justify-content:space-between;">
-                    <span>基准内在价值:</span> <strong id="c_value" style="color:var(--accent);">- 元</strong>
+                    <span>基准内在价值:</span> <strong id="c_value" style="color:var(--accent);">- </strong>
                 </div>
                 <div style="font-size:16px; margin-bottom:15px; display:flex; justify-content:space-between;">
                     <span>当前安全边际:</span> <strong id="c_mos">- %</strong>
                 </div>
                 <div style="background:#252525; padding:10px; border-radius:4px; font-size:13px; line-height:1.8;">
-                    <div id="c_suggest_text">正在生成研判...</div>
+                    <div id="c_suggest_text">生成研判...</div>
                     <hr style="border:0; border-top:1px dashed var(--border); margin:10px 0;">
-                    <div>🎯 <b>击球区 (建议买入区):</b> <span id="c_buy_zone" style="color:#69f0ae;">-</span></div>
+                    <div>🎯 <b>击球区 (建议买入):</b> <span id="c_buy_zone" style="color:#69f0ae;">-</span></div>
                 </div>
             </div>
         </div>
         
         <div class="card logic-doc">
-            <div class="card-title">⑩ 底层计算逻辑与估值模型说明</div>
-            
-            <h3>1. 企业价值 (EV) 还原</h3>
-            <p>EV = 股票总市值 + 有息负债 - 账面现金。<br>
-               逻辑：如果你全资收购一家公司，你需要买下所有股票，替他还清债务，但他账上的现金可以直接装进你的口袋。EV才是并购市场真正的衡量标尺。</p>
-            
-            <h3>2. 综合质量评分 (满分100)</h3>
-            <p>ROE权重25分、ROIC权重25分；利润含金量(现金转换率)20分；造血能力(FCF率)20分；资产模式(CAPEX比率)10分。<br>
-               逻辑：杜邦分析和波特五力的量化体现。低分公司说明要么处于周期底部血亏，要么商业模式极差，DCF模型对其完全失效。</p>
-
-            <h3>3. 达摩达兰两阶段 DCF 折现模型</h3>
-            <p>核心公式：$PV = \sum_{t=1}^{5} \frac{FCF \times (1+g_{1})^t}{(1+r)^t} + \frac{FCF_5 \times (1+g_{2})}{(r - g_{2}) \times (1+r)^5}$<br>
-               我们将未来现金流分两段：前5年具备确定性增长，之后进入与通胀持平的永续增长。计算出现金流现值后，加上净现金（现金-负债），除以总股本，即为单股内在价值。</p>
-
-            <h3>4. 安全边际 (MoS) 决策机制</h3>
-            <p>公式：MoS = (内在价值 - 当前股价) / 当前股价。<br>
-               逻辑：由格雷厄姆提出。即使我们算出的内在价值是绝对准确的，市场也可能发生黑天鹅。只有当股价跌到内在价值的 75折 到 85折 甚至更低时，才具备真正的防守反击能力。</p>
+            <div class="card-title">⑩ 底层计算逻辑与说明</div>
+            <h3>1. 数据源限制说明</h3>
+            <p>基于开源免费协议，本平台可通过 API 自动获取公开市场的<b>实时股价、流通股本、部分 TTM 财报数据（如 ROE、毛利率）</b>。涉及到深度财务审计级别的数据（如有息负债、自由现金流）必须依托于专业终端查阅后手动填入。</p>
+            <h3>2. 达摩达兰两阶段 DCF 折现模型</h3>
+            <p>核心公式：$PV = \sum_{t=1}^{5} \frac{FCF \times (1+g_{1})^t}{(1+r)^t} + \frac{FCF_5 \times (1+g_{2})}{(r - g_{2}) \times (1+r)^5}$</p>
         </div>
-
     </div>
 </div>
 
 <script>
-   // Finnhub API 密钥
+    // ===== Finnhub API 批量拉取引擎 =====
     const API_KEY = 'd96guf1r01qr77dkef2gd96guf1r01qr77dkef30';
 
-    async function fetchData() {
+    async function fetchFinnhubData() {
         const code = document.getElementById('i_code').value.trim().toUpperCase();
-        if (!code) {
-            alert('请先输入股票代码！');
-            return;
-        }
-
-        // 切换为 Finnhub 的 Quote 接口
-        const url = `https://finnhub.io/api/v1/quote?symbol=${code}&token=${API_KEY}`;
+        if (!code) { alert('请输入代码！'); return; }
         
+        const btn = document.getElementById('btn_fetch');
+        btn.innerText = "⏳ 拉取中...";
+        btn.style.opacity = "0.7";
+
         try {
-            const res = await fetch(url);
-            
-            // 💡 增强防御：拦截 HTTP 状态码报错（比如 401 密钥错，429 刷爆了）
-            if (!res.ok) {
-                if (res.status === 401) throw new Error("密钥(Token)无效，请检查 API_KEY 是否粘贴重复了");
-                if (res.status === 429) throw new Error("API 调用频率超限");
-                throw new Error(`HTTP 报错，状态码: ${res.status}`);
+            // 构造多个公开接口并发请求
+            const quoteUrl = `https://finnhub.io/api/v1/quote?symbol=${code}&token=${API_KEY}`;
+            const metricUrl = `https://finnhub.io/api/v1/stock/metric?symbol=${code}&metric=all&token=${API_KEY}`;
+            const profileUrl = `https://finnhub.io/api/v1/stock/profile2?symbol=${code}&token=${API_KEY}`;
+
+            const [resQuote, resMetric, resProfile] = await Promise.all([
+                fetch(quoteUrl), fetch(metricUrl), fetch(profileUrl)
+            ]);
+
+            if (!resQuote.ok) throw new Error("API连接失败，请检查网络或密钥限制");
+
+            const quote = await resQuote.json();
+            const metricData = await resMetric.json();
+            const profile = await resProfile.json();
+
+            let logMsg = `【自动抓取完成: ${code}】\n`;
+
+            // 1. 获取股价 (Quote)
+            if (quote && quote.c > 0) {
+                document.getElementById('i_price').value = quote.c;
+                logMsg += `✅ 股价: ${quote.c}\n`;
+            } else {
+                throw new Error("未找到该股票数据，美股请直接输代码，如 AAPL");
             }
 
-            const data = await res.json();
-            
-            // Finnhub 的逻辑是：如果查不到股票，它不会报错，而是会返回所有价格为 0
-            // data.c 代表 Current Price (当前价)
-            if (data && data.c > 0) {
-                const currentPrice = data.c; 
-                document.getElementById('i_price').value = currentPrice;
-                calc(); // 触发全盘重新计算
-                alert(`获取成功！${code} 最新价: ${currentPrice}`);
-            } else {
-                alert(`未找到代码为 ${code} 的数据。请检查代码是否正确（美股直接输字母，如 AAPL）。`);
+            // 2. 获取总股本 (Profile - shareOutstanding in millions)
+            if (profile && profile.shareOutstanding) {
+                document.getElementById('i_shares').value = Number(profile.shareOutstanding).toFixed(2);
+                logMsg += `✅ 股本: ${profile.shareOutstanding} 百万\n`;
             }
+
+            // 3. 获取 TTM 质量指标 (Metrics)
+            if (metricData && metricData.metric) {
+                const metrics = metricData.metric;
+                if (metrics.roeTTM !== undefined) {
+                    document.getElementById('i_roe').value = Number(metrics.roeTTM).toFixed(2);
+                    logMsg += `✅ ROE: ${metrics.roeTTM}%\n`;
+                }
+                if (metrics.grossMarginTTM !== undefined) {
+                    document.getElementById('i_margin').value = Number(metrics.grossMarginTTM).toFixed(2);
+                    logMsg += `✅ 毛利率: ${metrics.grossMarginTTM}%\n`;
+                }
+            }
+
+            calc(); // 数据刷新后触发计算引擎
+            alert(logMsg + "\n请手动补全 ✍️ 标记的财务数据后查看估值。");
+
         } catch (error) {
-            alert('接口请求失败：\n' + error.message);
+            alert('数据获取失败：\n' + error.message);
+        } finally {
+            btn.innerText = "⚡ 联网拉取公开数据";
+            btn.style.opacity = "1";
         }
-    } 
-    
+    }
+
+    // ===== 核心计算引擎 (保持 V3.0 的严密逻辑不变) =====
     function format(num) { return Number(num).toFixed(2); }
     
     function setTag(id, condition, safeText, warnText) {
         const el = document.getElementById(id);
-        if(condition) {
-            el.className = "tag safe"; el.innerText = safeText;
-        } else {
-            el.className = "tag warn"; el.innerText = warnText;
-        }
+        if(condition) { el.className = "tag safe"; el.innerText = safeText; } 
+        else { el.className = "tag warn"; el.innerText = warnText; }
     }
 
     function calcDCFPrice(fcf, g, g2, r, shares, netCash) {
-        let pvSum = 0;
-        let currentFcf = fcf;
+        let pvSum = 0; let currentFcf = fcf;
         for(let i=1; i<=5; i++) {
             currentFcf *= (1 + g);
             pvSum += currentFcf / Math.pow(1 + r, i);
@@ -509,46 +323,31 @@
     }
 
     function calc() {
-        const price = parseFloat(document.getElementById('i_price').value);
-        const shares = parseFloat(document.getElementById('i_shares').value);
-        const cash = parseFloat(document.getElementById('i_cash').value);
-        const debt = parseFloat(document.getElementById('i_debt').value);
+        const price = parseFloat(document.getElementById('i_price').value) || 0;
+        const shares = parseFloat(document.getElementById('i_shares').value) || 0;
+        const cash = parseFloat(document.getElementById('i_cash').value) || 0;
+        const debt = parseFloat(document.getElementById('i_debt').value) || 0;
         const netCash = cash - debt;
         
-        const roe = parseFloat(document.getElementById('i_roe').value);
-        const roic = parseFloat(document.getElementById('i_roic').value);
-        const ocf = parseFloat(document.getElementById('i_ocf').value);
-        const profit = parseFloat(document.getElementById('i_profit').value);
-        const capex = parseFloat(document.getElementById('i_capex').value);
-        const fcf = parseFloat(document.getElementById('i_fcf').value);
+        const roe = parseFloat(document.getElementById('i_roe').value) || 0;
+        const roic = parseFloat(document.getElementById('i_roic').value) || 0;
+        const ocf = parseFloat(document.getElementById('i_ocf').value) || 0;
+        const profit = parseFloat(document.getElementById('i_profit').value) || 0;
+        const capex = parseFloat(document.getElementById('i_capex').value) || 0;
+        const fcf = parseFloat(document.getElementById('i_fcf').value) || 0;
 
-        const g = parseFloat(document.getElementById('i_g1').value) / 100;
-        const g2 = parseFloat(document.getElementById('i_g2').value) / 100;
-        const r = parseFloat(document.getElementById('i_r').value) / 100;
-
-        let buyLow = parseFloat(document.getElementById('i_buy_low').value);
-        let buyHigh = parseFloat(document.getElementById('i_buy_high').value);
+        const g = (parseFloat(document.getElementById('i_g1').value) || 0) / 100;
+        const g2 = (parseFloat(document.getElementById('i_g2').value) || 0) / 100;
+        const r = (parseFloat(document.getElementById('i_r').value) || 0) / 100;
+        const buyLow = parseFloat(document.getElementById('i_buy_low').value) || 0.75;
+        const buyHigh = parseFloat(document.getElementById('i_buy_high').value) || 0.85;
 
         const validationBanner = document.getElementById('validation_warning');
-        let errors = [];
-        if (isNaN(price) || price <= 0) errors.push("当前股价必须是大于0的数字");
-        if (isNaN(shares) || shares <= 0) errors.push("总股本必须是大于0的数字");
-        if (isNaN(fcf) || fcf <= 0) errors.push("自由现金流(FCF)必须是大于0的数字，否则DCF无意义");
-        if (isNaN(profit) || profit === 0) errors.push("归母净利润不能为0（会导致比率无法计算）");
-        if (isNaN(ocf)) errors.push("经营现金流净额(OCF)不是有效数字");
-        if (isNaN(r) || isNaN(g2) || r <= g2) errors.push("折现率必须严格大于永续增长率，否则永续价值会失真");
-        if (!isNaN(buyLow) && !isNaN(buyHigh) && buyLow >= buyHigh) errors.push("击球区下限系数应小于上限系数");
-
-        if (errors.length > 0) {
+        if (price <= 0 || shares <= 0 || fcf <= 0 || r <= g2) {
             validationBanner.style.display = "block";
-            validationBanner.innerHTML = "⚠️ 触发风控拦截，暂停计算：<br>" + errors.map(e => "• " + e).join("<br>");
+            validationBanner.innerHTML = "⚠️ 关键参数缺失或冲突 (折现率需大于永续率，FCF必须为正)，暂停计算。";
             return;
-        } else {
-            validationBanner.style.display = "none";
-        }
-
-        if (isNaN(buyLow)) buyLow = 0.75;
-        if (isNaN(buyHigh)) buyHigh = 0.85;
+        } else { validationBanner.style.display = "none"; }
 
         const mcap = price * shares;
         const ev = mcap + debt - cash;
@@ -558,11 +357,9 @@
         let score = 0;
         if(roe > 20) score += 25; else if(roe > 10) score += 15;
         if(roic > 15) score += 25; else if(roic > 8) score += 15;
-        
-        const cashConv = ocf / profit;
-        const fcfRate = fcf / profit;
-        const capexRate = capex / ocf;
-        
+        const cashConv = profit !== 0 ? ocf / profit : 0;
+        const fcfRate = profit !== 0 ? fcf / profit : 0;
+        const capexRate = ocf !== 0 ? capex / ocf : 0;
         if(cashConv > 1.2) score += 20; else if(cashConv > 0.8) score += 10;
         if(fcfRate > 0.6) score += 20; else if(fcfRate > 0.3) score += 10;
         if(capexRate < 0.3) score += 10; else if(capexRate < 0.6) score += 5;
@@ -580,43 +377,34 @@
         document.getElementById('out_fcf_rate').innerText = format(fcfRate * 100) + '%';
         document.getElementById('out_capex_rate').innerText = format(capexRate * 100) + '%';
 
-        setTag('risk_cash', cashConv >= 0.8, '✔ 健康', '⚠ 利润纸面富贵');
-        setTag('risk_capex', capexRate <= 0.6, '✔ 轻资产/稳健', '⚠ 资本开支过大');
+        setTag('risk_cash', cashConv >= 0.8, '✔ 健康', '⚠ 纸面富贵');
+        setTag('risk_capex', capexRate <= 0.6, '✔ 轻资产', '⚠ 资本开支过大');
         setTag('risk_debt', debt / mcap < 0.3, '✔ 债务安全', '⚠ 杠杆偏高');
-        setTag('risk_roic', roic >= 10, '✔ 存在护城河', '⚠ 毁灭股东价值');
+        setTag('risk_roic', roic >= 10, '✔ 强护城河', '⚠ 价值毁灭');
 
-        let dcfFcfHtml = "<td>预测 FCF</td>";
-        let dcfPvHtml = "<td>现值 PV</td>";
-        let currentFcf = fcf;
-        let pvSum = 0;
-        
+        let dcfFcfHtml = "<td>预测 FCF</td>"; let dcfPvHtml = "<td>现值 PV</td>";
+        let currentFcf = fcf; let pvSum = 0;
         for(let i=1; i<=5; i++) {
             currentFcf *= (1 + g);
             let pv = currentFcf / Math.pow(1 + r, i);
-            dcfFcfHtml += `<td>${format(currentFcf)}</td>`;
-            dcfPvHtml += `<td>${format(pv)}</td>`;
+            dcfFcfHtml += `<td>${format(currentFcf)}</td>`; dcfPvHtml += `<td>${format(pv)}</td>`;
             pvSum += pv;
         }
         let tv = (currentFcf * (1 + g2)) / (r - g2);
         let tvPv = tv / Math.pow(1 + r, 5);
-        dcfFcfHtml += `<td>${format(tv)}</td>`;
-        dcfPvHtml += `<td>${format(tvPv)}</td>`;
-        
+        dcfFcfHtml += `<td>${format(tv)}</td>`; dcfPvHtml += `<td>${format(tvPv)}</td>`;
         document.getElementById('dcf_fcf').innerHTML = dcfFcfHtml;
         document.getElementById('dcf_pv').innerHTML = dcfPvHtml;
 
         const gList = [g - 0.02, g, g + 0.02];
         const rList = [r + 0.01, r, r - 0.01];
-        
         document.getElementById('th_r1').innerText = "R=" + format(rList[0]*100) + "%";
         document.getElementById('th_r2').innerText = "R=" + format(rList[1]*100) + "%";
         document.getElementById('th_r3').innerText = "R=" + format(rList[2]*100) + "%";
-
         for(let i=0; i<3; i++) {
             let tr = document.getElementById('tr_g' + (i+1));
             let tds = tr.getElementsByTagName('td');
             tr.getElementsByTagName('th')[0].innerText = "G=" + format(gList[i]*100) + "%";
-            
             for(let j=0; j<3; j++) {
                 let cellPrice = calcDCFPrice(fcf, gList[i], g2, rList[j], shares, netCash);
                 tds[j].innerText = format(cellPrice);
@@ -629,109 +417,23 @@
 
         let baseValue = calcDCFPrice(fcf, g, g2, r, shares, netCash);
         let mos = ((baseValue - price) / price) * 100;
-        
-        document.getElementById('c_value').innerText = format(baseValue) + " 元";
+        document.getElementById('c_value').innerText = format(baseValue) + " ";
         let mosEl = document.getElementById('c_mos');
         mosEl.innerText = format(mos) + " %";
         mosEl.style.color = mos > 0 ? "var(--green)" : "var(--red)";
-
-        document.getElementById('c_buy_zone').innerText = `${format(baseValue * buyLow)} ~ ${format(baseValue * buyHigh)} 元`;
+        document.getElementById('c_buy_zone').innerText = `${format(baseValue * buyLow)} ~ ${format(baseValue * buyHigh)}`;
         
-        let suggestText = `综合判定：该企业质量评分为 ${score} 分。`;
-        if(score < 60) {
-            suggestText += " 质地较差，存在严重的价值毁灭或财务造假风险，直接淘汰，不讨论价格。";
-        } else {
-            suggestText += ` 基本面优秀，具备长期护城河。当前价格下，安全边际为 ${format(mos)}%。`;
-            if(mos > 15) suggestText += " 目前市场报价具备显著的安全边际，处于击球区，建议长线资金分批建仓配置。";
-            else if(mos > -10) suggestText += " 目前估值处于合理区间，无显著超额收益空间，可作为底仓持有观望或等待暴跌机会。";
-            else suggestText += " 目前估值溢价过高，已经透支了未来几年的成长预期，面临均值回归风险，建议规避。";
+        let suggestText = `质量评分 ${score} 分。`;
+        if(score < 60) suggestText += " 质地极差，存在严重风险，淘汰。";
+        else {
+            if(mos > 15) suggestText += " 价格已跌入深度击球区，具备绝对安全边际。";
+            else if(mos > -10) suggestText += " 估值合理，可作底仓观望或等待大盘暴跌机会。";
+            else suggestText += " 估值泡沫严重透支成长预期，面临均值回归，建议规避。";
         }
         document.getElementById('c_suggest_text').innerText = suggestText;
     }
 
-    // ===== 修复：替换为浏览器原生 localStorage API 确保本地可用 =====
-    const ALL_INPUT_IDS = [
-        'i_code','i_price','i_shares','i_cash','i_debt',
-        'i_roe','i_roic','i_margin','i_ocf','i_profit','i_capex','i_fcf',
-        'i_g1','i_g2','i_r','i_buy_low','i_buy_high'
-    ];
-
-    function sanitizeKey(code) { return code.replace(/[\/\\'"\s]/g, '_').slice(0, 100); }
-
-    function saveCurrentStock() {
-        const code = document.getElementById('i_code').value.trim();
-        if (!code) { alert('请先填写股票代码/名称再保存'); return; }
-
-        const data = {};
-        ALL_INPUT_IDS.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) data[id] = el.value;
-        });
-        data.savedScore = document.getElementById('out_score').innerText;
-        data.savedMos = document.getElementById('c_mos').innerText;
-        
-        const key = 'stock_' + sanitizeKey(code);
-        localStorage.setItem(key, JSON.stringify(data));
-        refreshLibTable();
-        alert('保存成功！');
-    }
-
-    function loadStock(key) {
-        const result = localStorage.getItem(key);
-        if (!result) return;
-        const data = JSON.parse(result);
-        ALL_INPUT_IDS.forEach(id => {
-            const el = document.getElementById(id);
-            if (el && data[id] !== undefined) el.value = data[id];
-        });
-        calc();
-    }
-
-    function deleteStock(key, code) {
-        if (!confirm(`确定要从对比库删除「${code}」吗？`)) return;
-        localStorage.removeItem(key);
-        refreshLibTable();
-    }
-
-    function refreshLibTable() {
-        const table = document.getElementById('lib_table');
-        let keys = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            let k = localStorage.key(i);
-            if (k.startsWith('stock_')) keys.push(k);
-        }
-
-        if (keys.length === 0) {
-            table.innerHTML = `<tr><th>代码/名称</th><th>评分</th><th>安全边际</th><th>操作</th></tr>
-                <tr><td colspan="4" style="color:var(--text-muted);">暂无保存记录</td></tr>`;
-            return;
-        }
-
-        let rows = `<tr><th>代码/名称</th><th>评分</th><th>安全边际</th><th>操作</th></tr>`;
-        keys.forEach(key => {
-            const item = localStorage.getItem(key);
-            if (!item) return;
-            const data = JSON.parse(item);
-            const code = data.i_code || key.replace('stock_', '');
-            const mosVal = parseFloat(data.savedMos);
-            const mosColor = mosVal > 0 ? 'var(--green)' : 'var(--red)';
-            rows += `<tr>
-                <td style="text-align:left;">${code}</td>
-                <td>${data.savedScore || '-'}</td>
-                <td style="color:${mosColor};">${data.savedMos || '-'}</td>
-                <td class="lib-actions">
-                    <button onclick="loadStock('${key}')">加载</button>
-                    <button class="danger" onclick="deleteStock('${key}', '${code.replace(/'/g, "")}')">删除</button>
-                </td>
-            </tr>`;
-        });
-        table.innerHTML = rows;
-    }
-
-    window.onload = function() {
-        calc();
-        refreshLibTable();
-    };
+    window.onload = calc;
 </script>
 </body>
 </html>
