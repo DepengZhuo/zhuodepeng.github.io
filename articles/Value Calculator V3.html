@@ -443,40 +443,45 @@
 </div>
 
 <script>
-    const API_KEY = 'pV1wYVqBUNIgQ0w2Xn6OLOoUagjvdQOl';
+   // Finnhub API 密钥
+    const API_KEY = 'd96guf1r01qr77dkef2gd96guf1r01qr77dkef30';
 
-async function fetchData() {
+    async function fetchData() {
         const code = document.getElementById('i_code').value.trim().toUpperCase();
         if (!code) {
             alert('请先输入股票代码！');
             return;
         }
 
-        // 💡 核心修改：去掉了 quote-short，换成了最新官方支持的 quote 接口
-        const url = `https://financialmodelingprep.com/api/v3/quote/${code}?apikey=${API_KEY}`;
+        // 切换为 Finnhub 的 Quote 接口
+        const url = `https://finnhub.io/api/v1/quote?symbol=${code}&token=${API_KEY}`;
         
         try {
             const res = await fetch(url);
+            
+            // 💡 增强防御：拦截 HTTP 状态码报错（比如 401 密钥错，429 刷爆了）
+            if (!res.ok) {
+                if (res.status === 401) throw new Error("密钥(Token)无效，请检查 API_KEY 是否粘贴重复了");
+                if (res.status === 429) throw new Error("API 调用频率超限");
+                throw new Error(`HTTP 报错，状态码: ${res.status}`);
+            }
+
             const data = await res.json();
             
-            // 💡 增强防御：拦截并弹出具体的接口报错原话
-            if (data && data["Error Message"]) {
-                alert('FMP 接口报错了，原话是：\n' + data["Error Message"]);
-                return;
-            }
-            
-            if (data && data.length > 0) {
-                const currentPrice = data[0].price;
+            // Finnhub 的逻辑是：如果查不到股票，它不会报错，而是会返回所有价格为 0
+            // data.c 代表 Current Price (当前价)
+            if (data && data.c > 0) {
+                const currentPrice = data.c; 
                 document.getElementById('i_price').value = currentPrice;
-                calc(); 
+                calc(); // 触发全盘重新计算
                 alert(`获取成功！${code} 最新价: ${currentPrice}`);
             } else {
-                alert(`未找到代码为 ${code} 的数据，请检查代码是否正确（美股直接输字母，如 AAPL）。`);
+                alert(`未找到代码为 ${code} 的数据。请检查代码是否正确（美股直接输字母，如 AAPL）。`);
             }
         } catch (error) {
-            alert('接口请求失败，请检查网络或跨域设置：' + error);
+            alert('接口请求失败：\n' + error.message);
         }
-    }
+    } 
     
     function format(num) { return Number(num).toFixed(2); }
     
