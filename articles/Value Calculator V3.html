@@ -235,13 +235,24 @@
     </div>
 </div>
 
-<div class="grid-layout">
+        <div class="grid-layout">
     <div>
         <div class="card">
-            <div class="card-title">① 基础与市场数据 (亿元/亿股)</div>
-            <div class="input-group">
-                <div class="input-row"><label>股票代码/名称</label><input type="text" id="i_code" value="贵州茅台 (600519)" style="width:140px; text-align:left;" oninput="calc()"></div>
+            <div class="card-title">
+                ① 基础与市场数据 (亿元/亿股)
+                <button onclick="fetchData()" style="font-size:12px; padding:3px 8px; margin-left:10px; background:#2962ff; color:#fff; border:none; border-radius:3px; cursor:pointer;">
+                    ⚡ 一键抓取最新价
+                </button>
             </div>
+            
+            <div class="input-group">
+                <div class="input-row">
+                    <label>股票代码 (如 AAPL)</label>
+                    <input type="text" id="i_code" value="AAPL" style="width:140px; text-align:left;" oninput="calc()">
+                </div>
+            </div>
+        
+        
             <div class="input-group">
                 <div class="input-row"><label>当前股价 (元)</label><input type="number" id="i_price" value="1188" oninput="calc()"></div>
                 <div class="hint">行情软件首页最新价。</div>
@@ -432,6 +443,33 @@
 </div>
 
 <script>
+    const API_KEY = 'pV1wYVqBUNIgQ0w2Xn6OLOoUagjvdQOl';
+
+    async function fetchData() {
+        const code = document.getElementById('i_code').value.trim().toUpperCase();
+        if (!code) {
+            alert('请先输入股票代码！');
+            return;
+        }
+
+        const url = `https://financialmodelingprep.com/api/v3/quote-short/${code}?apikey=${API_KEY}`;
+        
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+            
+            if (data && data.length > 0) {
+                const currentPrice = data[0].price;
+                document.getElementById('i_price').value = currentPrice;
+                calc(); 
+                alert(`获取成功！${code} 最新价: ${currentPrice}`);
+            } else {
+                alert(`未找到代码为 ${code} 的数据，请检查代码是否正确（美股直接输字母，如 AAPL）。`);
+            }
+        } catch (error) {
+            alert('接口请求失败，请检查网络或跨域设置：' + error);
+        }
+    }
     function format(num) { return Number(num).toFixed(2); }
     
     function setTag(id, condition, safeText, warnText) {
