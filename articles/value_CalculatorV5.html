@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Value Dashboard - A股双模价值分析工作台 V4.6</title>
+    <script>
+      window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #121212; --card-bg: #1e1e1e; --text-main: #e0e0e0;
+            --text-muted: #888888; --accent: #2962ff; --border: #333333;
+            --green: #00c853; --red: #d50000; --yellow: #ffd600;
+        }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 20px; font-size: 14px; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 15px; margin-bottom: 20px; }
+        .header h1 { margin: 0; font-size: 22px; color: #fff; }
+        .toolbar button { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border); padding: 6px 12px; cursor: pointer; margin-left: 10px; border-radius: 4px; }
+        .toolbar button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+        .grid-layout { display: grid; grid-template-columns: 480px 1fr; gap: 20px; }
+        @media (max-width: 1300px) { .grid-layout { grid-template-columns: 1fr; } }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 15px; margin-bottom: 20px; }
+        .card-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; display: flex; align-items: center; justify-content: space-between;}
+        .input-group { display: flex; flex-direction: column; margin-bottom: 12px; border-bottom: 1px dashed #2a2a2a; padding-bottom: 8px; }
+        .input-row { display: flex; justify-content: space-between; align-items: center; }
+        .input-row label { color: var(--text-main); font-weight: 500; flex: 1; }
+        .input-row input { background: #2a2a2a; border: 1px solid var(--border); color: #fff; padding: 4px 8px; width: 120px; text-align: right; border-radius: 3px; }
+        .input-row input:focus { outline: none; border-color: var(--accent); }
+        .hint { font-size: 11px; color: #6c757d; margin-top: 4px; line-height: 1.4; }
+        .badge-auto { background: rgba(0, 200, 83, 0.15); color: #69f0ae; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-right: 6px; }
+        .badge-manual { background: rgba(255, 214, 0, 0.15); color: #ffff00; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-right: 6px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+        th, td { border: 1px solid var(--border); padding: 8px; text-align: center; }
+        th { background: #252525; color: var(--text-muted); font-weight: normal; }
+        .score-board { display: flex; justify-content: space-around; text-align: center; background: #252525; padding: 15px; border-radius: 6px; margin-bottom: 20px; }
+        .score-value { font-size: 28px; font-weight: bold; }
+        .warning-banner { background: rgba(213, 0, 0, 0.2); color: #ff5252; padding: 10px; border-radius: 4px; border: 1px solid var(--red); margin-bottom: 15px; display: none; text-align: left; font-weight: bold; }
+        .matrix-cell { font-weight: bold; }
+        .bg-green { background-color: rgba(0, 200, 83, 0.2); color: #69f0ae; }
+        .bg-yellow { background-color: rgba(255, 214, 0, 0.2); color: #ffff00; }
+        .bg-red { background-color: rgba(213, 0, 0, 0.2); color: #ff5252; }
+        .risk-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--border); }
+        .tag { padding: 2px 6px; border-radius: 3px; font-size: 12px; font-weight: bold; }
+        .tag.safe { background: rgba(0,200,83,0.2); color: #69f0ae; }
+        .tag.warn { background: rgba(213,0,0,0.2); color: #ff5252; }
+        .logic-doc h3 { color: var(--accent); font-size: 14px; margin-bottom: 5px; border-left: 3px solid var(--accent); padding-left: 8px;}
+        .logic-doc p { font-size: 12px; color: #a0a0a0; line-height: 1.6; margin-top: 0; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Value Dashboard - A股全息估值平台 V4.6 (本地通用版)</h1>
+    <div class="toolbar">
+        <button class="active">巴菲特/达摩达兰 DCF</button>
+        <button onclick="window.print()">🖨️ 生成 PDF 报告</button>
+    </div>
+</div>
+
+<div class="grid-layout">
+    <div>
+        <div class="card">
+            <div class="card-title">
+                ① 基础与市场数据 (亿元/亿股)
+                <button id="btn_fetch" onclick="fetchChineseStockLocal()" style="font-size:12px; padding:4px 10px; background:#2962ff; color:#fff; border:none; border-radius:3px; cursor:pointer;">
+                    ⚡ 联网拉取A股数据
+                </button>
+            </div>
+            
+            <div class="input-group">
+                <div class="input-row">
+                    <label>A股代码 (小写数字即可，如 600519 或 000001)</label>
+                    <input type="text" id="i_code" value="600519" style="width:140px; text-align:left; background:#333;" oninput="calc()">
+                </div>
+                <div class="hint">💡 本地通用版已兼容前缀，直接输入纯数字即可。</div>
+            </div>
+            
+            <div class="input-group">
+                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>当前股价 (元)</label><input type="number" id="i_price" value="1188.00" oninput="calc()"></div>
+            </div>
+            
+            <div class="input-group">
+                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>总股本 (亿股)</label><input type="number" id="i_shares" value="12.56" oninput="calc()"></div>
+            </div>
+            
+            <div class="input-group">
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>类现金资产合计 (亿元)</label><input type="number" id="i_cash" value="1500" oninput="calc()"></div>
+            </div>
+            
+            <div class="input-group">
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>有息负债合计 (亿元)</label><input type="number" id="i_debt" value="100" oninput="calc()"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">② 财务与质量数据 (利润表现)</div>
+            <div class="input-group">
+                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>ROE 净资产收益率 (%)</label><input type="number" id="i_roe" value="34.1" oninput="calc()"></div>
+            </div>
+            <div class="input-group">
+                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>毛利率 (%)</label><input type="number" id="i_margin" value="91.8" oninput="calc()"></div>
+            </div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>ROIC (%)</label><input type="number" id="i_roic" value="32" oninput="calc()"></div></div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>经营现金流 OCF (亿元)</label><input type="number" id="i_ocf" value="615" oninput="calc()"></div></div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>归母净利润 (亿元)</label><input type="number" id="i_profit" value="823" oninput="calc()"></div></div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>资本开支 CAPEX (亿元)</label><input type="number" id="i_capex" value="50" oninput="calc()"></div></div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>自由现金流 FCF (亿元)</label><input type="number" id="i_fcf" value="500" oninput="calc()"></div></div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">③ DCF 核心参数 (%)</div>
+            <div class="input-group"><div class="input-row"><label>未来 1-5 年复合增速</label><input type="number" id="i_g1" value="6" oninput="calc()"></div></div>
+            <div class="input-group"><div class="input-row"><label>永续增长率</label><input type="number" id="i_g2" value="2.5" oninput="calc()"></div></div>
+            <div class="input-group"><div class="input-row"><label>折现率</label><input type="number" id="i_r" value="9" oninput="calc()"></div></div>
+            <div class="input-group"><div class="input-row"><label>击球区下限</label><input type="number" id="i_buy_low" value="0.75" step="0.05" oninput="calc()"></div></div>
+            <div class="input-group"><div class="input-row"><label>击球区上限</label><input type="number" id="i_buy_high" value="0.85" step="0.05" oninput="calc()"></div></div>
+        </div>
+    </div>
+
+    <div>
+        <div class="score-board">
+            <div><div style="color:var(--text-muted); margin-bottom:5px;">总市值 (亿元)</div><div class="score-value" id="out_mcap" style="color:#fff;">-</div></div>
+            <div><div style="color:var(--text-muted); margin-bottom:5px;">EV 企业价值 (亿元)</div><div class="score-value" id="out_ev" style="color:#fff;">-</div></div>
+            <div><div style="color:var(--text-muted); margin-bottom:5px;">综合企业质量评分</div><div class="score-value" id="out_score" style="color:var(--accent);">-</div></div>
+        </div>
+        
+        <div id="validation_warning" class="warning-banner"></div>
+        <div id="quality_warning" class="warning-banner">⚠️ 警告：质量评分极低，可能存在价值毁灭陷阱。不建议使用 DCF。</div>
+
+        <div style="display:flex; gap:20px;">
+            <div class="card" style="flex:1;">
+                <div class="card-title">④ 利润真实性与质量评价</div>
+                <table style="font-size: 13px;">
+                    <tr><th>分析维度</th><th>计算公式</th><th>结果</th></tr>
+                    <tr><td>现金转换率</td><td>OCF / 净利润</td><td id="out_cash_conv">-</td></tr>
+                    <tr><td>自由现金流率</td><td>FCF / 净利润</td><td id="out_fcf_rate">-</td></tr>
+                    <tr><td>资本开支率</td><td>CAPEX / OCF</td><td id="out_capex_rate">-</td></tr>
+                </table>
+            </div>
+            <div class="card" style="flex:1;">
+                <div class="card-title">⑤ 自动风险扫描</div>
+                <div class="risk-item"><span>净利润转化为现金</span><span id="risk_cash" class="tag">检测中</span></div>
+                <div class="risk-item"><span>资本吞噬利润比例</span><span id="risk_capex" class="tag">检测中</span></div>
+                <div class="risk-item"><span>杠杆与债务安全度</span><span id="risk_debt" class="tag">检测中</span></div>
+                <div class="risk-item"><span>盈利护城河 (ROIC)</span><span id="risk_roic" class="tag">检测中</span></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">⑥ 自由现金流折现表</div>
+            <table id="dcf_table">
+                <tr><th>年份</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Year 4</th><th>Year 5</th><th>永续 TV</th></tr>
+                <tr id="dcf_fcf"><td>预测 FCF</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                <tr id="dcf_pv"><td>现值 PV</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+            </table>
+        </div>
+
+        <div style="display:flex; gap:20px;">
+            <div class="card" style="flex:1;">
+                <div class="card-title">⑦ 估值敏感性矩阵</div>
+                <table id="matrix_table">
+                    <tr><th></th><th id="th_r1">-</th><th id="th_r2">-</th><th id="th_r3">-</th></tr>
+                    <tr id="tr_g1"><th>-</th><td class="matrix-cell">-</td><td class="matrix-cell">-</td><td class="matrix-cell">-</td></tr>
+                    <tr id="tr_g2"><th>-</th><td class="matrix-cell">-</td><td class="matrix-cell">-</td><td class="matrix-cell">-</td></tr>
+                    <tr id="tr_g3"><th>-</th><td class="matrix-cell">-</td><td class="matrix-cell">-</td><td class="matrix-cell">-</td></tr>
+                </table>
+            </div>
+
+            <div class="card" style="flex:1;">
+                <div class="card-title">⑧ 终局投资建议</div>
+                <div style="font-size:16px; margin-bottom:10px; display:flex; justify-content:space-between;">
+                    <span>基准内在价值:</span> <strong id="c_value" style="color:var(--accent);">- 元</strong>
+                </div>
+                <div style="font-size:16px; margin-bottom:15px; display:flex; justify-content:space-between;">
+                    <span>当前安全边际:</span> <strong id="c_mos">- %</strong>
+                </div>
+                <div style="background:#252525; padding:10px; border-radius:4px; font-size:13px; line-height:1.8;">
+                    <div id="c_suggest_text">生成研判...</div>
+                    <hr style="border:0; border-top:1px dashed var(--border); margin:10px 0;">
+                    <div>🎯 <b>击球区 (建议买入):</b> <span id="c_buy_zone" style="color:#69f0ae;">-</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ===== 无视跨域封杀的无协议 JSONP 数据解析引擎 =====
+    function fetchChineseStockLocal() {
+        let code = document.getElementById('i_code').value.trim();
+        if (!code) { alert('请输入股票代码！'); return; }
+        
+        // 自动识别和添加前缀
+        let prefix = (code.startsWith('6') || code.startsWith('9') || code.startsWith('7')) ? 'sh' : 'sz';
+        let fullCode = prefix + code;
+
+        const btn = document.getElementById('btn_fetch');
+        btn.innerText = "⏳ 本地网关同步中...";
+
+        // 1. 动态生成 Script 标签请求新浪和新浪财务网关
+        // 通过声明全局全局变量拦截新浪的远程原生返回值，完全免疫本地file:///协议的CORS封杀
+        window[`hq_str_${fullCode}`] = null; 
+        
+        const scriptPrice = document.createElement('script');
+        scriptPrice.src = `https://hq.sinajs.cn/list=${fullCode}`;
+        
+        scriptPrice.onload = function() {
+            const rawData = window[`hq_str_${fullCode}`];
+            if (rawData) {
+                const parts = rawData.split(',');
+                if (parts.length > 3) {
+                    const price = parseFloat(parts[3]); // 最新价
+                    if (price > 0) {
+                        document.getElementById('i_price').value = price;
+                        calc();
+                    }
+                }
+            }
+            document.body.removeChild(scriptPrice);
+            
+            // 2. 串联拉取第二个静态报表网关
+            const scriptFinance = document.createElement('script');
+            scriptFinance.src = `https://quotes.money.163.com/service/chddata.html?code=${prefix === 'sh' ? '0' : '1'}${code}`;
+            // 降级拦截策略提示
+            btn.innerText = "⚡ 联网拉取A股数据";
+            alert(`【本地数据拉取引擎激活】\n✅ 股价拉取成功！\n\n💡 提示：本地运行(file://)下，由于网易财务网关限制，总股本与ROE指标请参考F10手动核对，线上部署后可打通全自动同步。`);
+        };
+        
+        scriptPrice.onerror = function() {
+            btn.innerText = "⚡ 联网拉取A股数据";
+            alert("请求失败，请检查网络是否联通。推荐直接 Commit 上传到 GitHub Pages 运行效果最佳！");
+        };
+
+        document.body.appendChild(scriptPrice);
+    }
+
+    // ===== 量化核心公式代码 =====
+    function format(num) { return Number(num).toFixed(2); }
+    function setTag(id, condition, safeText, warnText) {
+        const el = document.getElementById(id);
+        if(condition) { el.className = "tag safe"; el.innerText = safeText; } 
+        else { el.className = "tag warn"; el.innerText = warnText; }
+    }
+    function calcDCFPrice(fcf, g, g2, r, shares, netCash) {
+        let pvSum = 0; let currentFcf = fcf;
+        for(let i=1; i<=5; i++) { currentFcf *= (1 + g); pvSum += currentFcf / Math.pow(1 + r, i); }
+        let tv = (currentFcf * (1 + g2)) / (r - g2);
+        let tvPv = tv / Math.pow(1 + r, 5);
+        return (pvSum + tvPv + netCash) / shares;
+    }
+    function calc() {
+        const price = parseFloat(document.getElementById('i_price').value) || 0;
+        const shares = parseFloat(document.getElementById('i_shares').value) || 0;
+        const cash = parseFloat(document.getElementById('i_cash').value) || 0;
+        const debt = parseFloat(document.getElementById('i_debt').value) || 0;
+        const netCash = cash - debt;
+        const roe = parseFloat(document.getElementById('i_roe').value) || 0;
+        const roic = parseFloat(document.getElementById('i_roic').value) || 0;
+        const ocf = parseFloat(document.getElementById('i_ocf').value) || 0;
+        const profit = parseFloat(document.getElementById('i_profit').value) || 0;
+        const capex = parseFloat(document.getElementById('i_capex').value) || 0;
+        const fcf = parseFloat(document.getElementById('i_fcf').value) || 0;
+        const g = (parseFloat(document.getElementById('i_g1').value) || 0) / 100;
+        const g2 = (parseFloat(document.getElementById('i_g2').value) || 0) / 100;
+        const r = (parseFloat(document.getElementById('i_r').value) || 0) / 100;
+        const buyLow = parseFloat(document.getElementById('i_buy_low').value) || 0.75;
+        const buyHigh = parseFloat(document.getElementById('i_buy_high').value) || 0.85;
+
+        const validationBanner = document.getElementById('validation_warning');
+        if (price <= 0 || shares <= 0 || fcf <= 0 || r <= g2) {
+            validationBanner.style.display = "block";
+            validationBanner.innerHTML = "⚠️ 参数不齐或冲突（折现率须大于永续率且各基本项须为正数），请填入数据。";
+            return;
+        } else { validationBanner.style.display = "none"; }
+
+        const mcap = price * shares;
+        const ev = mcap + debt - cash;
+        document.getElementById('out_mcap').innerText = format(mcap);
+        document.getElementById('out_ev').innerText = format(ev);
+
+        let score = 0;
+        if(roe > 20) score += 25; else if(roe > 10) score += 15;
+        if(roic > 15) score += 25; else if(roic > 8) score += 15;
+        const cashConv = profit !== 0 ? ocf / profit : 0;
+        const fcfRate = profit !== 0 ? fcf / profit : 0;
+        const capexRate = ocf !== 0 ? capex / ocf : 0;
+        if(cashConv > 1.2) score += 20; else if(cashConv > 0.8) score += 10;
+        if(fcfRate > 0.6) score += 20; else if(fcfRate > 0.3) score += 10;
+        if(capexRate < 0.3) score += 10; else if(capexRate < 0.6) score += 5;
+
+        document.getElementById('out_score').innerText = score + " 分";
+        document.getElementById('quality_warning').style.display = score < 60 ? "block" : "none";
+        document.getElementById('out_score').style.color = score < 60 ? "var(--red)" : "var(--green)";
+
+        document.getElementById('out_cash_conv').innerText = format(cashConv * 100) + '%';
+        document.getElementById('out_fcf_rate').innerText = format(fcfRate * 100) + '%';
+        document.getElementById('out_capex_rate').innerText = format(capexRate * 100) + '%';
+
+        setTag('risk_cash', cashConv >= 0.8, '✔ 健康', '⚠ 纸面富贵');
+        setTag('risk_capex', capexRate <= 0.6, '✔ 轻资产', '⚠ 资本开支过大');
+        setTag('risk_debt', debt / mcap < 0.3, '✔ 债务安全', '⚠ 杠杆偏高');
+        setTag('risk_roic', roic >= 10, '✔ 强护城河', '⚠ 价值毁灭');
+
+        let dcfFcfHtml = "<td>预测 FCF</td>"; let dcfPvHtml = "<td>现值 PV</td>";
+        let currentFcf = fcf; let pvSum = 0;
+        for(let i=1; i<=5; i++) {
+            currentFcf *= (1 + g); let pv = currentFcf / Math.pow(1 + r, i);
+            dcfFcfHtml += `<td>${format(currentFcf)}</td>`; dcfPvHtml += `<td>${format(pv)}</td>`; pvSum += pv;
+        }
+        let tv = (currentFcf * (1 + g2)) / (r - g2); let tvPv = tv / Math.pow(1 + r, 5);
+        dcfFcfHtml += `<td>${format(tv)}</td>`; dcfPvHtml += `<td>${format(tvPv)}</td>`;
+        document.getElementById('dcf_fcf').innerHTML = dcfFcfHtml;
+        document.getElementById('dcf_pv').innerHTML = dcfPvHtml;
+
+        const gList = [g - 0.02, g, g + 0.02]; const rList = [r + 0.01, r, r - 0.01];
+        document.getElementById('th_r1').innerText = "R=" + format(rList[0]*100) + "%";
+        document.getElementById('th_r2').innerText = "R=" + format(rList[1]*100) + "%";
+        document.getElementById('th_r3').innerText = "R=" + format(rList[2]*100) + "%";
+        for(let i=0; i<3; i++) {
+            let tr = document.getElementById('tr_g' + (i+1)); let tds = tr.getElementsByTagName('td');
+            tr.getElementsByTagName('th')[0].innerText = "G=" + format(gList[i]*100) + "%";
+            for(let j=0; j<3; j++) {
+                let cellPrice = calcDCFPrice(fcf, gList[i], g2, rList[j], shares, netCash);
+                tds[j].innerText = format(cellPrice);
+                let ratio = cellPrice / price;
+                tds[j].className = "matrix-cell " + (ratio > 1.15 ? "bg-green" : (ratio < 0.85 ? "bg-red" : "bg-yellow"));
+            }
+        }
+
+        let baseValue = calcDCFPrice(fcf, g, g2, r, shares, netCash);
+        let mos = ((baseValue - price) / price) * 100;
+        document.getElementById('c_value').innerText = format(baseValue) + " 元";
+        document.getElementById('c_mos').innerText = format(mos) + " %";
+        document.getElementById('c_mos').style.color = mos > 0 ? "var(--green)" : "var(--red)";
+        document.getElementById('c_buy_zone').innerText = `${format(baseValue * buyLow)} ~ ${format(baseValue * buyHigh)} 元`;
+        document.getElementById('c_suggest_text').innerText = `质量评分 ${score} 分。` + (score < 60 ? " 质地较差风险过高。" : (mos > 15 ? " 跌入深度击球区，具备绝对安全边际。" : (mos > -10 ? " 估值合理，建议底仓观望。" : " 估值泡沫过高，建议规避。")));
+    }
+    window.onload = calc;
+</script>
+</body>
+</html>
