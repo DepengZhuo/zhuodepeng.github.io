@@ -99,7 +99,7 @@
 </div>
 
 <div class="top-notice-us">
-    🇺🇸 <b>联网拉取说明：</b> 「⚡ 联网拉取公开数据」功能<b>仅支持美股</b>（如 AAPL、MSFT、GOOGL、TSLA 等）。港股、A股及其他市场请手动填写全部数据。所有金额统一使用<b>百万美元</b>作为单位。
+    🇺🇸 <b>联网拉取说明：</b> 「⚡ 联网拉取公开数据」功能<b>仅支持美股</b>（如 AAPL、MSFT、GOOGL、TSLA 等）。港股、A股及其他市场请手动填写全部数据。所有金额统一使用<b>百万</b>作为单位。
 </div>
 
 <div class="grid-layout">
@@ -107,7 +107,7 @@
         <!-- ============ ① 基础与市场数据 ============ -->
         <div class="card">
             <div class="card-title">
-                ① 基础与市场数据 <span style="font-size:12px; color:#888;">(统一单位：百万美元)</span>
+                ① 基础与市场数据 <span style="font-size:12px; color:#888;">(统一单位：百万)</span>
                 <button id="btn_fetch" onclick="fetchFinnhubData()" style="font-size:12px; padding:4px 10px; background:#2962ff; color:#fff; border:none; border-radius:3px; cursor:pointer; display:flex; align-items:center;">
                     ⚡ 联网拉取公开数据
                 </button>
@@ -122,7 +122,7 @@
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>当前股价 <span class="unit-tag">美元 / 股</span></label><input type="number" id="i_price" value="226.00" oninput="calc()"></div>
+                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>当前股价 <span class="unit-tag">美元or人民币 / 股</span></label><input type="number" id="i_price" value="226.00" oninput="calc()"></div>
                 <div class="hint"><strong>含义：</strong>股票在市场上当前的交易价格，即你买一股需要花多少钱。<span class="beginner">美股以美元计价，如苹果股价 $226 表示买一股需 226 美元。</span></div>
             </div>
 
@@ -132,12 +132,12 @@
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>类现金资产合计 <span class="unit-tag">百万美元</span></label><input type="number" id="i_cash" value="67000" oninput="calc()"></div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>类现金资产合计 <span class="unit-tag">百万</span></label><input type="number" id="i_cash" value="67000" oninput="calc()"></div>
                 <div class="hint"><strong class="formula">公式：</strong>现金及现金等价物 + 短期投资。<br><strong>含义：</strong>公司口袋里的"活钱"。<span class="beginner">相当于你家银行卡余额 + 随时能取的理财。用于计算公司的净资产。</span><br><strong>获取来源：</strong>财报【资产负债表】。</div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>有息负债合计 <span class="unit-tag">百万美元</span></label><input type="number" id="i_debt" value="105000" oninput="calc()"></div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>有息负债合计 <span class="unit-tag">百万</span></label><input type="number" id="i_debt" value="105000" oninput="calc()"></div>
                 <div class="hint"><strong class="formula">公式：</strong>短期借款 + 长期借款 + 应付债券。<br><strong>含义：</strong>公司欠银行和债券持有人的钱，是要付利息的。<span class="beginner">注意：欠供应商的货款（应付账款）不算，因为不需要付利息。</span><br><strong>获取来源：</strong>财报【资产负债表】。</div>
             </div>
         </div>
@@ -162,23 +162,23 @@
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>经营现金流 OCF <span class="unit-tag">百万美元</span></label><input type="number" id="i_ocf" value="110000" oninput="calc()"></div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>经营现金流 OCF <span class="unit-tag">百万</span></label><input type="number" id="i_ocf" value="110000" oninput="calc()"></div>
                 <div class="hint"><strong>含义：</strong>公司做生意真正收进来的真金白银，不是账面上的利润。<span class="beginner">如果一家公司利润很高但 OCF 很低，说明利润可能是"纸面富贵"——钱还没收回来（全是应收账款）。</span><br><strong>获取来源：</strong>财报【现金流量表】第一项。</div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>归母净利润 <span class="unit-tag">百万美元</span></label><input type="number" id="i_profit" value="97000" oninput="calc()"></div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>归母净利润 <span class="unit-tag">百万</span></label><input type="number" id="i_profit" value="97000" oninput="calc()"></div>
                 <div class="hint"><strong>含义：</strong>公司赚的钱扣除所有成本、税费、利息后，属于普通股东的那部分。<span class="beginner">就是利润表最下面那行数字，也是股民最关心的"公司到底赚了多少"。</span><br><strong>获取来源：</strong>财报【利润表】底部。</div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>资本开支 CAPEX <span class="unit-tag">百万美元</span></label><input type="number" id="i_capex" value="10000" oninput="calc()"></div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>资本开支 CAPEX <span class="unit-tag">百万</span></label><input type="number" id="i_capex" value="10000" oninput="calc()"></div>
                 <div class="hint"><strong>含义：</strong>公司为了维持或扩大业务，买设备、建厂房等花的钱。<span class="beginner">这是必须花的钱，不能省。就像开餐厅必须买厨具一样。请输入正数。</span><br><strong>获取来源：</strong>财报【现金流量表】- 投资活动。</div>
             </div>
 
             <div class="input-group">
                 <div class="input-row">
-                    <label><span class="badge-manual">✍️ 手动</span>自由现金流 FCF <span class="unit-tag">百万美元</span></label>
+                    <label><span class="badge-manual">✍️ 手动</span>自由现金流 FCF <span class="unit-tag">百万</span></label>
                     <div style="display:flex; align-items:center;">
                         <input type="number" id="i_fcf" value="100000" oninput="calc()">
                         <button class="mini-btn" onclick="autoCalcFCF()">⚡ 自动算</button>
