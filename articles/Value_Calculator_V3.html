@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Value Dashboard - 机构级价值分析工作台 V5.0</title>
+    <title>Pro Value Lab - 价值分析工作台 V6.2</title>
 
     <script>
       window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
@@ -23,17 +23,20 @@
         }
         .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 15px; margin-bottom: 10px; }
         .header h1 { margin: 0; font-size: 22px; color: #fff; }
-        .toolbar button { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border); padding: 6px 12px; cursor: pointer; margin-left: 10px; border-radius: 4px; }
+        .toolbar button { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border); padding: 6px 12px; cursor: pointer; margin-left: 10px; border-radius: 4px; transition: all 0.2s; font-size: 13px; }
+        .toolbar button:hover { border-color: var(--accent); }
         .toolbar button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+        .toolbar button.primary { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: bold; font-size: 14px; padding: 8px 16px; }
+        
         .top-notice { background: rgba(41, 98, 255, 0.1); border: 1px solid var(--accent); color: #82b1ff; padding: 10px 15px; border-radius: 4px; margin-bottom: 10px; font-size: 13px; display: flex; align-items: center; }
         .top-notice-us { background: rgba(255, 214, 0, 0.08); border: 1px solid rgba(255, 214, 0, 0.4); color: #ffd600; padding: 10px 15px; border-radius: 4px; margin-bottom: 20px; font-size: 13px; display: flex; align-items: center; }
 
         .grid-layout { display: grid; grid-template-columns: 480px 1fr; gap: 20px; }
         @media (max-width: 1300px) { .grid-layout { grid-template-columns: 1fr; } }
         .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 15px; margin-bottom: 20px; }
-        .card-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
+        .card-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 5px; }
 
-        /* 表单样式优化 */
+        /* 表单样式 */
         .input-group { display: flex; flex-direction: column; margin-bottom: 14px; border-bottom: 1px dashed #2a2a2a; padding-bottom: 10px; }
         .input-row { display: flex; justify-content: space-between; align-items: center; }
         .input-row label { color: var(--text-main); font-weight: 500; flex: 1; }
@@ -46,6 +49,14 @@
         .hint .beginner { color: #a0a0a0; }
         .hint .formula { color: #82b1ff; }
 
+        /* 参数合理性警告 */
+        .param-warn { font-size: 12px; color: #ff8a80; margin-top: 4px; padding: 4px 8px; background: rgba(213, 0, 0, 0.1); border-left: 2px solid var(--red); border-radius: 2px; display: none; line-height: 1.4; }
+
+        /* 汇总参数警告区 */
+        .param-warn-area { background: rgba(213, 0, 0, 0.06); border: 1px solid rgba(213, 0, 0, 0.3); border-radius: 4px; padding: 12px; margin-bottom: 15px; display: none; }
+        .param-warn-area .warn-title { color: #ff5252; font-weight: bold; font-size: 13px; margin-bottom: 8px; }
+        .param-warn-area .warn-item { font-size: 12px; color: #ff8a80; margin-bottom: 4px; padding-left: 8px; }
+
         /* 标签指示器 */
         .badge-auto { background: rgba(0, 200, 83, 0.15); color: #69f0ae; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-right: 6px; }
         .badge-manual { background: rgba(255, 214, 0, 0.15); color: #ffff00; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-right: 6px; }
@@ -56,17 +67,22 @@
         .score-board { display: flex; justify-content: space-around; text-align: center; background: #252525; padding: 15px; border-radius: 6px; margin-bottom: 20px; }
         .score-value { font-size: 28px; font-weight: bold; }
         .score-unit { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-        .warning-banner { background: rgba(213, 0, 0, 0.2); color: #ff5252; padding: 10px; border-radius: 4px; border: 1px solid var(--red); margin-bottom: 15px; display: none; text-align: left; font-weight: bold; }
+        .star-rating { font-size: 14px; color: #ffd600; margin-top: 4px; letter-spacing: 2px; }
+        .quality-grade { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+        
+        .warning-banner { background: rgba(213, 0, 0, 0.2); color: #ff5252; padding: 12px; border-radius: 4px; border: 1px solid var(--red); margin-bottom: 15px; display: none; text-align: left; font-size: 13px; line-height: 1.5; font-weight: normal; }
 
         .matrix-cell { font-weight: bold; }
         .bg-green { background-color: rgba(0, 200, 83, 0.2); color: #69f0ae; }
         .bg-yellow { background-color: rgba(255, 214, 0, 0.2); color: #ffff00; }
         .bg-red { background-color: rgba(213, 0, 0, 0.2); color: #ff5252; }
+        .matrix-current { box-shadow: 0 0 0 2.5px var(--accent) inset !important; position: relative; }
+        .matrix-current::after { content: "\1F4CD"; position: absolute; top: -6px; right: -1px; font-size: 9px; }
 
         .risk-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed var(--border); align-items: center; }
         .risk-item .risk-label { flex: 1; }
         .risk-item .risk-explain { font-size: 11px; color: #666; margin-top: 2px; }
-        .tag { padding: 2px 6px; border-radius: 3px; font-size: 12px; font-weight: bold; }
+        .tag { padding: 2px 6px; border-radius: 3px; font-size: 12px; font-weight: bold; white-space: nowrap; }
         .tag.safe { background: rgba(0,200,83,0.2); color: #69f0ae; }
         .tag.warn { background: rgba(213,0,0,0.2); color: #ff5252; }
 
@@ -77,20 +93,50 @@
 
         .ai-prompt { width: 100%; box-sizing: border-box; height: 240px; background: #1a1a1a; color: #69f0ae; border: 1px solid #333; padding: 12px; border-radius: 4px; font-family: monospace; font-size: 13px; line-height: 1.5; resize: vertical; }
         .copy-btn { background: var(--accent); color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; float: right; font-size: 12px; margin-top: -35px; margin-right: 5px; position: relative; z-index: 10; }
-        .mini-btn { background: #333; color: #82b1ff; border: 1px solid var(--border); padding: 2px 8px; border-radius: 3px; cursor: pointer; font-size: 11px; margin-left: 6px; }
+        .mini-btn { background: #333; color: #82b1ff; border: 1px solid var(--border); padding: 4px 8px; border-radius: 3px; cursor: pointer; font-size: 11px; font-weight: bold; }
         .mini-btn:hover { background: var(--accent); color: #fff; }
+        .mini-btn-inline { background: #333; color: #82b1ff; border: 1px solid var(--border); padding: 2px 8px; border-radius: 3px; cursor: pointer; font-size: 11px; margin-left: 6px; }
+        .mini-btn-inline:hover { background: var(--accent); color: #fff; }
 
         .result-hint { font-size: 11px; color: #777; margin-top: 8px; line-height: 1.5; padding: 0 4px; }
         .result-hint .beginner { color: #999; }
+
+        /* DCF 可信度 */
+        .credibility-display { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 13px; }
+        .credibility-stars { color: #ffd600; font-size: 16px; letter-spacing: 1px; }
+        .credibility-desc { color: var(--text-muted); font-size: 12px; }
+
+        /* 估值摘要卡 */
+        .summary-card { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 1px solid rgba(41, 98, 255, 0.4); }
+        .summary-grid { display: grid; gap: 8px; }
+        .summary-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; background: rgba(255, 255, 255, 0.03); border-radius: 4px; }
+        .summary-label { color: var(--text-muted); font-size: 13px; }
+        .summary-value { font-size: 16px; font-weight: bold; color: #fff; }
+        .summary-unit { font-size: 11px; color: var(--text-muted); margin-left: 4px; }
+        .summary-divider { border: 0; border-top: 1px dashed rgba(41, 98, 255, 0.2); margin: 6px 0; }
+        .mos-badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 12px; font-weight: bold; margin-left: 6px; }
+
+        /* 免责声明 */
+        .disclaimer { background: rgba(255, 255, 255, 0.02); border: 1px dashed var(--border); border-radius: 4px; padding: 12px 15px; margin-bottom: 20px; font-size: 11px; color: #666; line-height: 1.6; }
+
+        /* 计算进度条 */
+        .calc-progress { height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 15px; overflow: hidden; display: none; }
+        .calc-progress-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.7s ease; }
+
+        /* 脉冲动画 */
+        @keyframes valuePulse { 0% { transform: scale(1); } 50% { transform: scale(1.06); } 100% { transform: scale(1); } }
+        .pulse { animation: valuePulse 0.4s ease-out; }
+        
+        .highlight-param { color: var(--accent); font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>Value Dashboard - 机构级全息估值平台 V5.0</h1>
+    <h1>Value Dashboard - 机构级全息估值平台 V6.2</h1>
     <div class="toolbar">
-        <button class="active">巴菲特/达摩达兰 DCF</button>
-        <button onclick="window.print()">🖨️ 生成 PDF 报告</button>
+        <button onclick="window.print()">🖨️ 生成 PDF</button>
+        <button class="primary" onclick="startValuation()">📊 点击计算 / 重新估值</button>
     </div>
 </div>
 
@@ -99,12 +145,11 @@
 </div>
 
 <div class="top-notice-us">
-    🇺🇸 <b>联网拉取说明：</b> 「⚡ 联网拉取公开数据」功能<b>仅支持美股</b>（如 AAPL、MSFT、GOOGL、TSLA 等）。港股、A股及其他市场请手动填写全部数据。所有金额统一使用<b>百万</b>作为单位。
+    🇺🇸 <b>联网拉取说明：</b> 「⚡ 联网拉取公开数据」功能<b>仅支持美股</b>（如 AAPL、MSFT 等）。港股、A股及其他市场请手动填写全部数据。所有金额统一使用<b>百万</b>作为基准单位。
 </div>
 
 <div class="grid-layout">
     <div>
-        <!-- ============ ① 基础与市场数据 ============ -->
         <div class="card">
             <div class="card-title">
                 ① 基础与市场数据 <span style="font-size:12px; color:#888;">(统一单位：百万)</span>
@@ -116,133 +161,146 @@
             <div class="input-group">
                 <div class="input-row">
                     <label>股票代码 <span class="unit-tag">如 AAPL</span></label>
-                    <input type="text" id="i_code" value="AAPL" style="width:140px; text-align:left; background:#333;" oninput="calc()">
+                    <input type="text" id="i_code" value="AAPL" style="width:140px; text-align:left; background:#333;">
                 </div>
-                <div class="hint"><strong>含义：</strong>公司的"身份证号"。比如 AAPL 就是苹果公司。<span class="beginner">仅美股代码可触发联网查询，其他市场请手动填写下方所有数据。</span></div>
+                <div class="hint"><strong>含义：</strong>公司的"身份证号"。<span class="beginner">仅美股代码可触发联网查询，其他市场请手动填写下方所有数据。</span></div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>当前股价 <span class="unit-tag">美元or人民币 / 股</span></label><input type="number" id="i_price" value="226.00" oninput="calc()"></div>
-                <div class="hint"><strong>含义：</strong>股票在市场上当前的交易价格，即你买一股需要花多少钱。<span class="beginner">美股以美元计价，如苹果股价 $226 表示买一股需 226 美元。</span></div>
+                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>当前股价 <span class="unit-tag">每股价格</span></label><input type="number" id="i_price" value="226.00"></div>
+                <div class="hint"><strong>含义：</strong>股票在市场上当前的交易价格。</div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>总股本 <span class="unit-tag">百万股</span></label><input type="number" id="i_shares" value="15340" oninput="calc()"></div>
-                <div class="hint"><strong>含义：</strong>公司一共发行了多少股股票。<span class="beginner">如苹果约 15340 百万股 = 约 153.4 亿股。美股 API 返回的单位通常就是百万股。</span></div>
+                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>总股本 <span class="unit-tag">百万股</span></label><input type="number" id="i_shares" value="15340"></div>
+                <div class="hint"><strong>含义：</strong>公司一共发行了多少股股票。<span class="beginner">如 15340 百万股 = 约 153.4 亿股。</span></div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>类现金资产合计 <span class="unit-tag">百万</span></label><input type="number" id="i_cash" value="67000" oninput="calc()"></div>
-                <div class="hint"><strong class="formula">公式：</strong>现金及现金等价物 + 短期投资。<br><strong>含义：</strong>公司口袋里的"活钱"。<span class="beginner">相当于你家银行卡余额 + 随时能取的理财。用于计算公司的净资产。</span><br><strong>获取来源：</strong>财报【资产负债表】。</div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>类现金资产合计 <span class="unit-tag">百万</span></label><input type="number" id="i_cash" value="67000"></div>
+                <div class="hint"><strong class="formula">公式：</strong>现金及现金等价物 + 短期投资。<br><strong>含义：</strong>公司口袋里的"活钱"。</div>
+                <div class="param-warn" id="warn_debt"></div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>有息负债合计 <span class="unit-tag">百万</span></label><input type="number" id="i_debt" value="105000" oninput="calc()"></div>
-                <div class="hint"><strong class="formula">公式：</strong>短期借款 + 长期借款 + 应付债券。<br><strong>含义：</strong>公司欠银行和债券持有人的钱，是要付利息的。<span class="beginner">注意：欠供应商的货款（应付账款）不算，因为不需要付利息。</span><br><strong>获取来源：</strong>财报【资产负债表】。</div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>有息负债合计 <span class="unit-tag">百万</span></label><input type="number" id="i_debt" value="105000"></div>
+                <div class="hint"><strong class="formula">公式：</strong>短期借款 + 长期借款 + 应付债券。<br><strong>含义：</strong>公司欠银行和债券持有人的钱，是要付利息的。</div>
+                <div class="param-warn" id="warn_debt2"></div>
             </div>
         </div>
 
-        <!-- ============ ② 财务与质量数据 ============ -->
         <div class="card">
             <div class="card-title">② 财务与质量数据 <span style="font-size:12px; color:#888;">(利润表现)</span></div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>ROE 净资产收益率 <span class="unit-tag">%</span></label><input type="number" id="i_roe" value="150" oninput="calc()"></div>
-                <div class="hint"><strong>含义：</strong>股东每投 100 块钱，公司一年能赚多少。<span class="beginner">如 ROE=150%，意味着股东每投 100 元，公司一年赚 150 元。巴菲特最看重这个指标，通常 > 15% 就是好公司，> 20% 是优秀公司。</span></div>
+                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>ROE 净资产收益率 <span class="unit-tag">%</span> <span class="range-tag">优秀 > 15%</span></label><input type="number" id="i_roe" value="150"></div>
+                <div class="hint"><strong>含义：</strong>股东每投 100 块钱，公司一年能赚多少。</div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>毛利率 <span class="unit-tag">%</span></label><input type="number" id="i_margin" value="45" oninput="calc()"></div>
-                <div class="hint"><strong>含义：</strong>卖出产品后，扣掉直接生产成本还剩多少。<span class="beginner">如毛利率 45%，意味着 100 元收入中扣掉成本后剩 45 元。越高说明产品定价权越强，苹果的毛利率就很高。</span></div>
+                <div class="input-row"><label><span class="badge-auto">🤖 自动</span>毛利率 <span class="unit-tag">%</span> <span class="range-tag">优秀 > 30%</span></label><input type="number" id="i_margin" value="45"></div>
+                <div class="hint"><strong>含义：</strong>卖出产品后，扣掉直接生产成本还剩多少。</div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>ROIC 投入资本回报率 <span class="unit-tag">%</span></label><input type="number" id="i_roic" value="40" oninput="calc()"></div>
-                <div class="hint"><strong>含义：</strong>和 ROE 类似，但剔除了借钱的影响，更真实地反映公司核心业务的赚钱能力。<span class="beginner">巴菲特认为 ROIC 持续 > 15% 的公司具有强大护城河（别人很难模仿的竞争优势）。> 10% 算合格，< 8% 要警惕价值毁灭。</span><br><strong>获取来源：</strong>理杏仁、雪球或计算 (NOPAT / 投入资本)。</div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>ROIC 投入资本回报率 <span class="unit-tag">%</span> <span class="range-tag">优秀 > 15%</span></label><input type="number" id="i_roic" value="40"></div>
+                <div class="hint"><strong>含义：</strong>剔除了借钱的影响，更真实地反映公司核心业务的赚钱能力。</div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>经营现金流 OCF <span class="unit-tag">百万</span></label><input type="number" id="i_ocf" value="110000" oninput="calc()"></div>
-                <div class="hint"><strong>含义：</strong>公司做生意真正收进来的真金白银，不是账面上的利润。<span class="beginner">如果一家公司利润很高但 OCF 很低，说明利润可能是"纸面富贵"——钱还没收回来（全是应收账款）。</span><br><strong>获取来源：</strong>财报【现金流量表】第一项。</div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>经营现金流 OCF <span class="unit-tag">百万</span></label><input type="number" id="i_ocf" value="110000"></div>
+                <div class="hint"><strong>含义：</strong>公司做生意真正收进来的真金白银。</div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>归母净利润 <span class="unit-tag">百万</span></label><input type="number" id="i_profit" value="97000" oninput="calc()"></div>
-                <div class="hint"><strong>含义：</strong>公司赚的钱扣除所有成本、税费、利息后，属于普通股东的那部分。<span class="beginner">就是利润表最下面那行数字，也是股民最关心的"公司到底赚了多少"。</span><br><strong>获取来源：</strong>财报【利润表】底部。</div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>归母净利润 <span class="unit-tag">百万</span></label><input type="number" id="i_profit" value="97000"></div>
+                <div class="hint"><strong>含义：</strong>属于普通股东的那部分最终净利。</div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>资本开支 CAPEX <span class="unit-tag">百万</span></label><input type="number" id="i_capex" value="10000" oninput="calc()"></div>
-                <div class="hint"><strong>含义：</strong>公司为了维持或扩大业务，买设备、建厂房等花的钱。<span class="beginner">这是必须花的钱，不能省。就像开餐厅必须买厨具一样。请输入正数。</span><br><strong>获取来源：</strong>财报【现金流量表】- 投资活动。</div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>资本开支 CAPEX <span class="unit-tag">百万</span></label><input type="number" id="i_capex" value="10000"></div>
+                <div class="hint"><strong>含义：</strong>买设备、建厂房等花的钱。请输入正数。</div>
             </div>
 
             <div class="input-group">
                 <div class="input-row">
                     <label><span class="badge-manual">✍️ 手动</span>自由现金流 FCF <span class="unit-tag">百万</span></label>
                     <div style="display:flex; align-items:center;">
-                        <input type="number" id="i_fcf" value="100000" oninput="calc()">
-                        <button class="mini-btn" onclick="autoCalcFCF()">⚡ 自动算</button>
+                        <input type="number" id="i_fcf" value="100000">
+                        <button class="mini-btn-inline" onclick="autoCalcFCF()">⚡ 自动算</button>
                     </div>
                 </div>
-                <div class="hint"><strong class="formula">公式：</strong>FCF = 经营现金流 OCF - 资本开支 CAPEX。<br><strong>含义：</strong>公司在维持正常运营后，真正能自由支配的钱。<span class="beginner">这是 DCF 估值的核心——公司到底能给你分多少钱。FCF 越高，公司越值钱。点击"自动算"可从上方 OCF 和 CAPEX 自动计算。</span></div>
+                <div class="hint"><strong class="formula">公式：</strong>FCF = 经营现金流 OCF - 资本开支 CAPEX。<br><strong>含义：</strong>公司在维持正常运营后，真正能自由支配的钱。<span class="beginner">点击"自动算"可从上方自动相减。</span></div>
             </div>
         </div>
 
-        <!-- ============ ③ DCF 核心参数 ============ -->
         <div class="card">
-            <div class="card-title">③ DCF 核心参数 <span style="font-size:12px; color:#888;">(预测与贴现率)</span></div>
-
-            <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>未来 1-5 年复合增速 <span class="unit-tag">%</span> <span class="range-tag">建议 0%-15%</span></label><input type="number" id="i_g1" value="8" oninput="calc()"></div>
-                <div class="hint"><strong>含义：</strong>预估公司未来 5 年的利润年增长率。<span class="beginner">建议取过去 3-5 年实际增速的一半（保守原则）。成熟企业通常 3%-8%，成长期企业 8%-15%。超过 15% 需极度谨慎——极少有企业能长期维持高增速。</span></div>
+            <div class="card-title">
+                ③ DCF 核心参数 <span style="font-size:12px; color:#888;">(预测与贴现率)</span>
+                <button class="mini-btn-inline" onclick="restoreDefaults()" style="margin-left:auto; margin-right:0;">🔄 恢复默认</button>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>永续增长率 <span class="unit-tag">%</span> <span class="range-tag">建议 2%-3%</span></label><input type="number" id="i_g2" value="2" oninput="calc()"></div>
-                <div class="hint"><strong>含义：</strong>第 5 年之后公司永久保持的增速。<span class="beginner">必须低于 GDP 增速和无风险利率，否则计算出的永续价值会趋向无穷大（不合理）。美国长期 GDP 增速约 2%-3%，所以通常取 2% 或 2.5%。绝对不能超过折现率！</span></div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>未来 1-5 年复合增速 <span class="unit-tag">%</span> <span class="range-tag">建议 0%-15%</span></label><input type="number" id="i_g1" value="8"></div>
+                <div class="hint"><strong>含义：</strong>预估公司未来 5 年的利润年增长率。<span class="beginner">建议取过去 3-5 年实际增速的一半。成熟企业 3%-8%；成长期企业 8%-15%。</span></div>
+                <div class="param-warn" id="warn_g1"></div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>折现率 <span class="unit-tag">%</span> <span class="range-tag">建议 8%-12%</span></label><input type="number" id="i_r" value="10" oninput="calc()"></div>
-                <div class="hint"><strong>含义：</strong>你期望的年化回报率，也是把未来钱折算成今天价值的利率。<span class="beginner">可以理解为"你要求的最低收益率"。稳健蓝筹股（如苹果）8%-9%，一般公司 10%，风险较高的公司 11%-12%。越高越保守，算出的内在价值越低。必须大于永续增长率！</span></div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>永续增长率 <span class="unit-tag">%</span> <span class="range-tag">建议 2%-3%</span></label><input type="number" id="i_g2" value="2"></div>
+                <div class="hint"><strong>含义：</strong>第 5 年之后公司永久保持的增速。<span class="beginner">必须低于折现率，通常取 2% 或 2.5%。</span></div>
+                <div class="param-warn" id="warn_g2"></div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>击球区下限 <span class="unit-tag">倍</span> <span class="range-tag">建议 0.60-0.75</span></label><input type="number" id="i_buy_low" value="0.75" step="0.05" oninput="calc()"></div>
-                <div class="hint"><strong>含义：</strong>安全边际下限。<span class="beginner">如 0.75 表示内在价值打 75 折时才开始买入。越低越保守（要求更大折扣），越高越激进。巴菲特通常要求至少 25% 的安全边际（即 0.75）。</span></div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>折现率 <span class="unit-tag">%</span> <span class="range-tag">建议 8%-12%</span></label><input type="number" id="i_r" value="10"></div>
+                <div class="hint"><strong>含义：</strong>把未来钱折算成今天价值的利率。<span class="beginner">一般企业 10%；高风险/周期企业 11%-12%。必须大于永续增长率。</span></div>
+                <div class="param-warn" id="warn_r"></div>
             </div>
 
             <div class="input-group">
-                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>击球区上限 <span class="unit-tag">倍</span> <span class="range-tag">建议 0.75-0.90</span></label><input type="number" id="i_buy_high" value="0.85" step="0.05" oninput="calc()"></div>
-                <div class="hint"><strong>含义：</strong>安全边际上限。<span class="beginner">如 0.85 表示内在价值超过 85 折时停止买入。低于下限是"闭眼买"，下限到上限之间是"可以买"，超过上限是"太贵了"。</span></div>
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>击球区下限 <span class="unit-tag">倍</span> <span class="range-tag">建议 0.60-0.75</span></label><input type="number" id="i_buy_low" value="0.75" step="0.05"></div>
+                <div class="hint"><strong>含义：</strong>如 0.75 表示内在价值打 75 折时才开始买入。</div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>击球区上限 <span class="unit-tag">倍</span> <span class="range-tag">建议 0.75-0.90</span></label><input type="number" id="i_buy_high" value="0.85" step="0.05"></div>
+                <div class="hint"><strong>含义：</strong>如 0.85 表示内在价值超过 85 折时停止买入。</div>
             </div>
         </div>
     </div>
 
-    <!-- ============ 右侧结果区 ============ -->
     <div>
+        <div class="calc-progress" id="calc_progress"><div class="calc-progress-bar" id="calc_progress_bar"></div></div>
+
         <div class="score-board">
             <div>
                 <div style="color:var(--text-muted); margin-bottom:5px;">总市值</div>
                 <div class="score-value" id="out_mcap" style="color:#fff;">-</div>
-                <div class="score-unit">百万美元</div>
+                <div class="score-unit">百万</div>
             </div>
             <div>
                 <div style="color:var(--text-muted); margin-bottom:5px;">EV 企业价值</div>
                 <div class="score-value" id="out_ev" style="color:#fff;">-</div>
-                <div class="score-unit">百万美元</div>
+                <div class="score-unit">百万</div>
             </div>
             <div>
                 <div style="color:var(--text-muted); margin-bottom:5px;">综合质量评分</div>
                 <div class="score-value" id="out_score" style="color:var(--accent);">-</div>
                 <div class="score-unit">满分 100 分</div>
+                <div class="star-rating" id="out_stars"></div>
+                <div class="quality-grade" id="out_grade"></div>
             </div>
         </div>
 
-        <div id="validation_warning" class="warning-banner"></div>
-        <div id="quality_warning" class="warning-banner">⚠️ 警告：质量评分极低，可能存在价值毁灭陷阱。不建议使用 DCF 估值。</div>
+        <div class="param-warn-area" id="param_warn_area">
+            <div class="warn-title">⚠️ 检测到 <span id="param_warn_count">0</span> 个参数异常，可能影响估值准确性：</div>
+            <div id="param_warn_list"></div>
+        </div>
 
-        <!-- ============ ④ 利润真实性与质量评价 ============ -->
+        <div id="validation_warning" class="warning-banner"></div>
+        <div id="quality_warning" class="warning-banner" style="font-weight: bold;">⚠️ 警告：质量评分极低，可能存在价值毁灭陷阱。不建议使用 DCF 估值。</div>
+
         <div style="display:flex; gap:20px;">
             <div class="card" style="flex:1;">
                 <div class="card-title">④ 利润真实性与质量评价</div>
@@ -252,99 +310,158 @@
                     <tr><td>自由现金流率</td><td>FCF / 净利润</td><td id="out_fcf_rate">-</td></tr>
                     <tr><td>资本开支率</td><td>CAPEX / OCF</td><td id="out_capex_rate">-</td></tr>
                 </table>
-                <div class="result-hint">
-                    <span class="beginner">💡 <b>小白解读：</b></span><br>
-                    <span class="beginner"><b>现金转换率</b>：> 100% 说明账面利润都变成了真金白银（好）；< 80% 要警惕利润造假（赚了数字没收到钱）。</span><br>
-                    <span class="beginner"><b>自由现金流率</b>：> 60% 说明公司利润质量极高，赚多少就能自由支配多少。</span><br>
-                    <span class="beginner"><b>资本开支率</b>：< 30% 是轻资产模式（好，如软件公司）；> 60% 说明赚的钱大部分要拿去买设备（重资产，如制造业）。</span>
-                </div>
             </div>
             <div class="card" style="flex:1;">
                 <div class="card-title">⑤ 自动风险扫描</div>
                 <div class="risk-item">
                     <div class="risk-label">
                         净利润转化为现金
-                        <div class="risk-explain">赚的利润是否变成了真金白银</div>
+                        <div class="risk-explain" id="risk_cash_desc">赚的利润是否变成了真金白银</div>
                     </div>
                     <span id="risk_cash" class="tag">检测中</span>
                 </div>
                 <div class="risk-item">
                     <div class="risk-label">
                         资本吞噬利润比例
-                        <div class="risk-explain">赚的钱是否被设备投资吃掉</div>
+                        <div class="risk-explain" id="risk_capex_desc">赚的钱是否被设备投资吃掉</div>
                     </div>
                     <span id="risk_capex" class="tag">检测中</span>
                 </div>
                 <div class="risk-item">
                     <div class="risk-label">
                         杠杆与债务安全度
-                        <div class="risk-explain">有息负债是否超过市值的 30%</div>
+                        <div class="risk-explain" id="risk_debt_desc">有息负债是否超过市值的 30%</div>
                     </div>
                     <span id="risk_debt" class="tag">检测中</span>
                 </div>
                 <div class="risk-item">
                     <div class="risk-label">
                         盈利护城河 (ROIC)
-                        <div class="risk-explain">核心业务回报率是否 > 10%</div>
+                        <div class="risk-explain" id="risk_roic_desc">核心业务回报率是否 > 10%</div>
                     </div>
                     <span id="risk_roic" class="tag">检测中</span>
                 </div>
             </div>
         </div>
 
-        <!-- ============ ⑥ DCF 折现表 ============ -->
         <div class="card">
-            <div class="card-title">⑥ 自由现金流折现表 <span style="font-size:12px; color:#888;">(单位：百万美元)</span></div>
+            <div class="card-title">⑥ 自由现金流折现表 <span style="font-size:12px; color:#888;">(单位：百万)</span></div>
+            <div class="credibility-display">
+                <span style="color:var(--text-muted);">DCF 可信度：</span>
+                <span class="credibility-stars" id="cred_stars">-</span>
+                <span class="credibility-desc" id="cred_desc">-</span>
+            </div>
             <table id="dcf_table">
                 <tr><th>年份</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Year 4</th><th>Year 5</th><th>永续 TV</th></tr>
                 <tr id="dcf_fcf"><td>预测 FCF</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
                 <tr id="dcf_pv"><td>现值 PV</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
             </table>
-            <div class="result-hint">
-                <span class="beginner">💡 <b>小白解读：</b>「预测 FCF」是公司未来每年预期能产生的自由现金流；「现值 PV」是把这些未来的钱折算成今天的价值（因为明年的 100 块不如今天的 100 块值钱）。「永续 TV」是第 5 年之后一直到永远的终值。所有 PV 加起来就是公司的企业价值。</span>
-            </div>
         </div>
 
-        <!-- ============ ⑦⑧ 估值矩阵与建议 ============ -->
         <div style="display:flex; gap:20px;">
             <div class="card" style="flex:1;">
-                <div class="card-title">⑦ 估值敏感性矩阵 <span style="font-size:12px; color:#888;">(单位：美元/股)</span></div>
+                <div class="card-title">⑦ 估值敏感性矩阵 <span style="font-size:12px; color:#888;">(每股)</span></div>
                 <table id="matrix_table">
                     <tr><th>增速 \ 折现率</th><th id="th_r1">-</th><th id="th_r2">-</th><th id="th_r3">-</th></tr>
                     <tr id="tr_g1"><th>-</th><td class="matrix-cell">-</td><td class="matrix-cell">-</td><td class="matrix-cell">-</td></tr>
                     <tr id="tr_g2"><th>-</th><td class="matrix-cell">-</td><td class="matrix-cell">-</td><td class="matrix-cell">-</td></tr>
                     <tr id="tr_g3"><th>-</th><td class="matrix-cell">-</td><td class="matrix-cell">-</td><td class="matrix-cell">-</td></tr>
                 </table>
-                <div class="result-hint">
-                    <span class="beginner">💡 <b>小白解读：</b>这张表展示了不同增速和折现率假设下，公司每股值多少钱。<span style="color:#69f0ae;">绿色 = 低估可买</span>，<span style="color:#ffff00;">黄色 = 估值合理</span>，<span style="color:#ff5252;">红色 = 高估需回避</span>。帮你理解"假设变了，估值会怎么变"。</span>
-                </div>
             </div>
 
             <div class="card" style="flex:1;">
                 <div class="card-title">⑧ 终局投资建议</div>
                 <div style="font-size:16px; margin-bottom:10px; display:flex; justify-content:space-between;">
-                    <span>基准内在价值 <span style="font-size:11px; color:#888;">(美元/股)</span></span> <strong id="c_value" style="color:var(--accent);">-</strong>
+                    <span>基准内在价值 <span style="font-size:11px; color:#888;">(每股)</span></span> <strong id="c_value" style="color:var(--accent);">-</strong>
                 </div>
-                <div style="font-size:16px; margin-bottom:15px; display:flex; justify-content:space-between;">
-                    <span>当前安全边际 <span style="font-size:11px; color:#888;">(%)</span></span> <strong id="c_mos">- %</strong>
+                <div style="font-size:16px; margin-bottom:15px; display:flex; justify-content:space-between; align-items:center;">
+                    <span>当前安全边际 <span style="font-size:11px; color:#888;">(%)</span></span>
+                    <div><strong id="c_mos">- %</strong> <span class="mos-badge" id="c_mos_badge" style="display:none;">-</span></div>
                 </div>
                 <div style="background:#252525; padding:10px; border-radius:4px; font-size:13px; line-height:1.8;">
-                    <div id="c_suggest_text">生成研判...</div>
+                    <div id="c_suggest_text">点击上方“开始计算”生成研判...</div>
                     <hr style="border:0; border-top:1px dashed var(--border); margin:10px 0;">
-                    <div>🎯 <b>击球区 (建议买入) <span style="font-size:11px; color:#888;">(美元/股)</span>：</b> <span id="c_buy_zone" style="color:#69f0ae;">-</span></div>
-                </div>
-                <div class="result-hint">
-                    <span class="beginner">💡 <b>小白解读：</b>「内在价值」是 DCF 模型算出的每股真实价值。「安全边际」= (内在价值 - 当前价格) / 内在价值，正值表示当前价格低于真实价值（有折扣=好），负值表示溢价（太贵了）。「击球区」是建议买入的价格区间——低于下限闭眼买，区间内可以买，超过上限别追高。</span>
+                    <div>🎯 <b>击球区 (建议买入)：</b> <span id="c_buy_zone" style="color:#69f0ae;">-</span></div>
                 </div>
             </div>
         </div>
 
-        <!-- ============ ⑩ 底层逻辑与操作指引 ============ -->
-        <div class="card logic-doc">
-            <div class="card-title">⑩ 底层计算逻辑与操作指引</div>
+        <div class="card summary-card">
+            <div class="card-title" style="color:#82b1ff;">⑨ 估值摘要 <span style="font-size:12px; color:#888;">(可截图分享)</span></div>
+            <div class="summary-grid">
+                <div class="summary-row">
+                    <span class="summary-label">内在价值</span>
+                    <span><span class="summary-value" id="s_value">-</span><span class="summary-unit">每股</span></span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">当前价格</span>
+                    <span><span class="summary-value" id="s_price">-</span><span class="summary-unit">每股</span></span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">安全边际</span>
+                    <span><span class="summary-value" id="s_mos">-</span><span class="mos-badge" id="s_mos_badge">-</span></span>
+                </div>
+                <hr class="summary-divider">
+                <div class="summary-row">
+                    <span class="summary-label">估值判断</span>
+                    <span class="summary-value" id="s_judge">-</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">操作建议</span>
+                    <span class="summary-value" id="s_action">-</span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">企业质量</span>
+                    <span class="summary-value" id="s_quality">-</span>
+                </div>
+            </div>
+        </div>
 
-            <h3>1. AI 数据获取提示词 (一键复制)</h3>
-            <p>基于开源 API 的限制，深度财务数据仍需查阅。您可以点击复制下方文案，直接发送给 ChatGPT、Kimi 或 Claude 获取整理好的数据表格：</p>
+        <div class="card logic-doc">
+            <div class="card-title">⑩ 底层逻辑与操作指引</div>
+            
+            <h3>1. 机构级 DCF 核心参数设定标尺 (参考与一键应用)</h3>
+            <p>为确保估值模型贴合不同企业的商业壁垒与生命周期，请参考以下标尺。点击“一键应用”可快速导入预设参数：</p>
+            <table style="font-size: 12px; margin-bottom: 20px;">
+                <tr>
+                    <th style="width: 18%;">企业类型</th>
+                    <th style="width: 13%;">1-5年增速 (g1)</th>
+                    <th style="width: 13%;">永续增速 (g2)</th>
+                    <th style="width: 13%;">折现率 (r)</th>
+                    <th>核心调整逻辑与操作</th>
+                </tr>
+                <tr>
+                    <td><strong>成熟现金牛</strong><br><span style="color:#888; font-size:11px;">(如宝洁/传统零售)</span></td>
+                    <td class="highlight-param">5%</td>
+                    <td class="highlight-param">2%</td>
+                    <td class="highlight-param">8.5%</td>
+                    <td style="text-align:left; line-height:1.5;">业务见顶但极稳，抗风险强。勿高估长期增速。<br><button class="mini-btn" style="margin-top:6px;" onclick="applyPreset(5, 2, 8.5)">⚡ 一键应用预设</button></td>
+                </tr>
+                <tr>
+                    <td><strong>高增长科技</strong><br><span style="color:#888; font-size:11px;">(如英伟达/AI零售)</span></td>
+                    <td class="highlight-param">20%</td>
+                    <td class="highlight-param">2.5%</td>
+                    <td class="highlight-param">11%</td>
+                    <td style="text-align:left; line-height:1.5;">跑马圈地阶段，不确定性高（折现率给足），前五年高预期。<br><button class="mini-btn" style="margin-top:6px;" onclick="applyPreset(20, 2.5, 11)">⚡ 一键应用预设</button></td>
+                </tr>
+                <tr>
+                    <td><strong>强壁垒垄断</strong><br><span style="color:#888; font-size:11px;">(如茅台/微软)</span></td>
+                    <td class="highlight-param">12%</td>
+                    <td class="highlight-param">2.5%</td>
+                    <td class="highlight-param">7.5%</td>
+                    <td style="text-align:left; line-height:1.5;">拥有绝对定价权，无颠覆风险，享有极低折现率与稳健增速。<br><button class="mini-btn" style="margin-top:6px;" onclick="applyPreset(12, 2.5, 7.5)">⚡ 一键应用预设</button></td>
+                </tr>
+                <tr>
+                    <td><strong>重资产周期</strong><br><span style="color:#888; font-size:11px;">(如航运/传统能源)</span></td>
+                    <td class="highlight-param">3%</td>
+                    <td class="highlight-param">0.5%</td>
+                    <td class="highlight-param">13%</td>
+                    <td style="text-align:left; line-height:1.5;">看天吃饭，极度依赖宏观环境，要求极高风险补偿。<br><button class="mini-btn" style="margin-top:6px;" onclick="applyPreset(3, 0.5, 13)">⚡ 一键应用预设</button></td>
+                </tr>
+            </table>
+
+            <h3>2. AI 数据获取提示词 (一键复制)</h3>
+            <p>直接发送给 ChatGPT、Kimi 或 Claude 获取整理好的数据表格：</p>
             <div style="position: relative;">
                 <button class="copy-btn" onclick="copyPrompt()">📋 复制代码</button>
                 <textarea id="ai_prompt_text" class="ai-prompt" readonly>
@@ -363,36 +480,30 @@
 10. 最新财年 CAPEX（资本开支：购建固定资产/无形资产支付的现金，请取正数，百万）：
 11. 最新财年 FCF（自由现金流 = 经营活动现金流净额 OCF - 资本开支 CAPEX，百万）：</textarea>
             </div>
+        </div>
 
-            <h3>2. 数据源限制说明</h3>
-            <div class="explain-box">
-                <p style="margin:0 0 8px 0;"><strong>联网拉取（仅限美股）：</strong>本平台通过 Finnhub 开源 API 可自动获取美股的<b>实时股价、流通股本、部分 TTM 财报数据（如 ROE、毛利率）</b>。不支持 A 股、港股及其他市场。</p>
-                <p style="margin:0 0 8px 0;"><strong>需手动填写的数据：</strong>涉及深度财务审计级别的数据（如类现金资产、有息负债、ROIC、OCF、归母净利润、CAPEX、FCF）必须依托专业终端或财报查阅后手动填入。</p>
-                <p style="margin:0;"><strong>建议操作流程：</strong>① 输入美股代码 → ② 点击「联网拉取」自动填充部分数据 → ③ 复制上方 AI 提示词获取剩余数据 → ④ 逐项填入 → ⑤ 查看右侧自动生成的估值结果。</p>
-            </div>
-
-            <h3>3. 达摩达兰两阶段 DCF 折现模型</h3>
-            <p>核心公式：$PV = \sum_{t=1}^{5} \frac{FCF \times (1+g_{1})^t}{(1+r)^t} + \frac{FCF_5 \times (1+g_{2})}{(r - g_{2}) \times (1+r)^5}$</p>
-            <div class="explain-box">
-                <p style="margin:0 0 6px 0;"><strong>小白拆解：</strong></p>
-                <p style="margin:0 0 4px 0;">① <strong>第一阶段（Year 1-5）：</strong>用你设定的增速 g₁ 预测未来 5 年每年的自由现金流，然后按折现率 r 折算成今天的价值。</p>
-                <p style="margin:0 0 4px 0;">② <strong>第二阶段（永续期）：</strong>第 5 年之后假设公司以永续增长率 g₂ 无限增长，用戈登增长模型算出一个"终值 TV"，再折算成今天的价值。</p>
-                <p style="margin:0 0 4px 0;">③ <strong>企业价值 EV =</strong> 5 年现值之和 + 永续现值。</p>
-                <p style="margin:0 0 4px 0;">④ <strong>股权价值 =</strong> EV + 净现金（现金 - 有息负债）。</p>
-                <p style="margin:0;">⑤ <strong>每股内在价值 =</strong> 股权价值 / 总股本。</p>
-            </div>
-
-            <h3>4. 安全边际计算逻辑</h3>
-            <div class="explain-box">
-                <p style="margin:0 0 6px 0;"><strong>公式：</strong>安全边际 = (内在价值 - 当前股价) / 内在价值 × 100%</p>
-                <p style="margin:0;"><strong>小白理解：</strong>如果算出内在价值是 $100，当前股价 $70，安全边际 = 30%，意味着你以 7 折买入，有 30% 的"缓冲垫"防止判断失误。安全边际越高越安全，巴菲特通常要求至少 25% 以上。</p>
-            </div>
+        <div class="disclaimer">
+            ⚠️ <b>风险提示与免责声明：</b>本工具输出的是基于当前参数假设计算得到的理论估值，不构成任何投资建议。DCF 估值对增长率、折现率等参数高度敏感，参数微调可能导致估值大幅变化。
         </div>
     </div>
 </div>
 
 <script>
-    // ===== 复制提示词功能 =====
+    const DEFAULTS = { g1: 8, g2: 2, r: 10, buyLow: 0.75, buyHigh: 0.85 };
+
+    function applyPreset(g1, g2, r) {
+        document.getElementById('i_g1').value = g1;
+        document.getElementById('i_g2').value = g2;
+        document.getElementById('i_r').value = r;
+        
+        pulseElement('i_g1');
+        pulseElement('i_g2');
+        pulseElement('i_r');
+        
+        // 自动触发计算以提供即时反馈
+        startValuation();
+    }
+
     function copyPrompt() {
         const copyText = document.getElementById("ai_prompt_text");
         copyText.select();
@@ -402,166 +513,239 @@
         setTimeout(() => { btn.innerText = "📋 复制代码"; }, 2000);
     }
 
-    // ===== 自动计算 FCF =====
     function autoCalcFCF() {
         const ocf = parseFloat(document.getElementById('i_ocf').value) || 0;
         const capex = parseFloat(document.getElementById('i_capex').value) || 0;
-        const fcf = ocf - capex;
-        document.getElementById('i_fcf').value = fcf.toFixed(2);
-        calc();
+        document.getElementById('i_fcf').value = (ocf - capex).toFixed(2);
     }
 
-    // ===== Finnhub API 批量拉取引擎 =====
+    function restoreDefaults() {
+        document.getElementById('i_g1').value = DEFAULTS.g1;
+        document.getElementById('i_g2').value = DEFAULTS.g2;
+        document.getElementById('i_r').value = DEFAULTS.r;
+        document.getElementById('i_buy_low').value = DEFAULTS.buyLow;
+        document.getElementById('i_buy_high').value = DEFAULTS.buyHigh;
+    }
+
+    function startValuation() {
+        const bar = document.getElementById('calc_progress');
+        const fill = document.getElementById('calc_progress_bar');
+        bar.style.display = 'block';
+        fill.style.width = '0%';
+        void fill.offsetWidth;
+        fill.style.width = '100%';
+        setTimeout(() => {
+            calc(true);
+            setTimeout(() => { bar.style.display = 'none'; fill.style.width = '0%'; }, 400);
+        }, 300); // 缩短动画延迟提升操作体验
+    }
+
+    function pulseElement(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.remove('pulse');
+        void el.offsetWidth;
+        el.classList.add('pulse');
+    }
+
     const API_KEY = 'd96guf1r01qr77dkef2gd96guf1r01qr77dkef30';
 
     async function fetchFinnhubData() {
         const code = document.getElementById('i_code').value.trim().toUpperCase();
         if (!code) { alert('请输入美股代码！'); return; }
-
         const btn = document.getElementById('btn_fetch');
-        btn.innerText = "⏳ 拉取中...";
-        btn.style.opacity = "0.7";
-
+        btn.innerText = "⏳ 拉取中..."; btn.style.opacity = "0.7";
         try {
-            const quoteUrl = `https://finnhub.io/api/v1/quote?symbol=${code}&token=${API_KEY}`;
-            const metricUrl = `https://finnhub.io/api/v1/stock/metric?symbol=${code}&metric=all&token=${API_KEY}`;
-            const profileUrl = `https://finnhub.io/api/v1/stock/profile2?symbol=${code}&token=${API_KEY}`;
-
             const [resQuote, resMetric, resProfile] = await Promise.all([
-                fetch(quoteUrl), fetch(metricUrl), fetch(profileUrl)
+                fetch(`https://finnhub.io/api/v1/quote?symbol=${code}&token=${API_KEY}`),
+                fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${code}&metric=all&token=${API_KEY}`),
+                fetch(`https://finnhub.io/api/v1/stock/profile2?symbol=${code}&token=${API_KEY}`)
             ]);
-
             if (!resQuote.ok) throw new Error("API 连接失败，请检查网络或密钥限制");
-
             const quote = await resQuote.json();
             const metricData = await resMetric.json();
             const profile = await resProfile.json();
-
             let logMsg = `【自动抓取完成: ${code}】\n`;
-
             if (quote && quote.c > 0) {
                 document.getElementById('i_price').value = quote.c;
-                logMsg += `✅ 股价: ${quote.c} 美元/股\n`;
-            } else {
-                throw new Error("未找到该股票数据。仅支持美股代码（如 AAPL、MSFT、GOOGL），请确认代码正确。");
-            }
-
+                logMsg += `✅ 股价: ${quote.c} \n`;
+            } else { throw new Error("未找到该股票数据。仅支持美股代码（如 AAPL）。"); }
             if (profile && profile.shareOutstanding) {
-                // Finnhub shareOutstanding 单位为股，需转换为百万股
                 let sharesMillions = profile.shareOutstanding / 1000000;
                 document.getElementById('i_shares').value = sharesMillions.toFixed(2);
                 logMsg += `✅ 总股本: ${sharesMillions.toFixed(2)} 百万股\n`;
             }
-
             if (metricData && metricData.metric) {
-                const metrics = metricData.metric;
-                if (metrics.roeTTM !== undefined && metrics.roeTTM !== null) {
-                    document.getElementById('i_roe').value = Number(metrics.roeTTM).toFixed(2);
-                    logMsg += `✅ ROE: ${metrics.roeTTM}%\n`;
-                }
-                if (metrics.grossMarginTTM !== undefined && metrics.grossMarginTTM !== null) {
-                    document.getElementById('i_margin').value = Number(metrics.grossMarginTTM).toFixed(2);
-                    logMsg += `✅ 毛利率: ${metrics.grossMarginTTM}%\n`;
-                }
+                const m = metricData.metric;
+                if (m.roeTTM != null) { document.getElementById('i_roe').value = Number(m.roeTTM).toFixed(2); logMsg += `✅ ROE: ${m.roeTTM}%\n`; }
+                if (m.grossMarginTTM != null) { document.getElementById('i_margin').value = Number(m.grossMarginTTM).toFixed(2); logMsg += `✅ 毛利率: ${m.grossMarginTTM}%\n`; }
             }
-
-            calc();
-            alert(logMsg + "\n请手动补全 ✍️ 标记的财务数据后查看估值。\n推荐滚动到底部使用 AI 提示词获取剩余数据。");
-
+            alert(logMsg + "\n请手动补全 ✍️ 标记的财务数据后点击“开始计算估值”。");
         } catch (error) {
             alert('数据获取失败：\n' + error.message + '\n\n提示：联网拉取仅支持美股代码。');
         } finally {
-            btn.innerText = "⚡ 联网拉取公开数据";
-            btn.style.opacity = "1";
+            btn.innerText = "⚡ 联网拉取公开数据"; btn.style.opacity = "1";
         }
     }
 
-    // ===== 核心计算引擎 =====
     function format(num) { return Number(num).toFixed(2); }
+    function formatM(num) { return Number(num).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 
-    // 格式化大数字（百万美元 → 带千分位的可读格式）
-    function formatM(num) {
-        return Number(num).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    function getQualityRating(score) {
+        if (score >= 90) return { stars: '★★★★★', grade: 'A 级', desc: '盈利能力优秀，现金流健康，负债可控' };
+        if (score >= 75) return { stars: '★★★★☆', grade: 'B 级', desc: '整体质量良好，部分指标有待改善' };
+        if (score >= 60) return { stars: '★★★☆☆', grade: 'C 级', desc: '质量一般，需仔细甄别风险' };
+        return { stars: '★★☆☆☆', grade: 'D 级', desc: '质量较差，存在价值毁灭风险' };
     }
 
-    function setTag(id, condition, safeText, warnText) {
+    function getMosGrade(mos) {
+        if (mos < 0) return { icon: '🔴', label: '高估', color: '#ff5252', bg: 'rgba(213,0,0,0.2)' };
+        if (mos < 15) return { icon: '🟡', label: '合理', color: '#ffd600', bg: 'rgba(255,214,0,0.2)' };
+        if (mos < 30) return { icon: '🟢', label: '可以关注', color: '#69f0ae', bg: 'rgba(0,200,83,0.2)' };
+        return { icon: '🟢🟢', label: '极具吸引力', color: '#00c853', bg: 'rgba(0,200,83,0.3)' };
+    }
+
+    function getDCFCredibility(g, g2, r, roic) {
+        let stars = 0;
+        if (g >= 0 && g <= 0.15) stars++;
+        if (g2 >= 0.02 && g2 <= 0.03) stars++;
+        if (r >= 0.08 && r <= 0.12) stars++;
+        if (g < r) stars++;
+        if (roic > 0 && roic / 100 > g) stars++;
+        const descs = ['参数严重不合理', '参数可信度极低', '参数有较大风险', '参数基本合理', '参数较合理', '参数合理，可信度高'];
+        return { stars: stars, desc: descs[stars] };
+    }
+
+    function checkParams(g, g2, r, roe, roic, debt, mcap) {
+        const warnings = [];
+        if (g2 > 0.03) warnings.push({ target: 'warn_g2', msg: '永续增长率通常建议不超过 3%，当前参数可能过于乐观' });
+        if (g >= r) warnings.push({ target: 'warn_g1', msg: '增长率高于折现率，DCF 结果可能失真' });
+        if (g > 0.15) warnings.push({ target: 'warn_g1', msg: '增长率超过 15%，极少有企业能长期维持，建议保守估算' });
+        if (roe < 10 && g > 0.10) warnings.push({ target: 'warn_g1', msg: '企业盈利能力较弱 (ROE < 10%)，长期维持高增长的可能性较低' });
+        if (roic > 0 && roic / 100 < g) warnings.push({ target: 'warn_g1', msg: 'ROIC 低于增长率，企业无法靠自身盈利支撑增长假设' });
+        if (r < 0.07) warnings.push({ target: 'warn_r', msg: '折现率低于 7%，可能低估了投资风险' });
+        if (r > 0.15) warnings.push({ target: 'warn_r', msg: '折现率高于 15%，可能过于保守' });
+        if (mcap > 0 && debt / mcap > 0.5) warnings.push({ target: 'warn_debt2', msg: '有息负债超过市值的 50%，财务风险较高' });
+        return warnings;
+    }
+
+    function displayParamWarnings(warnings) {
+        document.querySelectorAll('.param-warn').forEach(el => el.style.display = 'none');
+        warnings.forEach(w => {
+            const el = document.getElementById(w.target);
+            if (el) { el.innerHTML = '⚠ ' + w.msg; el.style.display = 'block'; }
+        });
+        const area = document.getElementById('param_warn_area');
+        const list = document.getElementById('param_warn_list');
+        if (warnings.length > 0) {
+            area.style.display = 'block';
+            document.getElementById('param_warn_count').innerText = warnings.length;
+            list.innerHTML = warnings.map(w => `<div class="warn-item">⚠ ${w.msg}</div>`).join('');
+        } else { area.style.display = 'none'; }
+    }
+
+    function setRiskTag(id, condition, valueText, safeText, warnText, safeDesc, warnDesc) {
         const el = document.getElementById(id);
-        if(condition) { el.className = "tag safe"; el.innerText = safeText; }
-        else { el.className = "tag warn"; el.innerText = warnText; }
-    }
-
-    // DCF 核心计算函数
-    // fcf: 自由现金流（百万美元）, g: 5年增速, g2: 永续增速, r: 折现率
-    // shares: 总股本（百万股）, netCash: 净现金（百万美元）
-    function calcDCFPrice(fcf, g, g2, r, shares, netCash) {
-        let pvSum = 0;
-        let currentFcf = fcf;
-        // 第一阶段：5年预测期
-        for(let i=1; i<=5; i++) {
-            currentFcf *= (1 + g);             // 第 i 年的 FCF
-            pvSum += currentFcf / Math.pow(1 + r, i);  // 折现到今天
+        const descEl = document.getElementById(id + '_desc');
+        if (condition) {
+            el.className = "tag safe";
+            el.innerHTML = `${valueText} <span style="margin-left:4px;">✔ ${safeText}</span>`;
+            if (descEl) descEl.innerText = safeDesc;
+        } else {
+            el.className = "tag warn";
+            el.innerHTML = `${valueText} <span style="margin-left:4px;">⚠ ${warnText}</span>`;
+            if (descEl) descEl.innerText = warnDesc;
         }
-        // 第二阶段：永续终值 (Gordon Growth Model)
-        let tv = (currentFcf * (1 + g2)) / (r - g2);
-        let tvPv = tv / Math.pow(1 + r, 5);    // 终值折现到今天
-        let ev = pvSum + tvPv;                 // 企业价值
-        let equityValue = ev + netCash;         // 股权价值 = 企业价值 + 净现金
-        return equityValue / shares;            // 每股内在价值
     }
 
-    function calc() {
+    function calcDCFPrice(fcf, g, g2, r, shares, netCash) {
+        let pvSum = 0, currentFcf = fcf;
+        for (let i = 1; i <= 5; i++) {
+            currentFcf *= (1 + g);
+            pvSum += currentFcf / Math.pow(1 + r, i);
+        }
+        let tv = (currentFcf * (1 + g2)) / (r - g2);
+        let tvPv = tv / Math.pow(1 + r, 5);
+        return (pvSum + tvPv + netCash) / shares;
+    }
+
+    function calc(animate) {
         const price = parseFloat(document.getElementById('i_price').value) || 0;
         const shares = parseFloat(document.getElementById('i_shares').value) || 0;
         const cash = parseFloat(document.getElementById('i_cash').value) || 0;
         const debt = parseFloat(document.getElementById('i_debt').value) || 0;
         const netCash = cash - debt;
-
         const roe = parseFloat(document.getElementById('i_roe').value) || 0;
         const roic = parseFloat(document.getElementById('i_roic').value) || 0;
         const ocf = parseFloat(document.getElementById('i_ocf').value) || 0;
         const profit = parseFloat(document.getElementById('i_profit').value) || 0;
         const capex = parseFloat(document.getElementById('i_capex').value) || 0;
-        const fcf = parseFloat(document.getElementById('i_fcf').value) || 0;
-
+        let fcf = parseFloat(document.getElementById('i_fcf').value) || 0;
+        
         const g = (parseFloat(document.getElementById('i_g1').value) || 0) / 100;
         const g2 = (parseFloat(document.getElementById('i_g2').value) || 0) / 100;
         const r = (parseFloat(document.getElementById('i_r').value) || 0) / 100;
         const buyLow = parseFloat(document.getElementById('i_buy_low').value) || 0.75;
         const buyHigh = parseFloat(document.getElementById('i_buy_high').value) || 0.85;
 
-        // 参数校验
         const validationBanner = document.getElementById('validation_warning');
-        if (price <= 0 || shares <= 0 || fcf <= 0 || r <= g2) {
-            validationBanner.style.display = "block";
-            validationBanner.innerHTML = "⚠️ 关键参数缺失或冲突（折现率需大于永续增长率，FCF 必须为正），暂停计算。";
-            return;
-        } else { validationBanner.style.display = "none"; }
+        let isSchemeA = false;
+        let originalFCF = fcf;
 
-        // 总市值 = 股价 × 总股本（百万股）→ 结果为百万美元
+        // 【方案A 拦截逻辑】
+        if (fcf <= 0 && profit > 0) {
+            fcf = profit * 0.8;
+            isSchemeA = true;
+        }
+
+        // 参数硬校验
+        if (price <= 0 || shares <= 0 || r <= g2 || fcf <= 0) {
+            validationBanner.style.display = "block";
+            validationBanner.style.backgroundColor = "rgba(213, 0, 0, 0.2)";
+            validationBanner.style.borderColor = "var(--red)";
+            validationBanner.style.color = "#ff5252";
+            validationBanner.innerHTML = "⚠️ 关键参数缺失或冲突（折现率需大于永续增速，且公司净利润及FCF不能同时为负），暂停计算。";
+            return;
+        }
+
+        // 方案A 提示展现
+        if (isSchemeA) {
+            validationBanner.style.display = "block";
+            validationBanner.style.backgroundColor = "rgba(255, 214, 0, 0.15)";
+            validationBanner.style.borderColor = "rgba(255, 214, 0, 0.5)";
+            validationBanner.style.color = "#ffd600";
+            validationBanner.innerHTML = `💡 <b>稳态自动调整（方案 A 触发）：</b> 检测到填写的自由现金流为负（${formatM(originalFCF)}）。系统已自动采用<b>“归母净利润的 80%”</b>（即 ${formatM(fcf)}）替代 FCF 进行估值，以客观反映企业度过重资产扩产期后的稳态价值。`;
+        } else {
+            validationBanner.style.display = "none";
+        }
+
+        const warnings = checkParams(g, g2, r, roe, roic, debt, price * shares);
+        displayParamWarnings(warnings);
+
         const mcap = price * shares;
-        // 企业价值 EV = 市值 + 有息负债 - 类现金
         const ev = mcap + debt - cash;
         document.getElementById('out_mcap').innerText = formatM(mcap);
         document.getElementById('out_ev').innerText = formatM(ev);
 
-        // ===== 质量评分（满分 100） =====
         let score = 0;
-        // ROE：> 20% 得 25 分，> 10% 得 15 分
-        if(roe > 20) score += 25; else if(roe > 10) score += 15;
-        // ROIC：> 15% 得 25 分，> 8% 得 15 分
-        if(roic > 15) score += 25; else if(roic > 8) score += 15;
-        // 现金转换率 = OCF / 净利润
+        if (roe > 20) score += 25; else if (roe > 10) score += 15;
+        if (roic > 15) score += 25; else if (roic > 8) score += 15;
         const cashConv = profit !== 0 ? ocf / profit : 0;
-        // 自由现金流率 = FCF / 净利润
-        const fcfRate = profit !== 0 ? fcf / profit : 0;
-        // 资本开支率 = CAPEX / OCF
+        
+        // 质量评分中使用的FCF仍然看账面真实数据，不使用调整后数据以客观反馈风险
+        const fcfRate = profit !== 0 ? originalFCF / profit : 0; 
         const capexRate = ocf !== 0 ? capex / ocf : 0;
-        if(cashConv > 1.2) score += 20; else if(cashConv > 0.8) score += 10;
-        if(fcfRate > 0.6) score += 20; else if(fcfRate > 0.3) score += 10;
-        if(capexRate < 0.3) score += 10; else if(capexRate < 0.6) score += 5;
+        
+        if (cashConv > 1.2) score += 20; else if (cashConv > 0.8) score += 10;
+        if (fcfRate > 0.6) score += 20; else if (fcfRate > 0.3) score += 10;
+        if (capexRate < 0.3) score += 10; else if (capexRate < 0.6) score += 5;
 
         document.getElementById('out_score').innerText = score + " 分";
-        if(score < 60) {
+        const rating = getQualityRating(score);
+        document.getElementById('out_stars').innerText = rating.stars;
+        document.getElementById('out_grade').innerText = rating.grade + ' · ' + rating.desc;
+        
+        if (score < 60) {
             document.getElementById('out_score').style.color = "var(--red)";
             document.getElementById('quality_warning').style.display = "block";
         } else {
@@ -573,23 +757,23 @@
         document.getElementById('out_fcf_rate').innerText = format(fcfRate * 100) + '%';
         document.getElementById('out_capex_rate').innerText = format(capexRate * 100) + '%';
 
-        // ===== 风险扫描 =====
-        setTag('risk_cash', cashConv >= 0.8, '✔ 健康', '⚠ 纸面富贵');
-        setTag('risk_capex', capexRate <= 0.6, '✔ 轻资产', '⚠ 资本开支过大');
-        setTag('risk_debt', mcap > 0 && debt / mcap < 0.3, '✔ 债务安全', '⚠ 杠杆偏高');
-        setTag('risk_roic', roic >= 10, '✔ 强护城河', '⚠ 价值毁灭');
+        setRiskTag('risk_cash', cashConv >= 0.8, '转换率 ' + format(cashConv * 100) + '%', '健康', '纸面富贵',
+            '赚的利润变成了真金白银', '账面利润未转化为现金，需警惕');
+        setRiskTag('risk_capex', capexRate <= 0.6, '开支率 ' + format(capexRate * 100) + '%', '轻资产', '重资产',
+            '赚的钱很少被设备投资吃掉', '赚的钱大部分要拿去买设备，重资产扩张模式');
+        const debtRatio = mcap > 0 ? debt / mcap : 0;
+        setRiskTag('risk_debt', debtRatio < 0.3, '负债/市值 ' + format(debtRatio * 100) + '%', '债务安全', '杠杆偏高',
+            '负债在可控范围内', '有息负债较高，需关注偿债压力');
+        setRiskTag('risk_roic', roic >= 10, 'ROIC ' + format(roic) + '%', '强护城河', '价值毁灭',
+            '资本利用效率优秀，具有竞争优势', '资本回报率偏低，可能存在价值毁灭');
 
-        // ===== DCF 折现表 =====
-        let dcfFcfHtml = "<td>预测 FCF</td>";
-        let dcfPvHtml = "<td>现值 PV</td>";
+        let dcfFcfHtml = "<td>预测 FCF</td>", dcfPvHtml = "<td>现值 PV</td>";
         let currentFcf = fcf;
-        let pvSum = 0;
-        for(let i=1; i<=5; i++) {
+        for (let i = 1; i <= 5; i++) {
             currentFcf *= (1 + g);
             let pv = currentFcf / Math.pow(1 + r, i);
             dcfFcfHtml += `<td>${formatM(currentFcf)}</td>`;
             dcfPvHtml += `<td>${formatM(pv)}</td>`;
-            pvSum += pv;
         }
         let tv = (currentFcf * (1 + g2)) / (r - g2);
         let tvPv = tv / Math.pow(1 + r, 5);
@@ -598,49 +782,76 @@
         document.getElementById('dcf_fcf').innerHTML = dcfFcfHtml;
         document.getElementById('dcf_pv').innerHTML = dcfPvHtml;
 
-        // ===== 敏感性矩阵 =====
-        // 行：增速 g ± 2%；列：折现率 r ± 1%
+        const cred = getDCFCredibility(g, g2, r, roic);
+        const starStr = '★'.repeat(cred.stars) + '☆'.repeat(5 - cred.stars);
+        document.getElementById('cred_stars').innerText = starStr;
+        document.getElementById('cred_desc').innerText = cred.desc;
+
         const gList = [g - 0.02, g, g + 0.02];
         const rList = [r + 0.01, r, r - 0.01];
-        document.getElementById('th_r1').innerText = "R=" + format(rList[0]*100) + "%";
-        document.getElementById('th_r2').innerText = "R=" + format(rList[1]*100) + "%";
-        document.getElementById('th_r3').innerText = "R=" + format(rList[2]*100) + "%";
-        for(let i=0; i<3; i++) {
-            let tr = document.getElementById('tr_g' + (i+1));
+        document.getElementById('th_r1').innerText = "R=" + format(rList[0] * 100) + "%";
+        document.getElementById('th_r2').innerText = "R=" + format(rList[1] * 100) + "%";
+        document.getElementById('th_r3').innerText = "R=" + format(rList[2] * 100) + "%";
+        for (let i = 0; i < 3; i++) {
+            let tr = document.getElementById('tr_g' + (i + 1));
             let tds = tr.getElementsByTagName('td');
-            tr.getElementsByTagName('th')[0].innerText = "G=" + format(gList[i]*100) + "%";
-            for(let j=0; j<3; j++) {
+            tr.getElementsByTagName('th')[0].innerText = "G=" + format(gList[i] * 100) + "%";
+            for (let j = 0; j < 3; j++) {
                 let cellPrice = calcDCFPrice(fcf, gList[i], g2, rList[j], shares, netCash);
                 tds[j].innerText = format(cellPrice);
                 let ratio = cellPrice / price;
-                if(ratio > 1.15) tds[j].className = "matrix-cell bg-green";
-                else if(ratio < 0.85) tds[j].className = "matrix-cell bg-red";
-                else tds[j].className = "matrix-cell bg-yellow";
+                let cls = "matrix-cell";
+                if (ratio > 1.15) cls += " bg-green";
+                else if (ratio < 0.85) cls += " bg-red";
+                else cls += " bg-yellow";
+                if (i === 1 && j === 1) cls += " matrix-current";
+                tds[j].className = cls;
             }
         }
 
-        // ===== 终局建议 =====
         let baseValue = calcDCFPrice(fcf, g, g2, r, shares, netCash);
-        // 安全边际 = (内在价值 - 当前价格) / 内在价值 × 100%
         let mos = ((baseValue - price) / baseValue) * 100;
         document.getElementById('c_value').innerText = format(baseValue);
         let mosEl = document.getElementById('c_mos');
         mosEl.innerText = format(mos) + " %";
-        mosEl.style.color = mos > 0 ? "var(--green)" : "var(--red)";
+        let mosGrade = getMosGrade(mos);
+        mosEl.style.color = mosGrade.color;
+        let mosBadge = document.getElementById('c_mos_badge');
+        mosBadge.innerText = mosGrade.icon + ' ' + mosGrade.label;
+        mosBadge.style.display = 'inline-block';
+        mosBadge.style.background = mosGrade.bg;
+        mosBadge.style.color = mosGrade.color;
         document.getElementById('c_buy_zone').innerText = `${format(baseValue * buyLow)} ~ ${format(baseValue * buyHigh)}`;
 
-        // 建议文案
-        let suggestText = `质量评分 ${score} 分。`;
-        if(score < 60) suggestText += " 质地极差，存在严重风险，淘汰。";
-        else {
-            if(mos > 15) suggestText += " 当前价格显著低于内在价值，具备充分安全边际，进入击球区。";
-            else if(mos > -10) suggestText += " 估值合理，可作底仓观望或等待大盘暴跌机会。";
-            else suggestText += " 估值偏高，价格透支成长预期，面临均值回归风险，建议规避。";
-        }
+        let suggestText = `质量评分 ${score} 分（${rating.grade}）。`;
+        if (score < 60) suggestText += " 基本面存在一定瑕疵，请重点审视商业护城河。";
+        else if (mos > 15) suggestText += " 当前价格低于理论内在价值，具备安全边际，进入击球区。";
+        else if (mos > -10) suggestText += " 估值处于合理区间，可作持续跟踪。";
+        else suggestText += " 估值偏高，价格可能透支部分成长预期。";
         document.getElementById('c_suggest_text').innerText = suggestText;
-    }
 
-    window.onload = calc;
+        document.getElementById('s_value').innerText = format(baseValue);
+        document.getElementById('s_price').innerText = format(price);
+        document.getElementById('s_mos').innerText = format(mos) + '%';
+        document.getElementById('s_mos').style.color = mosGrade.color;
+        let sBadge = document.getElementById('s_mos_badge');
+        sBadge.innerText = mosGrade.icon + ' ' + mosGrade.label;
+        sBadge.style.background = mosGrade.bg;
+        sBadge.style.color = mosGrade.color;
+
+        let judgeText, actionText;
+        if (score < 60) { judgeText = '❌ 质量承压'; actionText = '审慎评估'; }
+        else if (mos > 15) { judgeText = '🟢 具备吸引力'; actionText = '关注/买入'; }
+        else if (mos > -10) { judgeText = '🟡 估值合理'; actionText = '观望'; }
+        else { judgeText = '🔴 估值偏高'; actionText = '规避'; }
+        document.getElementById('s_judge').innerText = judgeText;
+        document.getElementById('s_action').innerText = actionText;
+        document.getElementById('s_quality').innerText = rating.stars + ' ' + rating.grade;
+
+        if (animate) {
+            ['out_mcap', 'out_ev', 'out_score', 'c_value', 'c_mos', 's_value', 's_mos'].forEach(pulseElement);
+        }
+    }
 </script>
 </body>
 </html>
