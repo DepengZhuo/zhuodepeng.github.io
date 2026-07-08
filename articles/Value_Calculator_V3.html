@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Value Dashboard - 机构级价值分析工作台 V4.0</title>
+    <title>Pro Value Dashboard - 机构级价值分析工作台 V4.1</title>
     
     <script>
       window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
@@ -21,22 +21,25 @@
             background-color: var(--bg-color); color: var(--text-main);
             margin: 0; padding: 20px; font-size: 14px;
         }
-        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 15px; margin-bottom: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 15px; margin-bottom: 10px; }
         .header h1 { margin: 0; font-size: 22px; color: #fff; }
         .toolbar button { background: var(--card-bg); color: var(--text-main); border: 1px solid var(--border); padding: 6px 12px; cursor: pointer; margin-left: 10px; border-radius: 4px; }
         .toolbar button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+        .top-notice { background: rgba(41, 98, 255, 0.1); border: 1px solid var(--accent); color: #82b1ff; padding: 10px 15px; border-radius: 4px; margin-bottom: 20px; font-size: 13px; display: flex; align-items: center;}
+        
         .grid-layout { display: grid; grid-template-columns: 480px 1fr; gap: 20px; }
         @media (max-width: 1300px) { .grid-layout { grid-template-columns: 1fr; } }
         .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 6px; padding: 15px; margin-bottom: 20px; }
         .card-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; display: flex; align-items: center; justify-content: space-between;}
         
         /* 表单样式优化 */
-        .input-group { display: flex; flex-direction: column; margin-bottom: 12px; border-bottom: 1px dashed #2a2a2a; padding-bottom: 8px; }
+        .input-group { display: flex; flex-direction: column; margin-bottom: 14px; border-bottom: 1px dashed #2a2a2a; padding-bottom: 10px; }
         .input-row { display: flex; justify-content: space-between; align-items: center; }
         .input-row label { color: var(--text-main); font-weight: 500; flex: 1; }
         .input-row input { background: #2a2a2a; border: 1px solid var(--border); color: #fff; padding: 4px 8px; width: 120px; text-align: right; border-radius: 3px; }
         .input-row input:focus { outline: none; border-color: var(--accent); }
-        .hint { font-size: 11px; color: #6c757d; margin-top: 4px; line-height: 1.4; }
+        .hint { font-size: 12px; color: #888; margin-top: 6px; line-height: 1.4; }
+        .hint strong { color: #bbb; }
         
         /* 标签指示器 */
         .badge-auto { background: rgba(0, 200, 83, 0.15); color: #69f0ae; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-right: 6px; }
@@ -59,25 +62,32 @@
         .tag.safe { background: rgba(0,200,83,0.2); color: #69f0ae; }
         .tag.warn { background: rgba(213,0,0,0.2); color: #ff5252; }
         
-        .logic-doc h3 { color: var(--accent); font-size: 14px; margin-bottom: 5px; border-left: 3px solid var(--accent); padding-left: 8px;}
+        .logic-doc h3 { color: var(--accent); font-size: 14px; margin-bottom: 8px; border-left: 3px solid var(--accent); padding-left: 8px; margin-top: 20px;}
         .logic-doc p { font-size: 12px; color: #a0a0a0; line-height: 1.6; margin-top: 0; margin-bottom: 10px; }
+        
+        .ai-prompt { width: 100%; box-sizing: border-box; height: 200px; background: #1a1a1a; color: #69f0ae; border: 1px solid #333; padding: 12px; border-radius: 4px; font-family: monospace; font-size: 13px; line-height: 1.5; resize: vertical;}
+        .copy-btn { background: var(--accent); color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; float: right; font-size: 12px; margin-top: -35px; margin-right: 5px; position: relative; z-index: 10;}
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>Value Dashboard - 机构级全息估值平台 V4.0</h1>
+    <h1>Value Dashboard - 机构级全息估值平台 V4.1</h1>
     <div class="toolbar">
         <button class="active">巴菲特/达摩达兰 DCF</button>
         <button onclick="window.print()">🖨️ 生成 PDF 报告</button>
     </div>
 </div>
 
+<div class="top-notice">
+    💡 <b>效率提示：</b> 无法自动获取的财务指标，请直接滚动到页面最下方（第⑩模块），复制【AI 数据获取提示词】，发送给您的 AI 助手一键提取，随后填入对应表单即可。
+</div>
+
 <div class="grid-layout">
     <div>
         <div class="card">
             <div class="card-title">
-                ① 基础与市场数据 (亿元/亿股)
+                ① 基础与市场数据 (建议统一使用 百万 作为单位)
                 <button id="btn_fetch" onclick="fetchFinnhubData()" style="font-size:12px; padding:4px 10px; background:#2962ff; color:#fff; border:none; border-radius:3px; cursor:pointer; display:flex; align-items:center;">
                     ⚡ 联网拉取公开数据
                 </button>
@@ -88,26 +98,27 @@
                     <label>股票代码 (如 AAPL)</label>
                     <input type="text" id="i_code" value="AAPL" style="width:140px; text-align:left; background:#333;" oninput="calc()">
                 </div>
+                <div class="hint"><strong>含义：</strong>用于触发 API 自动抓取最新市值数据。美股直接输代码。</div>
             </div>
             
             <div class="input-group">
                 <div class="input-row"><label><span class="badge-auto">🤖 自动</span>当前股价 (元/美元)</label><input type="number" id="i_price" value="226.00" oninput="calc()"></div>
-                <div class="hint">Finnhub API 提供实时报价。</div>
+                <div class="hint"><strong>获取来源：</strong>Finnhub API 实时报价，或交易软件。</div>
             </div>
             
             <div class="input-group">
                 <div class="input-row"><label><span class="badge-auto">🤖 自动</span>总股本 (百万股)</label><input type="number" id="i_shares" value="15340" oninput="calc()"></div>
-                <div class="hint">注：美股单位通常为 Millions (百万)。A股请换算对应。</div>
+                <div class="hint"><strong>含义：</strong>公司在外流通的全部股份数量。<strong>注意：</strong>美股API单位通常为 Millions (百万)。</div>
             </div>
             
             <div class="input-group">
                 <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>类现金资产合计</label><input type="number" id="i_cash" value="67000" oninput="calc()"></div>
-                <div class="hint">需查财报。资产负债表：现金 + 短期投资。</div>
+                <div class="hint"><strong>公式：</strong>现金及现金等价物 + 短期投资。<br><strong>获取来源：</strong>财报【资产负债表】。用于计算净资产。</div>
             </div>
             
             <div class="input-group">
                 <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>有息负债合计</label><input type="number" id="i_debt" value="105000" oninput="calc()"></div>
-                <div class="hint">需查财报。资产负债表：长短期借款 + 应付债券。</div>
+                <div class="hint"><strong>公式：</strong>短期借款 + 长期借款 + 应付债券。<br><strong>获取来源：</strong>财报【资产负债表】。剔除无息应付账款。</div>
             </div>
         </div>
 
@@ -116,52 +127,59 @@
             
             <div class="input-group">
                 <div class="input-row"><label><span class="badge-auto">🤖 自动</span>ROE 净资产收益率 (%)</label><input type="number" id="i_roe" value="150" oninput="calc()"></div>
-                <div class="hint">若 API 缺失，请自行查阅 TTM 数据。</div>
+                <div class="hint"><strong>含义：</strong>股东资金的投资回报率，体现赚钱效率。</div>
             </div>
             
             <div class="input-group">
                 <div class="input-row"><label><span class="badge-auto">🤖 自动</span>毛利率 (%)</label><input type="number" id="i_margin" value="45" oninput="calc()"></div>
+                <div class="hint"><strong>含义：</strong>产品的基础盈利空间，体现行业定价权。</div>
             </div>
             
             <div class="input-group">
                 <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>ROIC 投入资本回报率 (%)</label><input type="number" id="i_roic" value="40" oninput="calc()"></div>
+                <div class="hint"><strong>含义：</strong>剔除杠杆后的核心业务盈利能力，估值最核心指标。<br><strong>获取来源：</strong>理杏仁、雪球或计算 (NOPAT/投入资本)。</div>
             </div>
             
             <div class="input-group">
                 <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>经营现金流 OCF</label><input type="number" id="i_ocf" value="110000" oninput="calc()"></div>
-                <div class="hint">现金流量表：Operating Cash Flow。</div>
+                <div class="hint"><strong>含义：</strong>主营业务实际收到的真金白银（Operating Cash Flow）。<br><strong>获取来源：</strong>财报【现金流量表】首项。</div>
             </div>
             
             <div class="input-group">
                 <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>归母净利润</label><input type="number" id="i_profit" value="97000" oninput="calc()"></div>
+                <div class="hint"><strong>含义：</strong>归属母公司股东的最终净收益。<br><strong>获取来源：</strong>财报【利润表】底部。</div>
             </div>
             
             <div class="input-group">
                 <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>资本开支 CAPEX</label><input type="number" id="i_capex" value="10000" oninput="calc()"></div>
-                <div class="hint">投资维持生意的硬成本（正数）。</div>
+                <div class="hint"><strong>含义：</strong>购建固定/无形资产支付的现金（输入正数）。<br><strong>获取来源：</strong>财报【现金流量表】- 投资活动。</div>
             </div>
             
             <div class="input-group">
                 <div class="input-row"><label><span class="badge-manual">✍️ 手动</span>自由现金流 FCF</label><input type="number" id="i_fcf" value="100000" oninput="calc()"></div>
-                <div class="hint">公式：OCF - CAPEX。核心 DCF 折现基数。</div>
+                <div class="hint"><strong>公式：</strong>OCF - CAPEX。<br><strong>含义：</strong>企业真正能自由支配分配的现金，DCF折现基数。</div>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-title">③ DCF 核心参数 (%)</div>
-            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>未来 1-5 年复合增速</label><input type="number" id="i_g1" value="8" oninput="calc()"></div></div>
-            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>永续增长率 (勿超GDP)</label><input type="number" id="i_g2" value="2" oninput="calc()"></div></div>
-            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>折现率 (风险回报)</label><input type="number" id="i_r" value="10" oninput="calc()"></div></div>
-            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>击球区下限 (× 价值)</label><input type="number" id="i_buy_low" value="0.75" step="0.05" oninput="calc()"></div></div>
+            <div class="card-title">③ DCF 核心参数 (预测与贴现率)</div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>未来 1-5 年复合增速</label><input type="number" id="i_g1" value="8" oninput="calc()"></div>
+            <div class="hint">预估企业未来5年的利润复合年增长率。保守估算。</div></div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>永续增长率 (勿超GDP)</label><input type="number" id="i_g2" value="2" oninput="calc()"></div>
+            <div class="hint">第5年之后的永久增速。通常锚定无风险利率或长期通胀(2%-3%)。</div></div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>折现率 (风险回报)</label><input type="number" id="i_r" value="10" oninput="calc()"></div>
+            <div class="hint">你期望的年化回报率，或加权平均资本成本(WACC)。通常设为8%-12%。</div></div>
+            <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>击球区下限 (× 价值)</label><input type="number" id="i_buy_low" value="0.75" step="0.05" oninput="calc()"></div>
+            <div class="hint">安全边际设定，如0.75代表在内在价值打75折时买入。</div></div>
             <div class="input-group"><div class="input-row"><label><span class="badge-manual">✍️ 手动</span>击球区上限 (× 价值)</label><input type="number" id="i_buy_high" value="0.85" step="0.05" oninput="calc()"></div></div>
         </div>
     </div>
 
     <div>
         <div class="score-board">
-            <div><div style="color:var(--text-muted); margin-bottom:5px;">总市值 (百万)</div><div class="score-value" id="out_mcap" style="color:#fff;">-</div></div>
-            <div><div style="color:var(--text-muted); margin-bottom:5px;">EV 企业价值 (百万)</div><div class="score-value" id="out_ev" style="color:#fff;">-</div></div>
-            <div><div style="color:var(--text-muted); margin-bottom:5px;">综合企业质量评分</div><div class="score-value" id="out_score" style="color:var(--accent);">-</div></div>
+            <div><div style="color:var(--text-muted); margin-bottom:5px;">总市值</div><div class="score-value" id="out_mcap" style="color:#fff;">-</div></div>
+            <div><div style="color:var(--text-muted); margin-bottom:5px;">EV 企业价值</div><div class="score-value" id="out_ev" style="color:#fff;">-</div></div>
+            <div><div style="color:var(--text-muted); margin-bottom:5px;">综合质量评分</div><div class="score-value" id="out_score" style="color:var(--accent);">-</div></div>
         </div>
         
         <div id="validation_warning" class="warning-banner"></div>
@@ -223,16 +241,48 @@
         </div>
         
         <div class="card logic-doc">
-            <div class="card-title">⑩ 底层计算逻辑与说明</div>
-            <h3>1. 数据源限制说明</h3>
+            <div class="card-title">⑩ 底层计算逻辑与操作指引</div>
+            
+            <h3>1. AI 数据获取提示词 (一键复制)</h3>
+            <p>基于开源 API 的限制，深度财务数据仍需查阅。您可以点击复制下方文案，直接发送给 ChatGPT、Kimi 或 Claude 获取整理好的数据表格：</p>
+            <div style="position: relative;">
+                <button class="copy-btn" onclick="copyPrompt()">📋 复制代码</button>
+                <textarea id="ai_prompt_text" class="ai-prompt" readonly>
+请帮我查阅【在此处填写股票代码/名称】最新财报（TTM）数据，我需要提取以下10个核心财务指标。
+请务必保持单位统一（明确是 亿元人民币 还是 百万美元），并直接以【表格形式】返回给我。如果找不到确切数据请给出你的预估并说明：
+
+1. 实时每股股价：
+2. 总股本数量（百万股）：
+3. 类现金资产合计（现金及现金等价物 + 短期投资）：
+4. 有息负债合计（短期借款 + 长期借款 + 应付债券）：
+5. TTM ROE（净资产收益率，%）：
+6. TTM 毛利率（%）：
+7. 最新财年 ROIC（投入资本回报率，%）：
+8. 最新财年 OCF（经营活动现金流净额）：
+9. 最新财年 归母净利润：
+10. 最新财年 CAPEX（资本开支：购建固定资产/无形资产支付的现金，请取正数）：</textarea>
+            </div>
+            
+            <h3>2. 数据源限制说明</h3>
             <p>基于开源免费协议，本平台可通过 API 自动获取公开市场的<b>实时股价、流通股本、部分 TTM 财报数据（如 ROE、毛利率）</b>。涉及到深度财务审计级别的数据（如有息负债、自由现金流）必须依托于专业终端查阅后手动填入。</p>
-            <h3>2. 达摩达兰两阶段 DCF 折现模型</h3>
+            
+            <h3>3. 达摩达兰两阶段 DCF 折现模型</h3>
             <p>核心公式：$PV = \sum_{t=1}^{5} \frac{FCF \times (1+g_{1})^t}{(1+r)^t} + \frac{FCF_5 \times (1+g_{2})}{(r - g_{2}) \times (1+r)^5}$</p>
         </div>
     </div>
 </div>
 
 <script>
+    // ===== 复制提示词功能 =====
+    function copyPrompt() {
+        const copyText = document.getElementById("ai_prompt_text");
+        copyText.select();
+        document.execCommand("copy");
+        const btn = document.querySelector(".copy-btn");
+        btn.innerText = "✅ 已复制";
+        setTimeout(() => { btn.innerText = "📋 复制代码"; }, 2000);
+    }
+
     // ===== Finnhub API 批量拉取引擎 =====
     const API_KEY = 'd96guf1r01qr77dkef2gd96guf1r01qr77dkef30';
 
@@ -245,7 +295,6 @@
         btn.style.opacity = "0.7";
 
         try {
-            // 构造多个公开接口并发请求
             const quoteUrl = `https://finnhub.io/api/v1/quote?symbol=${code}&token=${API_KEY}`;
             const metricUrl = `https://finnhub.io/api/v1/stock/metric?symbol=${code}&metric=all&token=${API_KEY}`;
             const profileUrl = `https://finnhub.io/api/v1/stock/profile2?symbol=${code}&token=${API_KEY}`;
@@ -262,7 +311,6 @@
 
             let logMsg = `【自动抓取完成: ${code}】\n`;
 
-            // 1. 获取股价 (Quote)
             if (quote && quote.c > 0) {
                 document.getElementById('i_price').value = quote.c;
                 logMsg += `✅ 股价: ${quote.c}\n`;
@@ -270,13 +318,11 @@
                 throw new Error("未找到该股票数据，美股请直接输代码，如 AAPL");
             }
 
-            // 2. 获取总股本 (Profile - shareOutstanding in millions)
             if (profile && profile.shareOutstanding) {
                 document.getElementById('i_shares').value = Number(profile.shareOutstanding).toFixed(2);
                 logMsg += `✅ 股本: ${profile.shareOutstanding} 百万\n`;
             }
 
-            // 3. 获取 TTM 质量指标 (Metrics)
             if (metricData && metricData.metric) {
                 const metrics = metricData.metric;
                 if (metrics.roeTTM !== undefined) {
@@ -289,8 +335,8 @@
                 }
             }
 
-            calc(); // 数据刷新后触发计算引擎
-            alert(logMsg + "\n请手动补全 ✍️ 标记的财务数据后查看估值。");
+            calc(); 
+            alert(logMsg + "\n请手动补全 ✍️ 标记的财务数据后查看估值。推荐滚动到底部使用 AI 提示词获取剩余数据。");
 
         } catch (error) {
             alert('数据获取失败：\n' + error.message);
@@ -300,7 +346,7 @@
         }
     }
 
-    // ===== 核心计算引擎 (保持 V3.0 的严密逻辑不变) =====
+    // ===== 核心计算引擎 =====
     function format(num) { return Number(num).toFixed(2); }
     
     function setTag(id, condition, safeText, warnText) {
