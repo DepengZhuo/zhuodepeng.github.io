@@ -7,78 +7,135 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-100 min-h-screen py-8 px-4 font-sans">
-    <div id="app" class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
+<body class="bg-slate-50 min-h-screen py-8 px-4 font-sans text-slate-800">
+    <div id="app" class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200">
         
         <div class="bg-blue-600 px-6 py-5 text-white">
-            <h1 class="text-2xl font-bold text-center">📊 指数估值与定投决策计算器</h1>
-            <p class="text-xs text-blue-100 text-center mt-1">数据状态：每日收盘自动更新</p>
+            <h1 class="text-2xl font-bold text-center">📊 指数估值与定投决策计算器 (Pro版)</h1>
+            <p class="text-xs text-blue-100 text-center mt-1">支持：多指数自选 | 参数自定义微调 | 透明计算推导</p>
         </div>
 
         <div class="p-6 space-y-6">
 
             <!-- 1. 选择策略 -->
             <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1">1. 选择计算策略：</label>
-                <select v-model="selectedStrategy" @change="onStrategyChange" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="EARNINGS_YIELD">策略一：盈利收益率法（成熟高股息指数，如上证50/红利）</option>
-                    <option value="BOGLE_PE">策略二：博格公式 - PE版（宽基/成长指数，如沪深300/消费）</option>
-                    <option value="BOGLE_PB">策略三：博格公式 - PB版（周期性/金融行业，如证券/银行）</option>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">1. 选择计算策略：</label>
+                <select v-model="selectedStrategy" @change="onStrategyChange" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm bg-white focus:ring-2 focus:ring-blue-500">
+                    <option value="EARNINGS_YIELD">策略一：盈利收益率法（成熟高股息：上证50/红利等）</option>
+                    <option value="BOGLE_PE">策略二：博格公式 - PE版（成长/宽基：沪深300/消费/医药等）</option>
+                    <option value="BOGLE_PB">策略三：博格公式 - PB版（强周期/金融：证券/银行/地产等）</option>
                 </select>
             </div>
 
             <!-- 2. 选择指数 -->
             <div>
-                <label class="block text-sm font-semibold text-slate-700 mb-1">2. 选择对应指数：</label>
-                <select v-model="selectedIndex" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option v-for="(item, idx) in availableIndices" :key="idx" :value="idx">
+                <label class="block text-sm font-semibold text-slate-700 mb-2">2. 选择对应指数 (或选择自定义)：</label>
+                <select v-model="selectedCode" @change="onIndexChange" class="w-full border border-slate-300 rounded-lg px-4 py-2.5 text-sm bg-white focus:ring-2 focus:ring-blue-500 font-medium">
+                    <option value="CUSTOM" class="text-blue-600 font-bold">🔧 自定义输入 (手动填入下方参数)</option>
+                    <option disabled>──────────</option>
+                    <option v-for="item in availableIndices" :key="item.code" :value="item.code">
                         {{ item.name }} ({{ item.code }})
                     </option>
                 </select>
             </div>
 
             <!-- 3. 数据参数可微调 -->
-            <div v-if="currentData" class="space-y-4 border-t pt-4">
-                <h3 class="text-sm font-semibold text-slate-700">3. 今日市场指标（自动带出，支持微调）：</h3>
+            <div class="space-y-4 border-t pt-5">
+                <div class="flex justify-between items-end">
+                    <h3 class="text-sm font-semibold text-slate-700">3. 当前市场指标：</h3>
+                    <span v-if="selectedCode === 'CUSTOM'" class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">自定义模式</span>
+                    <span v-else class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">可手动微调</span>
+                </div>
                 
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <div v-if="selectedStrategy !== 'BOGLE_PB'" class="bg-slate-50 p-3 rounded-lg border">
                         <label class="block text-xs text-slate-500 mb-1">市盈率 (PE)</label>
-                        <input v-model.number="currentData.pe" type="number" step="0.1" class="w-full bg-white border rounded px-2 py-1 text-sm font-bold">
+                        <input v-model.number="params.pe" type="number" step="0.1" class="w-full bg-white border rounded px-2 py-1.5 text-sm font-bold focus:ring-1 focus:ring-blue-500">
                     </div>
 
                     <div v-if="selectedStrategy === 'BOGLE_PB'" class="bg-slate-50 p-3 rounded-lg border">
                         <label class="block text-xs text-slate-500 mb-1">市净率 (PB)</label>
-                        <input v-model.number="currentData.pb" type="number" step="0.01" class="w-full bg-white border rounded px-2 py-1 text-sm font-bold">
+                        <input v-model.number="params.pb" type="number" step="0.01" class="w-full bg-white border rounded px-2 py-1.5 text-sm font-bold focus:ring-1 focus:ring-blue-500">
                     </div>
 
                     <div v-if="selectedStrategy === 'BOGLE_PE'" class="bg-slate-50 p-3 rounded-lg border">
-                        <label class="block text-xs text-slate-500 mb-1">PE 历史百分位 (%)</label>
-                        <input v-model.number="currentData.pePct" type="number" class="w-full bg-white border rounded px-2 py-1 text-sm font-bold">
+                        <label class="block text-xs text-slate-500 mb-1">PE 分位数 (%)</label>
+                        <input v-model.number="params.pePct" type="number" class="w-full bg-white border rounded px-2 py-1.5 text-sm font-bold focus:ring-1 focus:ring-blue-500">
                     </div>
 
                     <div v-if="selectedStrategy === 'BOGLE_PB'" class="bg-slate-50 p-3 rounded-lg border">
-                        <label class="block text-xs text-slate-500 mb-1">PB 历史百分位 (%)</label>
-                        <input v-model.number="currentData.pbPct" type="number" class="w-full bg-white border rounded px-2 py-1 text-sm font-bold">
+                        <label class="block text-xs text-slate-500 mb-1">PB 分位数 (%)</label>
+                        <input v-model.number="params.pbPct" type="number" class="w-full bg-white border rounded px-2 py-1.5 text-sm font-bold focus:ring-1 focus:ring-blue-500">
                     </div>
 
                     <div class="bg-slate-50 p-3 rounded-lg border">
                         <label class="block text-xs text-slate-500 mb-1">股息率 (%)</label>
-                        <input v-model.number="currentData.dv" type="number" step="0.1" class="w-full bg-white border rounded px-2 py-1 text-sm font-bold">
+                        <input v-model.number="params.dv" type="number" step="0.1" class="w-full bg-white border rounded px-2 py-1.5 text-sm font-bold focus:ring-1 focus:ring-blue-500">
+                    </div>
+
+                    <div v-if="selectedStrategy === 'BOGLE_PE'" class="bg-slate-50 p-3 rounded-lg border">
+                        <label class="block text-xs text-slate-500 mb-1">预期盈利增长 (%)</label>
+                        <input v-model.number="params.eg" type="number" step="0.1" class="w-full bg-white border rounded px-2 py-1.5 text-sm font-bold focus:ring-1 focus:ring-blue-500">
+                    </div>
+                    
+                    <div v-if="selectedStrategy === 'BOGLE_PB'" class="bg-slate-50 p-3 rounded-lg border">
+                        <label class="block text-xs text-slate-500 mb-1">预期净资产增长 (%)</label>
+                        <input v-model.number="params.nag" type="number" step="0.1" class="w-full bg-white border rounded px-2 py-1.5 text-sm font-bold focus:ring-1 focus:ring-blue-500">
                     </div>
                 </div>
             </div>
 
-            <!-- 4. 评估结果 -->
-            <div v-if="currentData" class="space-y-4 border-t pt-4">
-                <h3 class="text-sm font-semibold text-slate-700">4. 决策建议：</h3>
-                
-                <div class="p-4 rounded-xl border" :class="resultStyle.box">
+            <!-- 4. 计算过程展示 (折叠面板风格) -->
+            <div class="border-t pt-5">
+                <h3 class="text-sm font-semibold text-slate-700 mb-3">4. 完整计算推导过程：</h3>
+                <div class="bg-slate-800 text-slate-300 p-4 rounded-xl text-sm font-mono leading-relaxed shadow-inner overflow-x-auto">
+                    <template v-if="selectedStrategy === 'EARNINGS_YIELD'">
+                        <p class="text-white font-bold mb-2">// 盈利收益率法计算公式</p>
+                        <p>1. 提取当前市盈率(PE) = <span class="text-green-400">{{ params.pe }}</span></p>
+                        <p>2. 计算盈利收益率 = ( 1 / PE ) * 100%</p>
+                        <p>3. 实际计算 = ( 1 / {{ params.pe }} ) * 100% = <span class="text-yellow-400 font-bold">{{ calcResult.eyValue }}%</span></p>
+                        <div class="mt-2 border-t border-slate-600 pt-2 text-xs">
+                            * 判定规则：> 10% (低估买入) | 6.4%~10% (合理持有) | < 6.4% (高估卖出)
+                        </div>
+                    </template>
+
+                    <template v-if="selectedStrategy === 'BOGLE_PE'">
+                        <p class="text-white font-bold mb-2">// 博格公式 (PE版) 预估年化收益</p>
+                        <p>公式 = 股息率 + 盈利增长率 + 估值变化修复(按3年回归均值折算)</p>
+                        <p>1. 基础收益 = {{ params.dv }}% (股息) + {{ params.eg }}% (增长) = <span class="text-green-400">{{ (params.dv + params.eg).toFixed(2) }}%</span></p>
+                        <p>2. 估值分位 = {{ params.pePct }}% (距50%均值空间：{{ 50 - params.pePct }}%)</p>
+                        <p>3. 估值修复 = ((50 - {{ params.pePct }}) / 3年) * 0.4系数 = <span class="text-blue-400">{{ calcResult.valuationFix }}%</span></p>
+                        <p class="mt-2 text-white font-bold border-t border-slate-600 pt-2">
+                            总预估年化收益 ≈ <span class="text-yellow-400">{{ calcResult.expectedReturn }}%</span>
+                        </p>
+                    </template>
+
+                    <template v-if="selectedStrategy === 'BOGLE_PB'">
+                        <p class="text-white font-bold mb-2">// 博格公式 (PB版) 预估年化收益</p>
+                        <p>公式 = 股息率 + 净资产增长率 + 估值变化修复(按2年回归均值折算)</p>
+                        <p>1. 基础收益 = {{ params.dv }}% (股息) + {{ params.nag }}% (增长) = <span class="text-green-400">{{ (params.dv + params.nag).toFixed(2) }}%</span></p>
+                        <p>2. 估值分位 = {{ params.pbPct }}% (距50%均值空间：{{ 50 - params.pbPct }}%)</p>
+                        <p>3. 估值修复 = ((50 - {{ params.pbPct }}) / 2年) * 0.6系数 = <span class="text-blue-400">{{ calcResult.valuationFix }}%</span></p>
+                        <p class="mt-2 text-white font-bold border-t border-slate-600 pt-2">
+                            周期爆发预估年化 ≈ <span class="text-yellow-400">{{ calcResult.expectedReturn }}%</span>
+                        </p>
+                    </template>
+                </div>
+            </div>
+
+            <!-- 5. 评估结果 -->
+            <div class="border-t pt-5">
+                <h3 class="text-sm font-semibold text-slate-700 mb-3">5. 最终决策建议：</h3>
+                <div class="p-5 rounded-xl border shadow-sm transition-all" :class="calcResult.style.box">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-lg font-bold" :class="resultStyle.titleText">{{ result.signalText }}</span>
-                        <span class="text-xs px-2.5 py-1 rounded-full font-medium" :class="resultStyle.badge">{{ result.statusTag }}</span>
+                        <span class="text-xl font-bold flex items-center gap-2" :class="calcResult.style.titleText">
+                            {{ calcResult.signalText }}
+                        </span>
+                        <span class="text-sm px-3 py-1 rounded-full font-bold" :class="calcResult.style.badge">
+                            {{ calcResult.statusTag }}
+                        </span>
                     </div>
-                    <p class="text-sm text-slate-600 mb-2">{{ result.reason }}</p>
+                    <p class="text-slate-700 mt-2 font-medium">{{ calcResult.reason }}</p>
                 </div>
             </div>
 
@@ -86,35 +143,44 @@
     </div>
 
     <script>
-        const { createApp, ref, computed, onMounted } = Vue
+        const { createApp, ref, computed, reactive, onMounted } = Vue
 
         createApp({
             setup() {
-                // 默认内置兜底数据（防止 json 未就绪时下拉框空白）
+                // 扩充版的默认指数库
                 const defaultData = {
                     EARNINGS_YIELD: [
                         { name: "上证50", code: "000016", pe: 10.2, pb: 1.1, pePct: 35, pbPct: 30, dv: 3.8 },
                         { name: "上证红利", code: "000015", pe: 6.5, pb: 0.7, pePct: 15, pbPct: 20, dv: 5.5 },
-                        { name: "恒生指数", code: "HSI", pe: 9.1, pb: 0.9, pePct: 20, pbPct: 18, dv: 4.1 }
+                        { name: "中证红利", code: "000922", pe: 7.1, pb: 0.8, pePct: 18, pbPct: 22, dv: 5.1 },
+                        { name: "恒生指数", code: "HSI", pe: 9.1, pb: 0.9, pePct: 20, pbPct: 18, dv: 4.1 },
+                        { name: "恒生国企", code: "HSCEI", pe: 8.2, pb: 0.8, pePct: 15, pbPct: 15, dv: 4.5 }
                     ],
                     BOGLE_PE: [
-                        { name: "沪深300", code: "000300", pe: 11.8, pb: 1.3, pePct: 25, pbPct: 28, dv: 3.0 },
-                        { name: "中证500", code: "399905", pe: 22.4, pb: 1.7, pePct: 18, pbPct: 22, dv: 1.8 },
-                        { name: "创业板指", code: "399006", pe: 28.5, pb: 2.8, pePct: 12, pbPct: 15, dv: 1.2 },
-                        { name: "主要消费", code: "000036", pe: 24.1, pb: 4.2, pePct: 22, pbPct: 30, dv: 2.5 }
+                        { name: "沪深300", code: "000300", pe: 11.8, pb: 1.3, pePct: 25, pbPct: 28, dv: 3.0, eg: 7.5 },
+                        { name: "中证500", code: "399905", pe: 22.4, pb: 1.7, pePct: 18, pbPct: 22, dv: 1.8, eg: 9.0 },
+                        { name: "创业板指", code: "399006", pe: 28.5, pb: 2.8, pePct: 12, pbPct: 15, dv: 1.2, eg: 12.0 },
+                        { name: "科创50", code: "000688", pe: 42.1, pb: 3.5, pePct: 10, pbPct: 12, dv: 0.8, eg: 15.0 },
+                        { name: "主要消费", code: "000036", pe: 24.1, pb: 4.2, pePct: 22, pbPct: 30, dv: 2.5, eg: 8.5 },
+                        { name: "医药100", code: "000109", pe: 26.5, pb: 3.1, pePct: 15, pbPct: 18, dv: 1.5, eg: 10.0 }
                     ],
                     BOGLE_PB: [
-                        { name: "证券公司", code: "399975", pe: 18.5, pb: 1.15, pePct: 40, pbPct: 12, dv: 1.5 },
-                        { name: "中证银行", code: "399986", pe: 5.2, pb: 0.55, pePct: 30, pbPct: 15, dv: 5.2 },
-                        { name: "地产等权", code: "399983", pe: 15.0, pb: 0.65, pePct: 50, pbPct: 8, dv: 3.0 }
+                        { name: "证券公司", code: "399975", pe: 18.5, pb: 1.15, pePct: 40, pbPct: 12, dv: 1.5, nag: 6.0 },
+                        { name: "中证银行", code: "399986", pe: 5.2, pb: 0.55, pePct: 30, pbPct: 15, dv: 5.2, nag: 5.0 },
+                        { name: "地产等权", code: "399983", pe: 15.0, pb: 0.65, pePct: 50, pbPct: 8, dv: 3.0, nag: 2.0 },
+                        { name: "中证煤炭", code: "399998", pe: 8.5, pb: 1.45, pePct: 60, pbPct: 75, dv: 6.5, nag: 4.0 }
                     ]
                 }
 
                 const rawData = ref(defaultData)
-                const selectedStrategy = ref('EARNINGS_YIELD')
-                const selectedIndex = ref(0)
+                const selectedStrategy = ref('BOGLE_PE') // 默认选策略二
+                const selectedCode = ref('000300')      // 默认选沪深300
 
-                // 尝试拉取远程更新的 json
+                // 独立出来的响应式参数（彻底解决绑定失效 Bug）
+                const params = reactive({
+                    pe: 11.8, pb: 1.3, pePct: 25, pbPct: 28, dv: 3.0, eg: 7.5, nag: 6.0
+                })
+
                 onMounted(async () => {
                     try {
                         const res = await fetch('./data.json?t=' + new Date().getTime())
@@ -122,55 +188,102 @@
                             const json = await res.json()
                             if (json && json.EARNINGS_YIELD) {
                                 rawData.value = json
+                                onIndexChange() // 加载新数据后刷新参数
                             }
                         }
                     } catch (e) {
-                        console.log('读取 data.json 失败，使用内置保底数据')
+                        console.log('读取线上 json 失败，使用扩充版内置数据')
                     }
                 })
 
-                const availableIndices = computed(() => {
-                    return rawData.value[selectedStrategy.value] || []
-                })
+                const availableIndices = computed(() => rawData.value[selectedStrategy.value] || [])
 
-                const currentData = computed(() => {
-                    if (availableIndices.value.length === 0) return null
-                    return availableIndices.value[selectedIndex.value] || availableIndices.value[0]
-                })
-
+                // 策略切换逻辑
                 const onStrategyChange = () => {
-                    selectedIndex.value = 0
+                    if (availableIndices.value.length > 0) {
+                        selectedCode.value = availableIndices.value[0].code
+                        onIndexChange()
+                    }
                 }
 
-                // 决策算法
-                const result = computed(() => {
-                    if (!currentData.value) return {}
-                    const item = currentData.value
+                // 指数切换逻辑：核心修复点，将对象数据解构赋值给独立 params
+                const onIndexChange = () => {
+                    if (selectedCode.value === 'CUSTOM') return; // 自定义模式保留现有输入框数字
+                    
+                    const target = availableIndices.value.find(i => i.code === selectedCode.value)
+                    if (target) {
+                        params.pe = target.pe
+                        params.pb = target.pb
+                        params.pePct = target.pePct
+                        params.pbPct = target.pbPct
+                        params.dv = target.dv
+                        params.eg = target.eg || 7.5
+                        params.nag = target.nag || 6.0
+                    }
+                }
+
+                // 统一的计算与展示逻辑引擎
+                const calcResult = computed(() => {
+                    let sig = 'HOLD', tag = '合理', text = '🟡 建议持有', reason = '', eyValue = 0, expRet = 0, valFix = 0;
 
                     if (selectedStrategy.value === 'EARNINGS_YIELD') {
-                        const ey = item.pe > 0 ? (1 / item.pe) * 100 : 0
-                        if (ey > 10) return { signal: 'BUY', statusTag: '低估', signalText: '🟢 建议买入 / 定投', reason: `当前盈利收益率 ${ey.toFixed(2)}% > 10%，性价比极高。` }
-                        if (ey < 6.4) return { signal: 'SELL', statusTag: '高估', signalText: '🔴 建议止盈 / 卖出', reason: `当前盈利收益率 ${ey.toFixed(2)}% < 6.4%，进入高估风险区。` }
-                        return { signal: 'HOLD', statusTag: '合理', signalText: '🟡 建议持有', reason: `当前盈利收益率 ${ey.toFixed(2)}% 估值合理。` }
-                    } else if (selectedStrategy.value === 'BOGLE_PE') {
-                        if (item.pePct <= 30) return { signal: 'BUY', statusTag: '低估', signalText: '🟢 建议买入 / 定投', reason: `PE 历史百分位仅为 ${item.pePct}% (≤30%)，处于低估吸筹期。` }
-                        if (item.pePct >= 70) return { signal: 'SELL', statusTag: '高估', signalText: '🔴 建议止盈 / 卖出', reason: `PE 历史百分位达 ${item.pePct}% (≥70%)，建议分批出场。` }
-                        return { signal: 'HOLD', statusTag: '合理', signalText: '🟡 建议持有', reason: `PE 历史百分位 ${item.pePct}% 处于中枢区间。` }
-                    } else {
-                        if (item.pbPct <= 20) return { signal: 'BUY', statusTag: '周期底部', signalText: '🟢 建议买入', reason: `PB 历史百分位仅为 ${item.pbPct}% (≤20%)，极具安全边际。` }
-                        if (item.pbPct >= 70) return { signal: 'SELL', statusTag: '周期顶部', signalText: '🔴 建议止盈', reason: `PB 历史百分位达 ${item.pbPct}% (≥70%)，周期顶部见好就收。` }
-                        return { signal: 'HOLD', statusTag: '合理', signalText: '🟡 建议持有', reason: `PB 历史百分位 ${item.pbPct}% 处于合理周期。` }
+                        eyValue = params.pe > 0 ? ((1 / params.pe) * 100).toFixed(2) : 0
+                        if (eyValue > 10) {
+                            sig = 'BUY'; tag = '低估'; text = '🟢 建议买入 / 定投';
+                            reason = `当前盈利收益率 ${eyValue}% 远大于 10% 黄金标准，性价比极高，安全边际充足。`
+                        } else if (eyValue < 6.4) {
+                            sig = 'SELL'; tag = '高估'; text = '🔴 建议止盈 / 卖出';
+                            reason = `当前盈利收益率 ${eyValue}% 低于 6.4% 警戒线（等同市盈率超15.6），进入高估风险区。`
+                        } else {
+                            sig = 'HOLD'; tag = '合理'; text = '🟡 建议观望 / 持有';
+                            reason = `当前盈利收益率 ${eyValue}% 处于 6.4%~10% 的合理中枢，保持现有仓位。`
+                        }
+                    } 
+                    else if (selectedStrategy.value === 'BOGLE_PE') {
+                        // 预估年化收益计算
+                        valFix = params.pePct < 50 ? ((50 - params.pePct) / 3 * 0.4) : ((50 - params.pePct) / 3 * 0.4);
+                        expRet = (params.dv + params.eg + valFix).toFixed(2);
+                        valFix = valFix.toFixed(2);
+
+                        if (params.pePct <= 30) {
+                            sig = 'BUY'; tag = '历史低估'; text = '🟢 建议买入 / 定投';
+                            reason = `PE 历史分位数仅为 ${params.pePct}% (≤30%)，具备极强估值优势，预估未来年化收益可达 ${expRet}%。`
+                        } else if (params.pePct >= 70) {
+                            sig = 'SELL'; tag = '历史高估'; text = '🔴 建议分批止盈';
+                            reason = `PE 历史分位数达 ${params.pePct}% (≥70%)，估值被透支，预估收益率下降，建议落袋为安。`
+                        } else {
+                            sig = 'HOLD'; tag = '合理估值'; text = '🟡 建议持有';
+                            reason = `PE 历史分位数 ${params.pePct}% 处于历史均值附近，未见明显套利空间。`
+                        }
+                    } 
+                    else {
+                        valFix = params.pbPct < 50 ? ((50 - params.pbPct) / 2 * 0.6) : ((50 - params.pbPct) / 2 * 0.6);
+                        expRet = (params.dv + params.nag + valFix).toFixed(2);
+                        valFix = valFix.toFixed(2);
+
+                        if (params.pbPct <= 20) {
+                            sig = 'BUY'; tag = '周期底部'; text = '🟢 建议逢低建仓';
+                            reason = `PB 历史分位数仅为 ${params.pbPct}% (≤20%)，身处周期绝对底部，下行风险极小。`
+                        } else if (params.pbPct >= 70) {
+                            sig = 'SELL'; tag = '周期顶部'; text = '🔴 坚决止盈卖出';
+                            reason = `PB 历史分位数达 ${params.pbPct}% (≥70%)，周期股见顶极快，切勿留恋，果断离场。`
+                        } else {
+                            sig = 'HOLD'; tag = '周期中部'; text = '🟡 建议持有等待';
+                            reason = `PB 历史分位数 ${params.pbPct}% 处于周期爬坡期，继续持有。`
+                        }
                     }
+
+                    // 样式控制
+                    const style = {
+                        box: sig === 'BUY' ? 'bg-emerald-50 border-emerald-300' : (sig === 'SELL' ? 'bg-rose-50 border-rose-300' : 'bg-amber-50 border-amber-300'),
+                        titleText: sig === 'BUY' ? 'text-emerald-700' : (sig === 'SELL' ? 'text-rose-700' : 'text-amber-700'),
+                        badge: sig === 'BUY' ? 'bg-emerald-600 text-white' : (sig === 'SELL' ? 'bg-rose-600 text-white' : 'bg-amber-500 text-white')
+                    }
+
+                    return { signalText: text, statusTag: tag, reason, eyValue, expectedReturn: expRet, valuationFix: valFix, style }
                 })
 
-                const resultStyle = computed(() => {
-                    const sig = result.value.signal
-                    if (sig === 'BUY') return { box: 'bg-emerald-50 border-emerald-200', titleText: 'text-emerald-800', badge: 'bg-emerald-200 text-emerald-800' }
-                    if (sig === 'SELL') return { box: 'bg-rose-50 border-rose-200', titleText: 'text-rose-800', badge: 'bg-rose-200 text-rose-800' }
-                    return { box: 'bg-amber-50 border-amber-200', titleText: 'text-amber-800', badge: 'bg-amber-200 text-amber-800' }
-                })
-
-                return { selectedStrategy, selectedIndex, availableIndices, currentData, result, resultStyle, onStrategyChange }
+                return { selectedStrategy, selectedCode, availableIndices, params, calcResult, onStrategyChange, onIndexChange }
             }
         }).mount('#app')
     </script>
