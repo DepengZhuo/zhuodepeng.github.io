@@ -757,27 +757,60 @@
     });
     </script>
 
-    <!-- 联系表单提交处理 -->
-    <script id='form-script'>
-    document.addEventListener('DOMContentLoaded', function () {
-      var contactForm = document.getElementById('contact-form');
-      contactForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var formData = {
-          name: document.getElementById('name').value,
-          email: document.getElementById('email').value,
-          subject: document.getElementById('subject').value,
-          message: document.getElementById('message').value
-        };
-        if (!formData.name || !formData.email || !formData.message) {
-          alert('请填写所有必填字段');
-          return;
+<!-- [JSMOD] 联系表单提交处理（接通 Formspree 真实发件） -->
+<script id='form-script'>
+document.addEventListener('DOMContentLoaded', function () {
+  var contactForm = document.getElementById('contact-form');
+  
+  contactForm.addEventListener('submit', async function (e) {
+    e.preventDefault(); // 阻止页面默认刷新跳转
+    
+    var submitBtn = contactForm.querySelector('button[type="submit"]');
+    var originalBtnText = submitBtn.innerHTML;
+
+    // 1. 基础必填项校验
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var message = document.getElementById('message').value;
+
+    if (!name || !email || !message) {
+      alert('请填写所有必填字段');
+      return;
+    }
+
+    // 2. 按钮切换为加载中状态
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> 发送中...';
+
+    // 3. 打包表单数据
+    var formData = new FormData(contactForm);
+
+    try {
+      // 4. 发送数据给 Formspree
+      var response = await fetch(contactForm.action, {
+        method: contactForm.method,
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
         }
-        alert('嘻嘻其实这只是个框，你信息我收不到');
-        contactForm.reset();
       });
-    });
-    </script>
+
+      if (response.ok) {
+        alert('邮件已成功发至 Devin 的邮箱！我会尽快回复你 ✉️');
+        contactForm.reset(); // 清空表单
+      } else {
+        alert('发送失败，请稍后再试或直接发邮件联系我。');
+      }
+    } catch (error) {
+      alert('网络请求异常，请检查网络后重试。');
+    } finally {
+      // 5. 恢复按钮原始状态
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnText;
+    }
+  });
+});
+</script>
 
     <!-- 加载更多文章逻辑 -->
     <script id='load-more-script'>
