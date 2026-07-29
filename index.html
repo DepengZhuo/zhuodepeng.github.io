@@ -928,7 +928,48 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+<!-- [JSMOD] 右下角悬浮按钮逻辑 -->
+<script id='fab-script'>
+document.addEventListener('DOMContentLoaded', function () {
+    var floatingWidget = document.getElementById('floating-widget');
+    var backToTopBtn = document.getElementById('back-to-top');
 
+    // 1. 监听页面滚动，控制火箭的显示与隐藏
+    window.addEventListener('scroll', function () {
+        if (window.scrollY > 400) {
+            // 向下滚动超过 400 像素时，滑出显示
+            floatingWidget.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+            floatingWidget.classList.add('translate-y-0', 'opacity-100');
+        } else {
+            // 靠近顶部时，隐藏回去
+            floatingWidget.classList.remove('translate-y-0', 'opacity-100');
+            floatingWidget.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+        }
+    });
+
+    // 2. 点击火箭，平滑滚动到顶部
+    backToTopBtn.addEventListener('click', function () {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+    
+<!-- ==================== 右下角悬浮操作区 ==================== -->
+    <div id="floating-widget" class="fixed bottom-8 right-8 z-50 transition-all duration-500 transform translate-y-20 opacity-0 pointer-events-none">
+        <div class="has-tooltip">
+            <button id="back-to-top" class="w-12 h-12 bg-gray-900 hover:bg-primary text-white rounded-full shadow-lg flex items-center justify-center transition-custom hover:shadow-2xl hover:-translate-y-1 focus:outline-none">
+                <i class="fas fa-rocket"></i>
+            </button>
+            <span class="tooltip right-full top-1/2 transform -translate-y-1/2 mr-3 whitespace-nowrap bg-gray-800 text-white text-xs px-2 py-1 rounded">
+                发射回顶部 🚀
+            </span>
+        </div>
+    </div>
+    
+</body> <!-- 这是你网页原本自带的结束标签 -->
     
 </body>
 </html>
