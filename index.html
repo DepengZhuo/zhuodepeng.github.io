@@ -269,78 +269,89 @@
         </section>
 
 
-        <!-- ================================================================= -->
-        <!-- 4. 我的世界板块 (UNIVERSE - 卡片展示网格)                         -->
-        <!-- 💡 提示：后期想多加新卡片，直接在下方 <div class='grid...'> 里面复制一套完整 Block -->
-        <!-- ================================================================= -->
-        <section class='py-20 bg-gray-50' id='universe'>
-            <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
-                <div class='text-center mb-16'>
-                    <h2 class='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>我的世界</h2>
-                    <p class='text-xl text-gray-600 max-w-3xl mx-auto'>工作、项目与爱好 🌟</p>
-                    <div class='w-20 h-1 bg-primary mx-auto mt-4 rounded-full'></div>
+<!-- ================================================================= -->
+<!-- 4. 我的世界板块 (UNIVERSE - 卡片展示网格 + 动态筛选)                 -->
+<!-- ================================================================= -->
+<section class='py-20 bg-gray-50' id='universe'>
+    <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
+        
+        <!-- 标题区 -->
+        <div class='text-center mb-10'>
+            <h2 class='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>我的世界</h2>
+            <p class='text-xl text-gray-600 max-w-3xl mx-auto'>工作、项目与爱好 🌟</p>
+            <div class='w-20 h-1 bg-primary mx-auto mt-4 rounded-full'></div>
+        </div>
+
+        <!-- 👇 新增：分类筛选按钮区 👇 -->
+        <div class="flex flex-wrap justify-center gap-4 mb-12" id="portfolio-filters">
+            <!-- 默认选中的按钮：蓝底白字 -->
+            <button class="filter-btn px-6 py-2 rounded-full border border-primary bg-primary text-white font-medium transition-custom shadow-sm" data-filter="all">全部</button>
+            <!-- 其他未选中的按钮：白底灰字 -->
+            <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 bg-white text-gray-600 font-medium transition-custom hover:border-primary hover:text-primary hover:shadow-sm" data-filter="tech">科技与折腾</button>
+            <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 bg-white text-gray-600 font-medium transition-custom hover:border-primary hover:text-primary hover:shadow-sm" data-filter="reading">阅读与思考</button>
+            <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 bg-white text-gray-600 font-medium transition-custom hover:border-primary hover:text-primary hover:shadow-sm" data-filter="tools">实用工具</button>
+        </div>
+
+        <!-- 卡片网格容器 -->
+        <div class='grid grid-cols-1 md:grid-cols-3 gap-8'>
+
+            <!-- ------------------- 【卡片 Block 1：Merry Christmas】 ------------------- -->
+            <!-- 💡 注意这里的 class 加上了 portfolio-card，并加上了 data-category="tech" -->
+            <div class='portfolio-card bg-white rounded-xl shadow-md overflow-hidden card-hover' data-category="tech">
+                <div class='h-48 overflow-hidden'>
+                    <img alt='圣诞树' class='w-full h-full object-cover transition-transform duration-500 hover:scale-110' src='images/Christmas_tree.jpg'/>
                 </div>
-
-                <!-- 卡片三列网格容器开始 -->
-                <div class='grid grid-cols-1 md:grid-cols-3 gap-8'>
-
-                    <!-- ------------------- 【卡片 Block 1：Merry Christmas】 ------------------- -->
-                    <div class='bg-white rounded-xl shadow-md overflow-hidden card-hover'>
-                        <div class='h-48 overflow-hidden'>
-                            <img alt='圣诞树' class='w-full h-full object-cover transition-transform duration-500 hover:scale-110' src='images/chrismax_tree.png'/>
-                        </div>
-                        <div class='p-6'>
-                            <div class='has-tooltip inline-block mb-4'>
-                                <h3 class='text-xl font-semibold text-gray-800'>Merry Christmas</h3>
-                                <span class='tooltip left-1/2 transform -translate-x-1/2'>圣诞节快乐，一颗圣诞树送给大家 📡</span>
-                            </div>
-                            <p class='text-gray-600 mb-4'>Light up the night. Merry Christmas.</p>
-                            <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Christmas Tree.html'  target='_blank'>
-                                了解更多 <i class='fas fa-arrow-right ml-2'></i>
-                            </a>
-                        </div>
+                <div class='p-6'>
+                    <div class='has-tooltip inline-block mb-4'>
+                        <h3 class='text-xl font-semibold text-gray-800'>Merry Christmas</h3>
+                        <span class='tooltip left-1/2 transform -translate-x-1/2'>圣诞节快乐，一颗圣诞树送给大家 📡</span>
                     </div>
-                    <!-- ------------------- 【卡片 Block 1 结束】 ------------------- -->
+                    <p class='text-gray-600 mb-4'>Light up the night. Merry Christmas.</p>
+                    <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Christmas Tree.html' target='_blank'>
+                        了解更多 <i class='fas fa-arrow-right ml-2'></i>
+                    </a>
+                </div>
+            </div>
 
-
-                    <!-- ------------------- 【卡片 Block 2：好书推荐】 ------------------- -->
-                    <div class='bg-white rounded-xl shadow-md overflow-hidden card-hover'>
-                        <div class='h-48 overflow-hidden'>
-                            <img alt='好书推荐' class='w-full h-full object-cover transition-transform duration-500 hover:scale-110' src='images/book.png'/>
-                        </div>
-                        <div class='p-6'>
-                            <div class='has-tooltip inline-block mb-4'>
-                                <h3 class='text-xl font-semibold text-gray-800'>好书推荐——《明朝那些事儿》</h3>
-                                <span class='tooltip left-1/2 transform -translate-x-1/2'>其实，文章是AI写的 🌐✨</span>
-                            </div>
-                            <p class='text-gray-600 mb-4'>所谓百年功名，千秋霸业，万古流芳，与一件事情相比，其实算不了什么，这件事情就是用你喜欢的方式度过一生。</p>
-                            <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/mingchao_review.html'  target='_blank'>
-                                阅读全文 <i class='fas fa-arrow-right ml-2'></i>
-                            </a>
-                        </div>
+            <!-- ------------------- 【卡片 Block 2：好书推荐】 ------------------- -->
+            <!-- 💡 分类标签设为了 "reading" -->
+            <div class='portfolio-card bg-white rounded-xl shadow-md overflow-hidden card-hover' data-category="reading">
+                <div class='h-48 overflow-hidden'>
+                    <img alt='网站建设实验' class='w-full h-full object-cover transition-transform duration-500 hover:scale-110' src='images/5.jpg'/>
+                </div>
+                <div class='p-6'>
+                    <div class='has-tooltip inline-block mb-4'>
+                        <h3 class='text-xl font-semibold text-gray-800'>好书推荐——《明朝那些事儿》</h3>
+                        <span class='tooltip left-1/2 transform -translate-x-1/2'>其实，文章是AI写的 🌐✨</span>
                     </div>
-                    <!-- ------------------- 【卡片 Block 2 结束】 ------------------- -->
+                    <p class='text-gray-600 mb-4'>所谓百年功名，千秋霸业，万古流芳，与一件事情相比，其实算不了什么，这件事情就是用你喜欢的方式度过一生。</p>
+                    <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/mingchao_review.html' target='_blank'>
+                        阅读全文 <i class='fas fa-arrow-right ml-2'></i>
+                    </a>
+                </div>
+            </div>
 
-
-                    <!-- ------------------- 【卡片 Block 3：价值投资计算器】 ------------------- -->
-                    <div class='bg-white rounded-xl shadow-md overflow-hidden card-hover'>
-                        <div class='h-48 overflow-hidden'>
-                            <img alt='价值投资计算器' class='w-full h-full object-cover transition-transform duration-500 hover:scale-110' src='images/value_calculator.png'/>
-                        </div>
-                        <div class='p-6'>
-                            <div class='has-tooltip inline-block mb-4'>
-                                <h3 class='text-xl font-semibold text-gray-800'>价值投资计算器</h3>
-                                <span class='tooltip left-1/2 transform -translate-x-1/2'>AI导AI弄出来的价值计算器，你值得拥有🔥</span>
-                            </div>
-                            <p class='text-gray-600 mb-4'>把需要的原始数据复制丢给AI，就会给出买入建议</p>
-                            <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Value_Calculator_V3.html' target='_blank'>
-                                点击计算 <i class='fas fa-arrow-right ml-2'></i>
-                            </a>
-                        </div>
+            <!-- ------------------- 【卡片 Block 3：价值投资计算器】 ------------------- -->
+            <!-- 💡 分类标签设为了 "tools" -->
+            <div class='portfolio-card bg-white rounded-xl shadow-md overflow-hidden card-hover' data-category="tools">
+                <div class='h-48 overflow-hidden'>
+                    <img alt='运动与健康' class='w-full h-full object-cover transition-transform duration-500 hover:scale-110' src='images/1.jpg'/>
+                </div>
+                <div class='p-6'>
+                    <div class='has-tooltip inline-block mb-4'>
+                        <h3 class='text-xl font-semibold text-gray-800'>价值投资计算器</h3>
+                        <span class='tooltip left-1/2 transform -translate-x-1/2'>AI导AI弄出来的价值计算器，你值得拥有🔥</span>
                     </div>
-                    <!-- ------------------- 【卡片 Block 3 结束】 ------------------- -->
+                    <p class='text-gray-600 mb-4'>把需要的原始数据复制丢给AI，就会给出买入建议</p>
+                    <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Value_Calculator_V3.html' target='_blank'>
+                        点击计算 <i class='fas fa-arrow-right ml-2'></i>
+                    </a>
+                </div>
+            </div>
 
-
+        </div>
+    </div>
+</section>
                     
                     <!-- 💡 后期扩展提示：如果想新增卡片 4、卡片 5，请复制上方任意一个 Block 粘贴在此处 -->
 
@@ -952,6 +963,53 @@ document.addEventListener('DOMContentLoaded', function () {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+<!-- [JSMOD] 卡片分类动态筛选逻辑 -->
+<script id='filter-script'>
+document.addEventListener('DOMContentLoaded', function () {
+    // 获取所有的过滤按钮和带 portfolio-card 类的卡片
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    var cards = document.querySelectorAll('.portfolio-card');
+
+    filterBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            
+            // 1. 样式重置：把所有按钮变回“未选中”状态（白底灰字）
+            filterBtns.forEach(function (b) {
+                b.classList.remove('bg-primary', 'text-white', 'border-primary');
+                b.classList.add('bg-white', 'text-gray-600', 'border-gray-300');
+            });
+
+            // 2. 样式高亮：给当前点击的这个按钮加上“已选中”状态（蓝底白字）
+            this.classList.remove('bg-white', 'text-gray-600', 'border-gray-300');
+            this.classList.add('bg-primary', 'text-white', 'border-primary');
+
+            // 3. 核心过滤逻辑
+            var filterValue = this.getAttribute('data-filter'); // 比如拿到了 'tech' 或者 'all'
+
+            cards.forEach(function (card) {
+                var cardCategory = card.getAttribute('data-category'); // 拿到卡片自己身上的标签
+                
+                if (filterValue === 'all' || filterValue === cardCategory) {
+                    // 匹配的留下来：移除隐藏属性，恢复透明度
+                    card.style.display = 'block';
+                    setTimeout(function() {
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                    }, 50);
+                } else {
+                    // 不匹配的藏起来：变透明、缩小，然后彻底隐藏
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.95)';
+                    setTimeout(function() {
+                        card.style.display = 'none';
+                    }, 300); // 等待300毫秒动画播完再隐藏骨架
+                }
+            });
         });
     });
 });
