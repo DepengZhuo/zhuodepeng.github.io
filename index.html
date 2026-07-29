@@ -1,44 +1,45 @@
+<!DOCTYPE html>
 <html lang='zh-CN'>
-        <head >
-        <meta name="baidu-site-verification" content="codeva-wEObIvql9t" />
-        <meta charset='utf-8'/>
-<meta name="baidu-site-verification" content="codeva-5WJZ7zBbwD" />
-<title >卓德鹏 - 个人主页</title>
-<script src='https://res.gemcoder.com/js/reload.js'></script>
-<script src='https://cdn.tailwindcss.com'></script>
-<link href='https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css' rel='stylesheet'/>
-<script >tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        primary: '#3B82F6',
-        secondary: '#10B981',
-        accent: '#8B5CF6',
-        dark: '#1E293B',
-        light: '#F8FAFC'
-      },
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif']
-      },
-      animation: {
-        'bounce-slow': 'bounce 3s infinite',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'wiggle': 'wiggle 1s ease-in-out infinite'
-      },
-      keyframes: {
-        wiggle: {
-          '0%, 100%': {
-            transform: 'rotate(-3deg)'
-          },
-          '50%': {
-            transform: 'rotate(3deg)'
+<head>
+    <meta name="baidu-site-verification" content="codeva-wEObIvql9t" />
+    <meta charset='utf-8'/>
+    <meta name="baidu-site-verification" content="codeva-5WJZ7zBbwD" />
+    <title>卓德鹏 - 个人主页</title>
+    <script src='https://res.gemcoder.com/js/reload.js'></script>
+    <script src='https://cdn.tailwindcss.com'></script>
+    <link href='https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css' rel='stylesheet'/>
+    
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#3B82F6',
+              secondary: '#10B981',
+              accent: '#8B5CF6',
+              dark: '#1E293B',
+              light: '#F8FAFC'
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif']
+            },
+            animation: {
+              'bounce-slow': 'bounce 3s infinite',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'wiggle': 'wiggle 1s ease-in-out infinite'
+            },
+            keyframes: {
+              wiggle: {
+                '0%, 100%': { transform: 'rotate(-3deg)' },
+                '50%': { transform: 'rotate(3deg)' }
+              }
+            }
           }
         }
-      }
-    }
-  }
-};</script>
-<style type='text/tailwindcss'>
+      };
+    </script>
+
+    <style type='text/tailwindcss'>
         @layer utilities {
             .text-shadow {
                 text-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -60,1040 +61,787 @@
             }
         }
     </style>
-    </head>
+</head>
+
 <body class='bg-gray-50 text-gray-800 font-sans'>
-        <!-- [MODULE] 7a3_主内容区域 -->
-<div class='min-h-screen flex flex-col'>
-        <!-- [MODULE] 2d9_导航栏 -->
-<nav class='sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm'>
-        <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
-        <div class='flex justify-between h-16'>
-        <div class='flex items-center'>
-        <a class='flex-shrink-0 flex items-center' href='javascript:void(0);'>
-        <span class='text-primary font-bold text-xl'>
-        卓德鹏
-    </span>
-    </a>
-    </div>
-<div class='hidden md:flex items-center space-x-8'>
-        <a class='text-gray-600 hover:text-primary transition-custom px-3 py-2 text-sm font-medium' href='#welcome'>
-        首页
-    </a>
-<a class='text-gray-600 hover:text-primary transition-custom px-3 py-2 text-sm font-medium' href='#about'>
-        关于我
-    </a>
-<a class='text-gray-600 hover:text-primary transition-custom px-3 py-2 text-sm font-medium' href='#universe'>
-        我的世界
-    </a>
-<a class='text-gray-600 hover:text-primary transition-custom px-3 py-2 text-sm font-medium' href='#thoughts'>
-        灵感与思考
-    </a>
-<a class='text-gray-600 hover:text-primary transition-custom px-3 py-2 text-sm font-medium' href='#fun'>
-        小互动
-    </a>
-<a class='text-gray-600 hover:text-primary transition-custom px-3 py-2 text-sm font-medium' href='#contact'>
-        联系我
-    </a>
-    </div>
-<div class='md:hidden flex items-center'>
-        <button class='text-gray-500 hover:text-primary focus:outline-none' id='mobile-menu-button'>
-        <i class='fas fa-bars text-xl'>
-        </i>
-    </button>
-    </div>
-    </div>
-    </div>
-<!-- 移动端菜单 -->
-<div class='hidden md:hidden bg-white shadow-lg absolute w-full' id='mobile-menu'>
-        <div class='px-2 pt-2 pb-3 space-y-1 sm:px-3'>
-        <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='#welcome'>
-        首页
-    </a>
-<a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='#about'>
-        关于我
-    </a>
-<a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='#universe'>
-        我的世界
-    </a>
-<a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='#thoughts'>
-        灵感与思考
-    </a>
-<a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='#fun'>
-        小互动
-    </a>
-<a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='#contact'>
-        联系我
-    </a>
-    </div>
-    </div>
-    </nav>
-<!-- [/MODULE] 2d9_导航栏 -- 包含网站导航链接，在移动端转为汉堡菜单 -->
-<!-- [MODULE] a7f_首页 -->
-<section class='py-20 md:py-32 bg-gradient-to-br from-blue-50 to-purple-50' id='welcome'>
-        <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
-        <div class='flex flex-col md:flex-row items-center'>
-        <!-- [MODULE] 9b2_首页:头像区域 -->
-<div class='w-full md:w-1/3 mb-10 md:mb-0 flex justify-center'>
-        <div class='relative has-tooltip'>
-        <div class='w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white shadow-xl transition-all duration-500 hover:scale-105 hover:shadow-2xl'>
-        <img alt='卓德鹏头像' class='w-full h-full object-cover transition-all duration-700 hover:brightness-110' src='https://design.gemcoder.com/api/upload/appResource/H8vEIys7nIV0MjMTqpEdN.jpg'/>
-        </div>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        哎呀，你偷看我啦，我在眨眼 😉
-    </span>
-<div class='absolute -bottom-2 -right-2 bg-green-500 rounded-full w-10 h-10 flex items-center justify-center border-2 border-white shadow-md'>
-        <i class='fas fa-check text-white'>
-        </i>
-    </div>
-    </div>
-    </div>
-<!-- [/MODULE] 9b2_首页:头像区域 -- 显示个人头像，鼠标悬停时显示"哎呀，你偷看我啦，我在眨眼 😉"提示 -->
-<!-- [MODULE] 5c1_首页:标题与介绍 -->
-<div class='w-full md:w-2/3 text-center md:text-left'>
-        <h1 class='text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight'>
-        你好，我是
-<span class='text-primary'>
-        卓德鹏
-    </span>
-👋
-    </h1>
-<div class='has-tooltip inline-block'>
-        <p class='text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed'>
-        数据、科技、创意的混合体
-<br />
-不只是咸鱼，也爱探索新鲜事物 🌏
-    </p>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        想知道我最近折腾了什么？点我就告诉你！
-    </span>
-    </div>
-<div class='flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4'>
-        <a class='bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg shadow-md transition-custom flex items-center justify-center' href='#about'>
-        <i class='fas fa-user mr-2'>
-        </i>
-了解更多
-    </a>
-<a class='bg-white hover:bg-gray-50 text-primary border border-primary font-medium py-3 px-6 rounded-lg shadow-sm transition-custom flex items-center justify-center' href='#contact'>
-        <i class='fas fa-envelope mr-2'>
-        </i>
-联系我
-    </a>
-    </div>
-<div id='disclaimer' class='mt-8 text-gray-500 text-sm italic'>
-        </div>
-    </div>
-<!-- [/MODULE] 5c1_首页:标题与介绍 -- 显示欢迎语和简短介绍，鼠标悬停副标题时显示"想知道我最近折腾了什么？点我就告诉你！"提示 -->
-    </div>
-    </div>
-    </section>
-<!-- [/MODULE] a7f_首页 -->
-<!-- [MODULE] 3d8_关于我 -->
-<section class='py-20 bg-white' id='about'>
-        <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
-        <div class='text-center mb-16'>
-        <h2 class='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
-        关于我
-    </h2>
-<div class='w-20 h-1 bg-primary mx-auto rounded-full'>
-        </div>
-    </div>
-<div class='max-w-3xl mx-auto'>
-        <!-- [MODULE] e2d_关于我:个人简介 -->
-<div class='mb-12'>
-        <h3 class='text-2xl font-semibold text-gray-800 mb-6 flex items-center'>
-        <span class='bg-primary/10 text-primary p-2 rounded-full mr-3'>
-        <i class='fas fa-user-circle'>
-        </i>
-    </span>
-一个没有脱离低级趣味的人 🛠️
-    </h3>
-<div class='bg-gray-50 rounded-xl p-6 shadow-sm'>
-        <p class='text-gray-700 mb-4 leading-relaxed'>
-        身高 182cm，体重 80kg，目标 75kg 💪
-    </p>
-<p class='text-gray-700 mb-4 leading-relaxed'>
-        Nothing Changes if nothing change 📊💼
-    </p>
-<p class='text-gray-700 leading-relaxed'>
-        除了控制不住的体重 🏊‍♂️🏃‍♂️，还有随波逐流的人生 📈
-    </p>
-    </div>
-    </div>
-<!-- [/MODULE] e2d_关于我:个人简介 -- 显示基本个人信息和生活工作爱好 -->
-<!-- [MODULE] 4f7_关于我:技能与兴趣标签 -->
-<div class='grid grid-cols-1 md:grid-cols-2 gap-8'>
-        <div >
-        <h3 class='text-xl font-semibold text-gray-800 mb-4'>
-        技能
-    </h3>
-<div class='flex flex-wrap gap-3'>
-        <div class='has-tooltip inline-block'>
-        <span class='bg-blue-100 text-blue-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-blue-200 cursor-pointer'>
-        数据通信
-    </span>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        点我，我可以帮你问AI 🎲
-    </span>
-    </div>
-<div class='has-tooltip inline-block'>
-        <span class='bg-green-100 text-green-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-green-200 cursor-pointer'>
-        市场营销
-    </span>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        点我，我也不知道什么是市场营销 🎲
-    </span>
-    </div>
-<div class='has-tooltip inline-block'>
-        <span class='bg-purple-100 text-purple-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-purple-200 cursor-pointer'>
-        数据分析
-    </span>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        点我，我Excel做表贼溜 🎲
-    </span>
-    </div>
-<div class='has-tooltip inline-block'>
-        <span class='bg-yellow-100 text-yellow-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-yellow-200 cursor-pointer'>
-        图表设计
-    </span>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        点我，我教你如何把数据玩成游戏 🎲
-    </span>
-    </div>
-<div class='has-tooltip inline-block'>
-        <span class='bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-red-200 cursor-pointer'>
-        项目管理
-    </span>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        点我，我教你怎么跟别人扯皮 🎲
-    </span>
-    </div>
-    </div>
-    </div>
-<div >
-        <h3 class='text-xl font-semibold text-gray-800 mb-4'>
-        兴趣
-    </h3>
-<div class='flex flex-wrap gap-3'>
-        <div class='has-tooltip inline-block'>
-        <span class='bg-indigo-100 text-indigo-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-indigo-200 cursor-pointer'>
-        健身
-    </span>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        偷偷告诉你，我健身是怕自己猝死💡
-    </span>
-    </div>
-<div class='has-tooltip inline-block'>
-        <span class='bg-pink-100 text-pink-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-pink-200 cursor-pointer'>
-        游泳
-    </span>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        偷偷告诉你，游完泳真的可以睡得安稳些 💡
-    </span>
-    </div>
-<div class='has-tooltip inline-block'>
-        <span class='bg-orange-100 text-orange-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-orange-200 cursor-pointer'>
-        爬山（仅限八分山）
-    </span>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        偷偷告诉你，八分山40分钟就能上去 💡
-    </span>
-    </div>
-<div class='has-tooltip inline-block'>
-        <span class='bg-teal-100 text-teal-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-teal-200 cursor-pointer'>
-        折腾网站
-    </span>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        偷偷告诉你，这个网站全是AI做的 💡
-    </span>
-    </div>
-<div class='has-tooltip inline-block'>
-        <span class='bg-gray-100 text-gray-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-gray-200 cursor-pointer'>
-        研究技术
-    </span>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        偷偷告诉你，其实我啥也不会 💡
-    </span>
-    </div>
-    </div>
-    </div>
-    </div>
-<!-- [/MODULE] 4f7_关于我:技能与兴趣标签 -- 显示技能和兴趣标签，鼠标悬停技能标签时显示"点我，我教你如何把数据玩成游戏 🎲"，悬停兴趣标签时显示"偷偷告诉你，我跑步的时候会想新的脑洞 💡" -->
-    </div>
-    </div>
-    </section>
-<!-- [/MODULE] 3d8_关于我 -->
-<!-- [MODULE] 8d2_我的世界 -->
-<section class='py-20 bg-gray-50' id='universe'>
-        <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
-        <div class='text-center mb-16'>
-        <h2 class='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
-        我的世界
-    </h2>
-<p class='text-xl text-gray-600 max-w-3xl mx-auto'>
-        工作、项目与爱好 🌟
-    </p>
-<div class='w-20 h-1 bg-primary mx-auto mt-4 rounded-full'>
-        </div>
-    </div>
-<div class='grid grid-cols-1 md:grid-cols-3 gap-8'>
-        <!-- [MODULE] 2e5_我的世界:数据通信与产品 -->
-<div class='bg-white rounded-xl shadow-md overflow-hidden card-hover'>
-        <div class='h-48 overflow-hidden'>
-        <img alt='圣诞树' class='w-full h-full object-cover transition-transform duration-500 hover:scale-110' src='images/Christmas_tree.jpg'/>
-    </div>
-<div class='p-6'>
-        <div class='has-tooltip inline-block mb-4'>
-        <h3 class='text-xl font-semibold text-gray-800'>
-        Merry Christmas
-    </h3>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        圣诞节快乐，一颗圣诞树送给大家 📡
-    </span>
-    </div>
-<p class='text-gray-600 mb-4'>
-        Light up the night. Merry Christmas.
-    </p>
-<a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Christmas Tree.html'>
-        了解更多
-<i class='fas fa-arrow-right ml-2'>
-        </i>
-    </a>
-    </div>
-    </div>
-        
-<!-- [/MODULE] 2e5_我的世界:数据通信与产品 -- 显示数据通信与产品相关内容，鼠标悬停时显示"数据流转的背后，其实藏着很多小秘密 📡"提示 -->
-<!-- [MODULE] 6g8_我的世界:网站建设实验 -->
-<div class='bg-white rounded-xl shadow-md overflow-hidden card-hover'>
-        <div class='h-48 overflow-hidden'>
-        <img alt='网站建设实验' class='w-full h-full object-cover transition-transform duration-500 hover:scale-110' src='images/5.jpg'/>
-    </div>
-<div class='p-6'>
-        <div class='has-tooltip inline-block mb-4'>
-        <h3 class='text-xl font-semibold text-gray-800'>
-        好书推荐——《明朝那些事儿》
-    </h3>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        其实，文章是AI写的 🌐✨
-    </span>
-    </div>
-<p class='text-gray-600 mb-4'>
-所谓百年功名，千秋霸业，万古流芳，与一件事情相比，其实算不了什么，这件事情就是用你喜欢的方式度过一生。
-    </p>
-<a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/mingchao_review.html'>
-        阅读全文
-<i class='fas fa-arrow-right ml-2'>
-        </i>
-    </a>
-        
-    </div>
-    </div>
-        
-<!-- [/MODULE] 6g8_我的世界:网站建设实验 -- 显示网站建设相关内容，鼠标悬停时显示"点我，我让你看到一个能动的创意小世界 🌐✨"提示 -->
-<!-- [MODULE] 9h2_我的世界:价值投资计算器 -->
-<div class='bg-white rounded-xl shadow-md overflow-hidden card-hover'>
-        <div class='h-48 overflow-hidden'>
-        <img alt='运动与健康' class='w-full h-full object-cover transition-transform duration-500 hover:scale-110' src='images/1.jpg'/>
-    </div>
-<div class='p-6'>
-        <div class='has-tooltip inline-block mb-4'>
-        <h3 class='text-xl font-semibold text-gray-800'>
-        价值投资计算器
-    </h3>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        AI导AI弄出来的价值计算器，你值得拥有🔥
-    </span>
-    </div>
-<p class='text-gray-600 mb-4'>
-        把需要的原始数据复制丢给AI，就会给出买入建议
-    </p>
-<a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Value_Calculator_V3.html'>
-        点击计算
-<i class='fas fa-arrow-right ml-2'>
-        </i>
-    </a>
-    </div>
-    </div>
-<!-- [/MODULE] 9h2_我的世界:运动与健康 -- 显示运动与健康相关内容，鼠标悬停时显示"猜猜我今天消耗了多少卡路里？🔥"提示 -->
-    </div>
-    </div>   
-        
-    </section>
-<!-- [/MODULE] 8d2_我的世界 -->
-<!-- [MODULE] 3c9_灵感与思考 -->
-<section class='py-20 bg-white' id='thoughts'>
-        <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
-        <div class='text-center mb-16'>
-        <h2 class='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
-        灵感与思考
-    </h2>
-<p class='text-xl text-gray-600 max-w-3xl mx-auto'>
-        不只有公式，还有脑洞 🤯
-    </p>
-<div class='w-20 h-1 bg-primary mx-auto mt-4 rounded-full'>
-        </div>
-    </div>
-<div class='max-w-4xl mx-auto'>
-        <!-- [MODULE] 5d7_灵感与思考:文章列表 -->
-<div class='space-y-8'>
-        <!-- 文章1 -->
-<div class='bg-gray-50 rounded-xl p-6 md:p-8 shadow-sm transition-custom hover:shadow-md'>
-        <div class='has-tooltip inline-block mb-3'>
-        <h3 class='text-2xl font-semibold text-gray-800 cursor-pointer'>
-         岁月留痕
-    </h3>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        哇，你的好奇心不错，这里有点小惊喜 🐾
-    </span>
-    </div>
-<div class='flex items-center text-gray-500 text-sm mb-4'>
-        <span class='flex items-center mr-4'>
-        <i class='far fa-calendar-alt mr-1'>
-        </i>
-2023-06-15
-    </span>
-<span class='flex items-center'>
-        <i class='far fa-clock mr-1'>
-        </i>
-5 分钟阅读
-    </span>
-    </div>
-<div class='has-tooltip'>
-        <p class='text-gray-700 leading-relaxed mb-4'>
-        生活不止眼前的苟且，还有诗和远方的田野。在这里，每一张照片都是一段旅程，每一个瞬间都值得铭记。
-    </p>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        点一下，我可能会弹出一条随机思考小贴士 💡
-    </span>
-    </div>
-<a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/photowall.html'>
-        阅读全文
-<i class='fas fa-long-arrow-alt-right ml-2'>
-        </i>
-    </a>
-    </div>
-<!-- 文章2 -->
-<div class='bg-gray-50 rounded-xl p-6 md:p-8 shadow-sm transition-custom hover:shadow-md'>
-        <div class='has-tooltip inline-block mb-3'>
-        <h3 class='text-2xl font-semibold text-gray-800 cursor-pointer'>
-        浮光掠金
-    </h3>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        哇，你的好奇心不错，这里有点小惊喜 🐾
-    </span>
-    </div>
-<div class='flex items-center text-gray-500 text-sm mb-4'>
-        <span class='flex items-center mr-4'>
-        <i class='far fa-calendar-alt mr-1'>
-        </i>
-2023-05-22
-    </span>
-<span class='flex items-center'>
-        <i class='far fa-clock mr-1'>
-        </i>
-7 分钟阅读
-    </span>
-    </div>
-<div class='has-tooltip'>
-        <p class='text-gray-700 leading-relaxed mb-4'>
-       人生要紧的不是你经历了什么，而是你记住了什么。
-    </p>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        点一下，我可能会弹出一条随机思考小贴士 💡
-    </span>
-    </div>
-<a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Noir-Gold.html'>
-        阅读全文
-<i class='fas fa-long-arrow-alt-right ml-2'>
-        </i>
-    </a>
-    </div>
-<!-- 文章3 -->
-<div class='bg-gray-50 rounded-xl p-6 md:p-8 shadow-sm transition-custom hover:shadow-md'>
-        <div class='has-tooltip inline-block mb-3'>
-        <h3 class='text-2xl font-semibold text-gray-800 cursor-pointer'>
-        用数据分析世界，不如先分析自己
-    </h3>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        哇，你的好奇心不错，这里有点小惊喜 🐾
-    </span>
-    </div>
-<div class='flex items-center text-gray-500 text-sm mb-4'>
-        <span class='flex items-center mr-4'>
-        <i class='far fa-calendar-alt mr-1'>
-        </i>
-2023-04-30
-    </span>
-<span class='flex items-center'>
-        <i class='far fa-clock mr-1'>
-        </i>
-6 分钟阅读
-    </span>
-    </div>
-<div class='has-tooltip'>
-        <p class='text-gray-700 leading-relaxed mb-4'>
-        我们热衷于用数据分析市场趋势、用户行为，却常常忽略了分析自己。本文分享如何利用数据分析方法来了解自己的习惯、优化时间管理，以及如何通过数据驱动的方式实现个人成长...
-    </p>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        点一下，我可能会弹出一条随机思考小贴士 💡
-    </span>
-    </div>
-<a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='javascript:void(0);'>
-        阅读全文
-<i class='fas fa-long-arrow-alt-right ml-2'>
-        </i>
-    </a>
-    </div>
-    </div>
-<!-- [/MODULE] 5d7_灵感与思考:文章列表 -- 显示三篇文章，鼠标移到文章标题时显示"哇，你的好奇心不错，这里有点小惊喜 🐾"，移到正文段落时显示"点一下，我可能会弹出一条随机思考小贴士 💡" -->
-<!-- [MODULE] 7f3_灵感与思考:加载更多按钮 -->
-<div class='text-center mt-12'>
-        <button class='bg-white border border-gray-300 text-gray-700 font-medium py-3 px-6 rounded-lg shadow-sm transition-custom hover:bg-gray-50' id='load-more-thoughts'>
-        <i class='fas fa-spinner mr-2'>
-        </i>
-加载更多
-    </button>
-    </div>
-<!-- [/MODULE] 7f3_灵感与思考:加载更多按钮 -- 提供加载更多文章的功能 -->
-    </div>
-    </div>
-    </section>
-<!-- [/MODULE] 3c9_灵感与思考 -->
-<!-- [MODULE] 6e1_小互动 -->
-<section class='py-20 bg-gradient-to-br from-purple-50 to-blue-50' id='fun'>
-        <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
-        <div class='text-center mb-16'>
-        <h2 class='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
-        小互动
-    </h2>
-<p class='text-xl text-gray-600 max-w-3xl mx-auto'>
-        来点互动吧 🎮
-    </p>
-<div class='w-20 h-1 bg-primary mx-auto mt-4 rounded-full'>
-        </div>
-    </div>
-<div class='grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto'>
-        <!-- [MODULE] 8a4_小互动:步数猜测 -->
-<div class='bg-white rounded-xl shadow-md p-6 text-center card-hover'>
-        <div class='w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4'>
-        <i class='fas fa-walking text-blue-600 text-2xl'>
-        </i>
-    </div>
-<h3 class='text-xl font-semibold text-gray-800 mb-2'>
-        猜猜我今天走了多少步？
-    </h3>
-<p class='text-gray-500 text-sm mb-4'>
-        👣 日常活动的小挑战
-    </p>
-<div class='has-tooltip mb-6'>
-        <input class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom mb-2' id='step-guess' placeholder='输入你的猜测' type='number'/>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        别作弊哦，我可是有记录的 📊
-    </span>
-    </div>
-<button class='w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-custom' id='check-step-guess'>
-        提交猜测
-    </button>
-<p class='mt-4 text-gray-600 hidden' id='step-result'>
-        </p>
-    </div>
-<!-- [/MODULE] 8a4_小互动:步数猜测 -- 提供步数猜测游戏，输入框悬停时显示"别作弊哦，我可是有记录的 📊"提示 -->
-<!-- [MODULE] 3b7_小互动:随机建议 -->
-<div class='bg-white rounded-xl shadow-md p-6 text-center card-hover'>
-        <div class='w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4'>
-        <i class='fas fa-lightbulb text-green-600 text-2xl'>
-        </i>
-    </div>
-<h3 class='text-xl font-semibold text-gray-800 mb-2'>
-        随机建议
-    </h3>
-<p class='text-gray-500 text-sm mb-6'>
-        💡 生活小贴士
-    </p>
-<div class='has-tooltip'>
-        <button class='w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-lg transition-custom' id='random-tip'>
-        点我，我给你生活小贴士
-    </button>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        可能很管用，也可能只是个笑话 😜
-    </span>
-    </div>
-<div class='mt-6 p-4 bg-gray-50 rounded-lg text-gray-700 min-h-20 flex items-center justify-center' id='tip-result'>
-        点击上方按钮获取随机小贴士
-    </div>
-    </div>
-<!-- [/MODULE] 3b7_小互动:随机建议 -- 提供随机生活建议功能，按钮悬停时显示"可能很管用，也可能只是个笑话 😜"提示 -->
-<!-- [MODULE] 5d9_小互动:计划安排 -->
-<div class='bg-white rounded-xl shadow-md p-6 text-center card-hover'>
-        <div class='w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4'>
-        <i class='fas fa-calendar-alt text-purple-600 text-2xl'>
-        </i>
-    </div>
-<h3 class='text-xl font-semibold text-gray-800 mb-2'>
-        计划安排
-    </h3>
-<p class='text-gray-500 text-sm mb-6'>
-        🎲 工作与健身平衡
-    </p>
-<div class='has-tooltip'>
-        <button class='w-full bg-purple-500 hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-lg transition-custom' id='generate-schedule'>
-        帮我安排一周计划
-    </button>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        你敢试试吗？有点难哦 😎
-    </span>
-    </div>
-<div class='mt-6 p-4 bg-gray-50 rounded-lg text-gray-700 min-h-20 flex items-center justify-center' id='schedule-result'>
-        点击上方按钮生成一周计划
-    </div>
-    </div>
-<!-- [/MODULE] 5d9_小互动:计划安排 -- 提供一周工作和健身计划生成功能，按钮悬停时显示"你敢试试吗？有点难哦 😎"提示 -->
-    </div>
-    </div>
-    </section>
-<!-- [/MODULE] 6e1_小互动 -->
-<!-- [MODULE] 9c3_联系我 -->
-<section class='py-20 bg-white' id='contact'>
-        <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
-        <div class='text-center mb-16'>
-        <h2 class='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
-        联系我
-    </h2>
-<p class='text-xl text-gray-600 max-w-3xl mx-auto'>
-        想聊聊吗？或者单纯来打个招呼 ✉️
-    </p>
-<div class='w-20 h-1 bg-primary mx-auto mt-4 rounded-full'>
-        </div>
-    </div>
-<div class='grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto'>
-        <!-- [MODULE] 4e8_联系我:联系信息 -->
-<div >
-        <div class='bg-gray-50 rounded-xl p-8 h-full'>
-        <h3 class='text-2xl font-semibold text-gray-800 mb-6'>
-        联系方式
-    </h3>
-<p class='text-gray-600 mb-8'>
-        你可以通过邮箱、LinkedIn、GitHub 联系我
-<br />
-（鸽子邮递可选，但不保证准时 🐦）
-    </p>
-<div class='space-y-6'>
-        <div class='has-tooltip'>
-        <a class='flex items-center text-gray-700 hover:text-primary transition-custom' href='mailto:example@example.com'>
-        <div class='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4'>
-        <i class='fas fa-envelope text-blue-600'>
-        </i>
-    </div>
-<div >
-        <p class='text-sm text-gray-500'>
-        邮箱
-    </p>
-<p class='font-medium'>
-        zhuodepeng@gmail.com
-    </p>
-    </div>
-    </a>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        点我，发封信吧，我保证不回鸽子 🕊️
-    </span>
-    </div>
-<div class='has-tooltip'>
-        <a class='flex items-center text-gray-700 hover:text-primary transition-custom' href='javascript:void(0);'>
-        <div class='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4'>
-        <i class='fab fa-linkedin text-blue-600'>
-        </i>
-    </div>
-<div >
-        <p class='text-sm text-gray-500'>
-        LinkedIn
-    </p>
-<p class='font-medium'>
-        卓德鹏
-    </p>
-    </div>
-    </a>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        点击看看我平时折腾的东西，保证有趣 🔍
-    </span>
-    </div>
-<div class='has-tooltip'>
-        <a class='flex items-center text-gray-700 hover:text-primary transition-custom' href='javascript:void(0);'>
-        <div class='w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mr-4'>
-        <i class='fab fa-github text-gray-800'>
-        </i>
-    </div>
-<div >
-        <p class='text-sm text-gray-500'>
-        GitHub
-    </p>
-<p class='font-medium'>
-        github.com/zhuodepeng
-    </p>
-    </div>
-    </a>
-<span class='tooltip left-1/2 transform -translate-x-1/2'>
-        点击看看我平时折腾的东西，保证有趣 🔍
-    </span>
-    </div>
-    </div>
-<div class='mt-10'>
-        <h4 class='text-lg font-medium text-gray-800 mb-4'>
-        关注我
-    </h4>
-<div class='flex space-x-4'>
-        <a class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'>
-        <i class='fab fa-twitter text-gray-700'>
-        </i>
-    </a>
-<a class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'>
-        <i class='fab fa-instagram text-gray-700'>
-        </i>
-    </a>
-<a class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'>
-        <i class='fab fa-weixin text-gray-700'>
-        </i>
-    </a>
-<a class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'>
-        <i class='fab fa-weibo text-gray-700'>
-        </i>
-    </a>
-    </div>
-    </div>
-    </div>
-    </div>
-<!-- [/MODULE] 4e8_联系我:联系信息 -- 显示各种联系方式，鼠标悬停邮箱时显示"点我，发封信吧，我保证不回鸽子 🕊️"，悬停LinkedIn/GitHub时显示"点击看看我平时折腾的东西，保证有趣 🔍" -->
-<!-- [MODULE] 7d2_联系我:联系表单 -->
-<div >
-        <form class='bg-white rounded-xl shadow-md p-8' id='contact-form'>
-        <h3 class='text-2xl font-semibold text-gray-800 mb-6'>
-        发送消息
-    </h3>
-<div class='grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4'>
-        <div >
-        <label class='block text-sm font-medium text-gray-700 mb-1' for='name'>
-        姓名
-    </label>
-<input class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom' id='name' name='name' placeholder='你的名字' type='text'/>
-    </div>
-<div >
-        <label class='block text-sm font-medium text-gray-700 mb-1' for='email'>
-        邮箱
-    </label>
-<input class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom' id='email' name='email' placeholder='your@email.com' type='email'/>
-    </div>
-    </div>
-<div class='mb-4'>
-        <label class='block text-sm font-medium text-gray-700 mb-1' for='subject'>
-        主题
-    </label>
-<input class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom' id='subject' name='subject' placeholder='消息主题' type='text'/>
-    </div>
-<div >
-        <label class='block text-sm font-medium text-gray-700 mb-1' for='message'>
-        消息
-    </label>
-<textarea class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom' id='message' name='message' placeholder='请输入你的消息...' rows='5'>
-        </textarea>
-    </div>
-<button class='w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg shadow-md transition-custom mt-6' type='submit'>
-        <i class='fas fa-paper-plane mr-2'>
-        </i>
-发送消息
-    </button>
-    </form>
-    </div>
-<!-- [/MODULE] 7d2_联系我:联系表单 -- 提供发送消息的表单 -->
-    </div>
-    </div>
-    </section>
-<!-- [/MODULE] 9c3_联系我 -->
-<!-- [MODULE] 8f4_页脚 -->
-<footer class='bg-gray-900 text-white py-12'>
-        <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
-        <div class='grid grid-cols-1 md:grid-cols-4 gap-8'>
-        <div class='md:col-span-2'>
-        <h3 class='text-xl font-bold mb-4'>
-        卓德鹏
-    </h3>
-<p class='text-gray-400 max-w-md'>
-        数据、科技、创意的混合体。不只是咸鱼，也爱探索新鲜事物。
-    </p>
-<div class='flex space-x-4 mt-6'>
-        <a class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'>
-        <i class='fab fa-twitter'>
-        </i>
-    </a>
-<a class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'>
-        <i class='fab fa-linkedin'>
-        </i>
-    </a>
-<a class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'>
-        <i class='fab fa-github'>
-        </i>
-    </a>
-<a class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'>
-        <i class='fab fa-weixin'>
-        </i>
-    </a>
-    </div>
-    </div>
-<div >
-        <h4 class='text-lg font-semibold mb-4'>
-        快速链接
-    </h4>
-<ul class='space-y-2'>
-        <li >
-        <a class='text-gray-400 hover:text-white transition-custom' href='#welcome'>
-        首页
-    </a>
-    </li>
-<li >
-        <a class='text-gray-400 hover:text-white transition-custom' href='#about'>
-        关于我
-    </a>
-    </li>
-<li >
-        <a class='text-gray-400 hover:text-white transition-custom' href='#universe'>
-        我的世界
-    </a>
-    </li>
-<li >
-        <a class='text-gray-400 hover:text-white transition-custom' href='#thoughts'>
-        灵感与思考
-    </a>
-    </li>
-<li >
-        <a class='text-gray-400 hover:text-white transition-custom' href='#fun'>
-        小互动
-    </a>
-    </li>
-    </ul>
-    </div>
-<div >
-        <h4 class='text-lg font-semibold mb-4'>
-        联系我
-    </h4>
-<ul class='space-y-2'>
-        <li class='flex items-center text-gray-400'>
-        <i class='fas fa-envelope mr-2'>
-        </i>
-zhuodepeng@gmail.com
-    </li>
-<li class='flex items-center text-gray-400'>
-        <i class='fab fa-linkedin mr-2'>
-        </i>
-LinkedIn
-    </li>
-<li class='flex items-center text-gray-400'>
-        <i class='fab fa-github mr-2'>
-        </i>
-GitHub
-    </li>
-    </ul>
-    </div>
-    </div>
-<div class='border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm'>
-        <p >
-        © 2025 卓德鹏. 保留所有权利.
-    </p>
-    </div>
-    </div>
-    </footer>
-<!-- [/MODULE] 8f4_页脚 -- 显示网站底部信息和导航链接 -->
-    </div>
-<!-- [/MODULE] 7a3_主内容区域 -->
-<!-- [JSMOD] 3f9_导航菜单交互 -->
-<script id='nav-script'>// 移动端菜单切换
-document.addEventListener('DOMContentLoaded', function () {
-  var mobileMenuButton = document.getElementById('mobile-menu-button');
-  var mobileMenu = document.getElementById('mobile-menu');
-  mobileMenuButton.addEventListener('click', function () {
-    mobileMenu.classList.toggle('hidden');
-  });
-  // 点击导航链接后关闭移动菜单
-  var mobileLinks = mobileMenu.querySelectorAll('a');
-  mobileLinks.forEach(function (link) {
-    link.addEventListener('click', function () {
-      mobileMenu.classList.add('hidden');
-    });
-  });
-  // 平滑滚动
-  document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      var targetId = this.getAttribute('href');
-      var targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        window.scrollTo({
-          top: targetElement.offsetTop - 80,
-          behavior: 'smooth'
+
+    <div class='min-h-screen flex flex-col'>
+
+        <!-- ================================================================= -->
+        <!-- 1. 顶部导航栏 (NAVBAR)                                            -->
+        <!-- ================================================================= -->
+        <nav class='sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm'>
+            <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
+                <div class='flex justify-between h-16'>
+                    <div class='flex items-center'>
+                        <a class='flex-shrink-0 flex items-center' href='javascript:void(0);'>
+                            <span class='text-primary font-bold text-xl'>卓德鹏</span>
+                        </a>
+                    </div>
+                    <div class='hidden md:flex items-center space-x-8'>
+                        <a class='text-gray-600 hover:text-primary transition-custom px-3 py-2 text-sm font-medium' href='#welcome'>首页</a>
+                        <a class='text-gray-600 hover:text-primary transition-custom px-3 py-2 text-sm font-medium' href='#about'>关于我</a>
+                        <a class='text-gray-600 hover:text-primary transition-custom px-3 py-2 text-sm font-medium' href='#universe'>我的世界</a>
+                        <a class='text-gray-600 hover:text-primary transition-custom px-3 py-2 text-sm font-medium' href='#thoughts'>灵感与思考</a>
+                        <a class='text-gray-600 hover:text-primary transition-custom px-3 py-2 text-sm font-medium' href='#fun'>小互动</a>
+                        <a class='text-gray-600 hover:text-primary transition-custom px-3 py-2 text-sm font-medium' href='#contact'>联系我</a>
+                    </div>
+                    <div class='md:hidden flex items-center'>
+                        <button class='text-gray-500 hover:text-primary focus:outline-none' id='mobile-menu-button'>
+                            <i class='fas fa-bars text-xl'></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 移动端抽屉菜单 -->
+            <div class='hidden md:hidden bg-white shadow-lg absolute w-full' id='mobile-menu'>
+                <div class='px-2 pt-2 pb-3 space-y-1 sm:px-3'>
+                    <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='#welcome'>首页</a>
+                    <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='#about'>关于我</a>
+                    <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='#universe'>我的世界</a>
+                    <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='#thoughts'>灵感与思考</a>
+                    <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='#fun'>小互动</a>
+                    <a class='block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-primary hover:bg-gray-50' href='#contact'>联系我</a>
+                </div>
+            </div>
+        </nav>
+
+
+        <!-- ================================================================= -->
+        <!-- 2. 首页欢迎区域 (HERO SECTION)                                    -->
+        <!-- ================================================================= -->
+        <section class='py-20 md:py-32 bg-gradient-to-br from-blue-50 to-purple-50' id='welcome'>
+            <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
+                <div class='flex flex-col md:flex-row items-center'>
+                    
+                    <!-- 头像区域 -->
+                    <div class='w-full md:w-1/3 mb-10 md:mb-0 flex justify-center'>
+                        <div class='relative has-tooltip'>
+                            <div class='w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white shadow-xl transition-all duration-500 hover:scale-105 hover:shadow-2xl'>
+                                <img alt='卓德鹏头像' class='w-full h-full object-cover transition-all duration-700 hover:brightness-110' src='https://design.gemcoder.com/api/upload/appResource/H8vEIys7nIV0MjMTqpEdN.jpg'/>
+                            </div>
+                            <span class='tooltip left-1/2 transform -translate-x-1/2'>哎呀，你偷看我啦，我在眨眼 😉</span>
+                            <div class='absolute -bottom-2 -right-2 bg-green-500 rounded-full w-10 h-10 flex items-center justify-center border-2 border-white shadow-md'>
+                                <i class='fas fa-check text-white'></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 标题与介绍文本 -->
+                    <div class='w-full md:w-2/3 text-center md:text-left'>
+                        <h1 class='text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight'>
+                            你好，我是 <span class='text-primary'>卓德鹏</span> 👋
+                        </h1>
+                        <div class='has-tooltip inline-block'>
+                            <p class='text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed'>
+                                数据、科技、创意的混合体<br />
+                                不只是咸鱼，也爱探索新鲜事物 🌏
+                            </p>
+                            <span class='tooltip left-1/2 transform -translate-x-1/2'>想知道我最近折腾了什么？点我就告诉你！</span>
+                        </div>
+                        <div class='flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4'>
+                            <a class='bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg shadow-md transition-custom flex items-center justify-center' href='#about'>
+                                <i class='fas fa-user mr-2'></i> 了解更多
+                            </a>
+                            <a class='bg-white hover:bg-gray-50 text-primary border border-primary font-medium py-3 px-6 rounded-lg shadow-sm transition-custom flex items-center justify-center' href='#contact'>
+                                <i class='fas fa-envelope mr-2'></i> 联系我
+                            </a>
+                        </div>
+                        <div id='disclaimer' class='mt-8 text-gray-500 text-sm italic'></div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================================================================= -->
+        <!-- 3. 关于我板块 (ABOUT ME)                                          -->
+        <!-- ================================================================= -->
+        <section class='py-20 bg-white' id='about'>
+            <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
+                <div class='text-center mb-16'>
+                    <h2 class='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>关于我</h2>
+                    <div class='w-20 h-1 bg-primary mx-auto rounded-full'></div>
+                </div>
+                
+                <div class='max-w-3xl mx-auto'>
+                    <!-- 个人简介描述 -->
+                    <div class='mb-12'>
+                        <h3 class='text-2xl font-semibold text-gray-800 mb-6 flex items-center'>
+                            <span class='bg-primary/10 text-primary p-2 rounded-full mr-3'>
+                                <i class='fas fa-user-circle'></i>
+                            </span>
+                            一个没有脱离低级趣味的人 🛠️
+                        </h3>
+                        <div class='bg-gray-50 rounded-xl p-6 shadow-sm'>
+                            <p class='text-gray-700 mb-4 leading-relaxed'>身高 182cm，体重 80kg，目标 75kg 💪</p>
+                            <p class='text-gray-700 mb-4 leading-relaxed'>Nothing Changes if nothing change 📊💼</p>
+                            <p class='text-gray-700 leading-relaxed'>除了控制不住的体重 🏊‍♂️🏃‍♂️，还有随波逐流的人生 📈</p>
+                        </div>
+                    </div>
+
+                    <!-- 技能与兴趣标签网格 -->
+                    <div class='grid grid-cols-1 md:grid-cols-2 gap-8'>
+                        <!-- 技能标签 -->
+                        <div>
+                            <h3 class='text-xl font-semibold text-gray-800 mb-4'>技能</h3>
+                            <div class='flex flex-wrap gap-3'>
+                                <div class='has-tooltip inline-block'>
+                                    <span class='bg-blue-100 text-blue-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-blue-200 cursor-pointer'>数据通信</span>
+                                    <span class='tooltip left-1/2 transform -translate-x-1/2'>点我，我可以帮你问AI 🎲</span>
+                                </div>
+                                <div class='has-tooltip inline-block'>
+                                    <span class='bg-green-100 text-green-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-green-200 cursor-pointer'>市场营销</span>
+                                    <span class='tooltip left-1/2 transform -translate-x-1/2'>点我，我也不知道什么是市场营销 🎲</span>
+                                </div>
+                                <div class='has-tooltip inline-block'>
+                                    <span class='bg-purple-100 text-purple-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-purple-200 cursor-pointer'>数据分析</span>
+                                    <span class='tooltip left-1/2 transform -translate-x-1/2'>点我，我Excel做表贼溜 🎲</span>
+                                </div>
+                                <div class='has-tooltip inline-block'>
+                                    <span class='bg-yellow-100 text-yellow-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-yellow-200 cursor-pointer'>图表设计</span>
+                                    <span class='tooltip left-1/2 transform -translate-x-1/2'>点我，我教你如何把数据玩成游戏 🎲</span>
+                                </div>
+                                <div class='has-tooltip inline-block'>
+                                    <span class='bg-red-100 text-red-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-red-200 cursor-pointer'>项目管理</span>
+                                    <span class='tooltip left-1/2 transform -translate-x-1/2'>点我，我教你怎么跟别人扯皮 🎲</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 兴趣标签 -->
+                        <div>
+                            <h3 class='text-xl font-semibold text-gray-800 mb-4'>兴趣</h3>
+                            <div class='flex flex-wrap gap-3'>
+                                <div class='has-tooltip inline-block'>
+                                    <span class='bg-indigo-100 text-indigo-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-indigo-200 cursor-pointer'>健身</span>
+                                    <span class='tooltip left-1/2 transform -translate-x-1/2'>偷偷告诉你，我健身是怕自己猝死💡</span>
+                                </div>
+                                <div class='has-tooltip inline-block'>
+                                    <span class='bg-pink-100 text-pink-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-pink-200 cursor-pointer'>游泳</span>
+                                    <span class='tooltip left-1/2 transform -translate-x-1/2'>偷偷告诉你，游完泳真的可以睡得安稳些 💡</span>
+                                </div>
+                                <div class='has-tooltip inline-block'>
+                                    <span class='bg-orange-100 text-orange-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-orange-200 cursor-pointer'>爬山（仅限八分山）</span>
+                                    <span class='tooltip left-1/2 transform -translate-x-1/2'>偷偷告诉你，八分山40分钟就能上去 💡</span>
+                                </div>
+                                <div class='has-tooltip inline-block'>
+                                    <span class='bg-teal-100 text-teal-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-teal-200 cursor-pointer'>折腾网站</span>
+                                    <span class='tooltip left-1/2 transform -translate-x-1/2'>偷偷告诉你，这个网站全是AI做的 💡</span>
+                                </div>
+                                <div class='has-tooltip inline-block'>
+                                    <span class='bg-gray-100 text-gray-800 text-sm font-medium px-4 py-2 rounded-full transition-custom hover:bg-gray-200 cursor-pointer'>研究技术</span>
+                                    <span class='tooltip left-1/2 transform -translate-x-1/2'>偷偷告诉你，其实我啥也不会 💡</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================================================================= -->
+        <!-- 4. 我的世界板块 (UNIVERSE - 卡片展示网格)                         -->
+        <!-- 💡 提示：后期想多加新卡片，直接在下方 <div class='grid...'> 里面复制一套完整 Block -->
+        <!-- ================================================================= -->
+        <section class='py-20 bg-gray-50' id='universe'>
+            <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
+                <div class='text-center mb-16'>
+                    <h2 class='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>我的世界</h2>
+                    <p class='text-xl text-gray-600 max-w-3xl mx-auto'>工作、项目与爱好 🌟</p>
+                    <div class='w-20 h-1 bg-primary mx-auto mt-4 rounded-full'></div>
+                </div>
+
+                <!-- 卡片三列网格容器开始 -->
+                <div class='grid grid-cols-1 md:grid-cols-3 gap-8'>
+
+                    <!-- ------------------- 【卡片 Block 1：Merry Christmas】 ------------------- -->
+                    <div class='bg-white rounded-xl shadow-md overflow-hidden card-hover'>
+                        <div class='h-48 overflow-hidden'>
+                            <img alt='圣诞树' class='w-full h-full object-cover transition-transform duration-500 hover:scale-110' src='images/Christmas_tree.jpg'/>
+                        </div>
+                        <div class='p-6'>
+                            <div class='has-tooltip inline-block mb-4'>
+                                <h3 class='text-xl font-semibold text-gray-800'>Merry Christmas</h3>
+                                <span class='tooltip left-1/2 transform -translate-x-1/2'>圣诞节快乐，一颗圣诞树送给大家 📡</span>
+                            </div>
+                            <p class='text-gray-600 mb-4'>Light up the night. Merry Christmas.</p>
+                            <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Christmas Tree.html'>
+                                了解更多 <i class='fas fa-arrow-right ml-2'></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- ------------------- 【卡片 Block 1 结束】 ------------------- -->
+
+
+                    <!-- ------------------- 【卡片 Block 2：好书推荐】 ------------------- -->
+                    <div class='bg-white rounded-xl shadow-md overflow-hidden card-hover'>
+                        <div class='h-48 overflow-hidden'>
+                            <img alt='网站建设实验' class='w-full h-full object-cover transition-transform duration-500 hover:scale-110' src='images/5.jpg'/>
+                        </div>
+                        <div class='p-6'>
+                            <div class='has-tooltip inline-block mb-4'>
+                                <h3 class='text-xl font-semibold text-gray-800'>好书推荐——《明朝那些事儿》</h3>
+                                <span class='tooltip left-1/2 transform -translate-x-1/2'>其实，文章是AI写的 🌐✨</span>
+                            </div>
+                            <p class='text-gray-600 mb-4'>所谓百年功名，千秋霸业，万古流芳，与一件事情相比，其实算不了什么，这件事情就是用你喜欢的方式度过一生。</p>
+                            <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/mingchao_review.html'>
+                                阅读全文 <i class='fas fa-arrow-right ml-2'></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- ------------------- 【卡片 Block 2 结束】 ------------------- -->
+
+
+                    <!-- ------------------- 【卡片 Block 3：价值投资计算器】 ------------------- -->
+                    <div class='bg-white rounded-xl shadow-md overflow-hidden card-hover'>
+                        <div class='h-48 overflow-hidden'>
+                            <img alt='运动与健康' class='w-full h-full object-cover transition-transform duration-500 hover:scale-110' src='images/1.jpg'/>
+                        </div>
+                        <div class='p-6'>
+                            <div class='has-tooltip inline-block mb-4'>
+                                <h3 class='text-xl font-semibold text-gray-800'>价值投资计算器</h3>
+                                <span class='tooltip left-1/2 transform -translate-x-1/2'>AI导AI弄出来的价值计算器，你值得拥有🔥</span>
+                            </div>
+                            <p class='text-gray-600 mb-4'>把需要的原始数据复制丢给AI，就会给出买入建议</p>
+                            <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Value_Calculator_V3.html'>
+                                点击计算 <i class='fas fa-arrow-right ml-2'></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!-- ------------------- 【卡片 Block 3 结束】 ------------------- -->
+
+
+                    <!-- 💡 后期扩展提示：如果想新增卡片 4、卡片 5，请复制上方任意一个 Block 粘贴在此处 -->
+
+                </div>
+                <!-- 卡片三列网格容器结束 -->
+
+            </div>
+        </section>
+
+
+        <!-- ================================================================= -->
+        <!-- 5. 灵感与思考板块 (THOUGHTS - 文章列表)                          -->
+        <!-- 💡 提示：增加新文章时，直接在 <div class='space-y-8'> 中复制文章 Block -->
+        <!-- ================================================================= -->
+        <section class='py-20 bg-white' id='thoughts'>
+            <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
+                <div class='text-center mb-16'>
+                    <h2 class='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>灵感与思考</h2>
+                    <p class='text-xl text-gray-600 max-w-3xl mx-auto'>不只有公式，还有脑洞 🤯</p>
+                    <div class='w-20 h-1 bg-primary mx-auto mt-4 rounded-full'></div>
+                </div>
+
+                <div class='max-w-4xl mx-auto'>
+                    
+                    <!-- 文章列表容器开始 -->
+                    <div class='space-y-8'>
+
+                        <!-- ------------------- 【文章 Block 1：岁月留痕】 ------------------- -->
+                        <div class='bg-gray-50 rounded-xl p-6 md:p-8 shadow-sm transition-custom hover:shadow-md'>
+                            <div class='has-tooltip inline-block mb-3'>
+                                <h3 class='text-2xl font-semibold text-gray-800 cursor-pointer'>岁月留痕</h3>
+                                <span class='tooltip left-1/2 transform -translate-x-1/2'>哇，你的好奇心不错，这里有点小惊喜 🐾</span>
+                            </div>
+                            <div class='flex items-center text-gray-500 text-sm mb-4'>
+                                <span class='flex items-center mr-4'>
+                                    <i class='far fa-calendar-alt mr-1'></i> 2023-06-15
+                                </span>
+                                <span class='flex items-center'>
+                                    <i class='far fa-clock mr-1'></i> 5 分钟阅读
+                                </span>
+                            </div>
+                            <div class='has-tooltip'>
+                                <p class='text-gray-700 leading-relaxed mb-4'>生活不止眼前的苟且，还有诗和远方的田野。在这里，每一张照片都是一段旅程，每一个瞬间都值得铭记。</p>
+                                <span class='tooltip left-1/2 transform -translate-x-1/2'>点一下，我可能会弹出一条随机思考小贴士 💡</span>
+                            </div>
+                            <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/photowall.html'>
+                                阅读全文 <i class='fas fa-long-arrow-alt-right ml-2'></i>
+                            </a>
+                        </div>
+
+                        <!-- ------------------- 【文章 Block 2：浮光掠金】 ------------------- -->
+                        <div class='bg-gray-50 rounded-xl p-6 md:p-8 shadow-sm transition-custom hover:shadow-md'>
+                            <div class='has-tooltip inline-block mb-3'>
+                                <h3 class='text-2xl font-semibold text-gray-800 cursor-pointer'>浮光掠金</h3>
+                                <span class='tooltip left-1/2 transform -translate-x-1/2'>哇，你的好奇心不错，这里有点小惊喜 🐾</span>
+                            </div>
+                            <div class='flex items-center text-gray-500 text-sm mb-4'>
+                                <span class='flex items-center mr-4'>
+                                    <i class='far fa-calendar-alt mr-1'></i> 2023-05-22
+                                </span>
+                                <span class='flex items-center'>
+                                    <i class='far fa-clock mr-1'></i> 7 分钟阅读
+                                </span>
+                            </div>
+                            <div class='has-tooltip'>
+                                <p class='text-gray-700 leading-relaxed mb-4'>人生要紧的不是你经历了什么，而是你记住了什么。</p>
+                                <span class='tooltip left-1/2 transform -translate-x-1/2'>点一下，我可能会弹出一条随机思考小贴士 💡</span>
+                            </div>
+                            <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Noir-Gold.html'>
+                                阅读全文 <i class='fas fa-long-arrow-alt-right ml-2'></i>
+                            </a>
+                        </div>
+
+                        <!-- ------------------- 【文章 Block 3：用数据分析世界...】 ------------------- -->
+                        <div class='bg-gray-50 rounded-xl p-6 md:p-8 shadow-sm transition-custom hover:shadow-md'>
+                            <div class='has-tooltip inline-block mb-3'>
+                                <h3 class='text-2xl font-semibold text-gray-800 cursor-pointer'>用数据分析世界，不如先分析自己</h3>
+                                <span class='tooltip left-1/2 transform -translate-x-1/2'>哇，你的好奇心不错，这里有点小惊喜 🐾</span>
+                            </div>
+                            <div class='flex items-center text-gray-500 text-sm mb-4'>
+                                <span class='flex items-center mr-4'>
+                                    <i class='far fa-calendar-alt mr-1'></i> 2023-04-30
+                                </span>
+                                <span class='flex items-center'>
+                                    <i class='far fa-clock mr-1'></i> 6 分钟阅读
+                                </span>
+                            </div>
+                            <div class='has-tooltip'>
+                                <p class='text-gray-700 leading-relaxed mb-4'>我们热衷于用数据分析市场趋势、用户行为，却常常忽略了分析自己。本文分享如何利用数据分析方法来了解自己的习惯、优化时间管理，以及如何通过数据驱动的方式实现个人成长...</p>
+                                <span class='tooltip left-1/2 transform -translate-x-1/2'>点一下，我可能会弹出一条随机思考小贴士 💡</span>
+                            </div>
+                            <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='javascript:void(0);'>
+                                阅读全文 <i class='fas fa-long-arrow-alt-right ml-2'></i>
+                            </a>
+                        </div>
+
+                        <!-- 💡 后期扩展提示：如果想新增文章，复制上方任意一个文章 Block 粘贴在此处 -->
+
+                    </div>
+                    <!-- 文章列表容器结束 -->
+
+                    <!-- 加载更多按钮 -->
+                    <div class='text-center mt-12'>
+                        <button class='bg-white border border-gray-300 text-gray-700 font-medium py-3 px-6 rounded-lg shadow-sm transition-custom hover:bg-gray-50' id='load-more-thoughts'>
+                            <i class='fas fa-spinner mr-2'></i> 加载更多
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================================================================= -->
+        <!-- 6. 小互动板块 (FUN INTERACTION)                                   -->
+        <!-- ================================================================= -->
+        <section class='py-20 bg-gradient-to-br from-purple-50 to-blue-50' id='fun'>
+            <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
+                <div class='text-center mb-16'>
+                    <h2 class='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>小互动</h2>
+                    <p class='text-xl text-gray-600 max-w-3xl mx-auto'>来点互动吧 🎮</p>
+                    <div class='w-20 h-1 bg-primary mx-auto mt-4 rounded-full'></div>
+                </div>
+
+                <div class='grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto'>
+                    
+                    <!-- 1. 步数猜测卡片 -->
+                    <div class='bg-white rounded-xl shadow-md p-6 text-center card-hover'>
+                        <div class='w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4'>
+                            <i class='fas fa-walking text-blue-600 text-2xl'></i>
+                        </div>
+                        <h3 class='text-xl font-semibold text-gray-800 mb-2'>猜猜我今天走了多少步？</h3>
+                        <p class='text-gray-500 text-sm mb-4'>👣 日常活动的小挑战</p>
+                        <div class='has-tooltip mb-6'>
+                            <input class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom mb-2' id='step-guess' placeholder='输入你的猜测' type='number'/>
+                            <span class='tooltip left-1/2 transform -translate-x-1/2'>别作弊哦，我可是有记录的 📊</span>
+                        </div>
+                        <button class='w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-custom' id='check-step-guess'>提交猜测</button>
+                        <p class='mt-4 text-gray-600 hidden' id='step-result'></p>
+                    </div>
+
+                    <!-- 2. 随机建议卡片 -->
+                    <div class='bg-white rounded-xl shadow-md p-6 text-center card-hover'>
+                        <div class='w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4'>
+                            <i class='fas fa-lightbulb text-green-600 text-2xl'></i>
+                        </div>
+                        <h3 class='text-xl font-semibold text-gray-800 mb-2'>随机建议</h3>
+                        <p class='text-gray-500 text-sm mb-6'>💡 生活小贴士</p>
+                        <div class='has-tooltip'>
+                            <button class='w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-lg transition-custom' id='random-tip'>点我，我给你生活小贴士</button>
+                            <span class='tooltip left-1/2 transform -translate-x-1/2'>可能很管用，也可能只是个笑话 😜</span>
+                        </div>
+                        <div class='mt-6 p-4 bg-gray-50 rounded-lg text-gray-700 min-h-20 flex items-center justify-center' id='tip-result'>点击上方按钮获取随机小贴士</div>
+                    </div>
+
+                    <!-- 3. 计划安排卡片 -->
+                    <div class='bg-white rounded-xl shadow-md p-6 text-center card-hover'>
+                        <div class='w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4'>
+                            <i class='fas fa-calendar-alt text-purple-600 text-2xl'></i>
+                        </div>
+                        <h3 class='text-xl font-semibold text-gray-800 mb-2'>计划安排</h3>
+                        <p class='text-gray-500 text-sm mb-6'>🎲 工作与健身平衡</p>
+                        <div class='has-tooltip'>
+                            <button class='w-full bg-purple-500 hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-lg transition-custom' id='generate-schedule'>帮我安排一周计划</button>
+                            <span class='tooltip left-1/2 transform -translate-x-1/2'>你敢试试吗？有点难哦 😎</span>
+                        </div>
+                        <div class='mt-6 p-4 bg-gray-50 rounded-lg text-gray-700 min-h-20 flex items-center justify-center' id='schedule-result'>点击上方按钮生成一周计划</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================================================================= -->
+        <!-- 7. 联系我板块 (CONTACT)                                           -->
+        <!-- ================================================================= -->
+        <section class='py-20 bg-white' id='contact'>
+            <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
+                <div class='text-center mb-16'>
+                    <h2 class='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>联系我</h2>
+                    <p class='text-xl text-gray-600 max-w-3xl mx-auto'>想聊聊吗？或者单纯来打个招呼 ✉️</p>
+                    <div class='w-20 h-1 bg-primary mx-auto mt-4 rounded-full'></div>
+                </div>
+
+                <div class='grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto'>
+                    <!-- 左侧：联系信息 -->
+                    <div>
+                        <div class='bg-gray-50 rounded-xl p-8 h-full'>
+                            <h3 class='text-2xl font-semibold text-gray-800 mb-6'>联系方式</h3>
+                            <p class='text-gray-600 mb-8'>可以通过邮箱、LinkedIn、GitHub 联系我<br />（鸽子邮递可选，但不保证准时 🐦）</p>
+                            
+                            <div class='space-y-6'>
+                                <div class='has-tooltip'>
+                                    <a class='flex items-center text-gray-700 hover:text-primary transition-custom' href='mailto:example@example.com'>
+                                        <div class='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4'>
+                                            <i class='fas fa-envelope text-blue-600'></i>
+                                        </div>
+                                        <div>
+                                            <p class='text-sm text-gray-500'>邮箱</p>
+                                            <p class='font-medium'>zhuodepeng@gmail.com</p>
+                                        </div>
+                                    </a>
+                                    <span class='tooltip left-1/2 transform -translate-x-1/2'>点我，发封信吧，我保证不回鸽子 🕊️</span>
+                                </div>
+
+                                <div class='has-tooltip'>
+                                    <a class='flex items-center text-gray-700 hover:text-primary transition-custom' href='javascript:void(0);'>
+                                        <div class='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4'>
+                                            <i class='fab fa-linkedin text-blue-600'></i>
+                                        </div>
+                                        <div>
+                                            <p class='text-sm text-gray-500'>LinkedIn</p>
+                                            <p class='font-medium'>卓德鹏</p>
+                                        </div>
+                                    </a>
+                                    <span class='tooltip left-1/2 transform -translate-x-1/2'>点击看看我平时折腾的东西，保证有趣 🔍</span>
+                                </div>
+
+                                <div class='has-tooltip'>
+                                    <a class='flex items-center text-gray-700 hover:text-primary transition-custom' href='javascript:void(0);'>
+                                        <div class='w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mr-4'>
+                                            <i class='fab fa-github text-gray-800'></i>
+                                        </div>
+                                        <div>
+                                            <p class='text-sm text-gray-500'>GitHub</p>
+                                            <p class='font-medium'>github.com/zhuodepeng</p>
+                                        </div>
+                                    </a>
+                                    <span class='tooltip left-1/2 transform -translate-x-1/2'>点击看看我平时折腾的东西，保证有趣 🔍</span>
+                                </div>
+                            </div>
+
+                            <div class='mt-10'>
+                                <h4 class='text-lg font-medium text-gray-800 mb-4'>关注我</h4>
+                                <div class='flex space-x-4'>
+                                    <a class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'><i class='fab fa-twitter text-gray-700'></i></a>
+                                    <a class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'><i class='fab fa-instagram text-gray-700'></i></a>
+                                    <a class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'><i class='fab fa-weixin text-gray-700'></i></a>
+                                    <a class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'><i class='fab fa-weibo text-gray-700'></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 右侧：发送消息表单 -->
+                    <div>
+                        <form class='bg-white rounded-xl shadow-md p-8' id='contact-form'>
+                            <h3 class='text-2xl font-semibold text-gray-800 mb-6'>发送消息</h3>
+                            <div class='grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4'>
+                                <div>
+                                    <label class='block text-sm font-medium text-gray-700 mb-1' for='name'>姓名</label>
+                                    <input class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom' id='name' name='name' placeholder='你的名字' type='text'/>
+                                </div>
+                                <div>
+                                    <label class='block text-sm font-medium text-gray-700 mb-1' for='email'>邮箱</label>
+                                    <input class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom' id='email' name='email' placeholder='your@email.com' type='email'/>
+                                </div>
+                            </div>
+                            <div class='mb-4'>
+                                <label class='block text-sm font-medium text-gray-700 mb-1' for='subject'>主题</label>
+                                <input class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom' id='subject' name='subject' placeholder='消息主题' type='text'/>
+                            </div>
+                            <div>
+                                <label class='block text-sm font-medium text-gray-700 mb-1' for='message'>消息</label>
+                                <textarea class='w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom' id='message' name='message' placeholder='请输入你的消息...' rows='5'></textarea>
+                            </div>
+                            <button class='w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg shadow-md transition-custom mt-6' type='submit'>
+                                <i class='fas fa-paper-plane mr-2'></i> 发送消息
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================================================================= -->
+        <!-- 8. 页脚区域 (FOOTER)                                              -->
+        <!-- ================================================================= -->
+        <footer class='bg-gray-900 text-white py-12'>
+            <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
+                <div class='grid grid-cols-1 md:grid-cols-4 gap-8'>
+                    <div class='md:col-span-2'>
+                        <h3 class='text-xl font-bold mb-4'>卓德鹏</h3>
+                        <p class='text-gray-400 max-w-md'>数据、科技、创意的混合体。不只是咸鱼，也爱探索新鲜事物。</p>
+                        <div class='flex space-x-4 mt-6'>
+                            <a class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'><i class='fab fa-twitter'></i></a>
+                            <a class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'><i class='fab fa-linkedin'></i></a>
+                            <a class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'><i class='fab fa-github'></i></a>
+                            <a class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'><i class='fab fa-weixin'></i></a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class='text-lg font-semibold mb-4'>快速链接</h4>
+                        <ul class='space-y-2'>
+                            <li><a class='text-gray-400 hover:text-white transition-custom' href='#welcome'>首页</a></li>
+                            <li><a class='text-gray-400 hover:text-white transition-custom' href='#about'>关于我</a></li>
+                            <li><a class='text-gray-400 hover:text-white transition-custom' href='#universe'>我的世界</a></li>
+                            <li><a class='text-gray-400 hover:text-white transition-custom' href='#thoughts'>灵感与思考</a></li>
+                            <li><a class='text-gray-400 hover:text-white transition-custom' href='#fun'>小互动</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class='text-lg font-semibold mb-4'>联系我</h4>
+                        <ul class='space-y-2'>
+                            <li class='flex items-center text-gray-400'><i class='fas fa-envelope mr-2'></i> zhuodepeng@gmail.com</li>
+                            <li class='flex items-center text-gray-400'><i class='fab fa-linkedin mr-2'></i> LinkedIn</li>
+                            <li class='flex items-center text-gray-400'><i class='fab fa-github mr-2'></i> GitHub</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class='border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm'>
+                    <p>© 2025 卓德鹏. 保留所有权利.</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- 9. JAVASCRIPT 脚本交互逻辑                                         -->
+    <!-- ================================================================= -->
+
+    <!-- 导航菜单交互 -->
+    <script id='nav-script'>
+    document.addEventListener('DOMContentLoaded', function () {
+      var mobileMenuButton = document.getElementById('mobile-menu-button');
+      var mobileMenu = document.getElementById('mobile-menu');
+      mobileMenuButton.addEventListener('click', function () {
+        mobileMenu.classList.toggle('hidden');
+      });
+      
+      var mobileLinks = mobileMenu.querySelectorAll('a');
+      mobileLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          mobileMenu.classList.add('hidden');
         });
-      }
+      });
+      
+      document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          var targetId = this.getAttribute('href');
+          var targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 80,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
     });
-  });
-});</script>
-<!-- [/JSMOD] 3f9_导航菜单交互 -- 处理移动端菜单显示/隐藏和导航链接的平滑滚动 -->
-<!-- [JSMOD] 5e2_小互动功能 -->
-<script id='fun-script'>document.addEventListener('DOMContentLoaded', function () {
-  // 步数猜测游戏
-  var checkStepGuess = document.getElementById('check-step-guess');
-  var stepGuessInput = document.getElementById('step-guess');
-  var stepResult = document.getElementById('step-result');
-  checkStepGuess.addEventListener('click', function () {
-    var userGuess = parseInt(stepGuessInput.value);
-    var actualSteps = Math.floor(Math.random() * 10000) + 5000; // 5000-15000步之间的随机数
-    if (isNaN(userGuess)) {
-      stepResult.textContent = '请输入一个有效的数字';
-      stepResult.classList.remove('hidden', 'text-green-600');
-      stepResult.classList.add('text-red-600');
-      return;
-    }
-    var difference = Math.abs(userGuess - actualSteps);
-    var feedback = '';
-    if (difference < 500) {
-      feedback = "\u592A\u51C6\u4E86\uFF01\u6211\u4ECA\u5929\u8D70\u4E86".concat(actualSteps, "\u6B65\uFF0C\u4F60\u731C\u7684\u53EA\u5DEE\u4E86").concat(difference, "\u6B65\uFF01");
-    } else if (difference < 1000) {
-      feedback = "\u4E0D\u9519\u54E6\uFF01\u6211\u4ECA\u5929\u8D70\u4E86".concat(actualSteps, "\u6B65\uFF0C\u4F60\u731C\u7684\u5DEE\u4E86").concat(difference, "\u6B65\u3002");
-    } else if (difference < 3000) {
-      feedback = "\u8FD8\u53EF\u4EE5\uFF01\u6211\u4ECA\u5929\u8D70\u4E86".concat(actualSteps, "\u6B65\uFF0C\u4F60\u731C\u7684\u5DEE\u4E86").concat(difference, "\u6B65\u3002");
-    } else {
-      feedback = "\u5DEE\u5F97\u6709\u70B9\u8FDC\u54E6\uFF01\u6211\u4ECA\u5929\u8D70\u4E86".concat(actualSteps, "\u6B65\uFF0C\u4F60\u731C\u7684\u5DEE\u4E86").concat(difference, "\u6B65\u3002");
-    }
-    stepResult.textContent = feedback;
-    stepResult.classList.remove('hidden', 'text-red-600');
-    stepResult.classList.add('text-green-600');
-  });
-  // 随机小贴士
-  var randomTipButton = document.getElementById('random-tip');
-  var tipResult = document.getElementById('tip-result');
-  var tips = ["每天喝够8杯水，保持身体水分充足。", "尝试每天冥想10分钟，有助于减轻压力。", "学习新技能时，每天坚持练习比一次性长时间练习更有效。", "站立工作可以改善姿势，减轻背部压力。", "睡前一小时避免使用电子设备，有助于提高睡眠质量。", "微笑可以改善你的心情，即使你并不感到特别开心。", "尝试每天写三件感恩的事情，培养积极心态。", "深呼吸练习可以在几秒钟内帮助你冷静下来。", "读书时，尝试在页边做笔记，提高理解和记忆。", "偶尔给自己一个小奖励，庆祝完成小目标。", "这个小贴士其实是个笑话，哈哈！", "记得定期备份你的重要文件，以防意外丢失。", "学习一项新技能时，教给别人是巩固知识的好方法。"];
-  randomTipButton.addEventListener('click', function () {
-    var randomIndex = Math.floor(Math.random() * tips.length);
-    tipResult.textContent = tips[randomIndex];
-    // 添加淡入效果
-    tipResult.style.opacity = '0';
-    setTimeout(function () {
-      tipResult.style.transition = 'opacity 0.5s';
-      tipResult.style.opacity = '1';
-    }, 50);
-  });
-  // 生成一周计划
-  var generateScheduleButton = document.getElementById('generate-schedule');
-  var scheduleResult = document.getElementById('schedule-result');
-  var workTasks = ["数据分析项目推进", "市场调研报告撰写", "团队周会与进度同步", "客户沟通与需求确认", "技术文档整理与更新", "新项目规划与设计", "产品测试与优化"];
-  var fitnessActivities = ["晨跑5公里", "健身房力量训练", "游泳1小时", "瑜伽放松练习", "HIIT高强度间歇训练", "骑行探索新路线", "徒步旅行"];
-  generateScheduleButton.addEventListener('click', function () {
-    var weekDays = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
-    var scheduleHTML = '<ul class="text-left space-y-3">';
-    weekDays.forEach(function (day) {
-      var workTask = workTasks[Math.floor(Math.random() * workTasks.length)];
-      var fitnessActivity = fitnessActivities[Math.floor(Math.random() * fitnessActivities.length)];
-      scheduleHTML += "<li class=\"flex justify-between items-center\">\n                            <span class=\"font-medium\">".concat(day, ":</span>\n                            <span class=\"text-sm\">\u5DE5\u4F5C:").concat(workTask, ", \u5065\u8EAB:").concat(fitnessActivity, "</span>\n                        </li>");
+    </script>
+
+    <!-- 小互动功能逻辑 -->
+    <script id='fun-script'>
+    document.addEventListener('DOMContentLoaded', function () {
+      // 步数猜测游戏
+      var checkStepGuess = document.getElementById('check-step-guess');
+      var stepGuessInput = document.getElementById('step-guess');
+      var stepResult = document.getElementById('step-result');
+      checkStepGuess.addEventListener('click', function () {
+        var userGuess = parseInt(stepGuessInput.value);
+        var actualSteps = Math.floor(Math.random() * 10000) + 5000;
+        if (isNaN(userGuess)) {
+          stepResult.textContent = '请输入一个有效的数字';
+          stepResult.classList.remove('hidden', 'text-green-600');
+          stepResult.classList.add('text-red-600');
+          return;
+        }
+        var difference = Math.abs(userGuess - actualSteps);
+        var feedback = '';
+        if (difference < 500) {
+          feedback = "太准了！我今天走了" + actualSteps + "步，你猜的只差了" + difference + "步！";
+        } else if (difference < 1000) {
+          feedback = "不错哦！我今天走了" + actualSteps + "步，你猜的差了" + difference + "步。";
+        } else if (difference < 3000) {
+          feedback = "还可以！我今天走了" + actualSteps + "步，你猜的差了" + difference + "步。";
+        } else {
+          feedback = "差得有点远哦！我今天走了" + actualSteps + "步，你猜的差了" + difference + "步。";
+        }
+        stepResult.textContent = feedback;
+        stepResult.classList.remove('hidden', 'text-red-600');
+        stepResult.classList.add('text-green-600');
+      });
+
+      // 随机小贴士
+      var randomTipButton = document.getElementById('random-tip');
+      var tipResult = document.getElementById('tip-result');
+      var tips = [
+        "每天喝够8杯水，保持身体水分充足。",
+        "尝试每天冥想10分钟，有助于减轻压力。",
+        "学习新技能时，每天坚持练习比一次性长时间练习更有效。",
+        "站立工作可以改善姿势，减轻背部压力。",
+        "睡前一小时避免使用电子设备，有助于提高睡眠质量。",
+        "微笑可以改善你的心情，即使你并不感到特别开心。",
+        "尝试每天写三件感恩的事情，培养积极心态。",
+        "深呼吸练习可以在几秒钟内帮助你冷静下来。",
+        "读书时，尝试在页边做笔记，提高理解和记忆。",
+        "偶尔给自己一个小奖励，庆祝完成小目标。",
+        "这个小贴士其实是个笑话，哈哈！",
+        "记得定期备份你的重要文件，以防意外丢失。",
+        "学习一项新技能时，教给别人是巩固知识的好方法。"
+      ];
+      randomTipButton.addEventListener('click', function () {
+        var randomIndex = Math.floor(Math.random() * tips.length);
+        tipResult.textContent = tips[randomIndex];
+        tipResult.style.opacity = '0';
+        setTimeout(function () {
+          tipResult.style.transition = 'opacity 0.5s';
+          tipResult.style.opacity = '1';
+        }, 50);
+      });
+
+      // 生成一周计划
+      var generateScheduleButton = document.getElementById('generate-schedule');
+      var scheduleResult = document.getElementById('schedule-result');
+      var workTasks = ["数据分析项目推进", "市场调研报告撰写", "团队周会与进度同步", "客户沟通与需求确认", "技术文档整理与更新", "新项目规划与设计", "产品测试与优化"];
+      var fitnessActivities = ["晨跑5公里", "健身房力量训练", "游泳1小时", "瑜伽放松练习", "HIIT高强度间歇训练", "骑行探索新路线", "徒步旅行"];
+      generateScheduleButton.addEventListener('click', function () {
+        var weekDays = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
+        var scheduleHTML = '<ul class="text-left space-y-3">';
+        weekDays.forEach(function (day) {
+          var workTask = workTasks[Math.floor(Math.random() * workTasks.length)];
+          var fitnessActivity = fitnessActivities[Math.floor(Math.random() * fitnessActivities.length)];
+          scheduleHTML += "<li class='flex justify-between items-center'><span class='font-medium'>" + day + ":</span><span class='text-sm'>工作:" + workTask + ", 健身:" + fitnessActivity + "</span></li>";
+        });
+        scheduleHTML += '</ul>';
+        scheduleResult.innerHTML = scheduleHTML;
+        scheduleResult.style.opacity = '0';
+        setTimeout(function () {
+          scheduleResult.style.transition = 'opacity 0.5s';
+          scheduleResult.style.opacity = '1';
+        }, 50);
+      });
     });
-    scheduleHTML += '</ul>';
-    scheduleResult.innerHTML = scheduleHTML;
-    // 添加淡入效果
-    scheduleResult.style.opacity = '0';
-    setTimeout(function () {
-      scheduleResult.style.transition = 'opacity 0.5s';
-      scheduleResult.style.opacity = '1';
-    }, 50);
-  });
-});</script>
-<!-- [/JSMOD] 5e2_小互动功能 -- 实现步数猜测、随机建议和计划安排的互动功能 -->
-<!-- [JSMOD] 7a1_表单提交处理 -->
-<script id='form-script'>document.addEventListener('DOMContentLoaded', function () {
-  var contactForm = document.getElementById('contact-form');
-  contactForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    // 在实际应用中，这里会有表单验证和提交到服务器的代码
-    // 这里仅做简单的演示
-    // 获取表单数据
-    var formData = {
-      name: document.getElementById('name').value,
-      email: document.getElementById('email').value,
-      subject: document.getElementById('subject').value,
-      message: document.getElementById('message').value
-    };
-    // 简单验证
-    if (!formData.name || !formData.email || !formData.message) {
-      alert('请填写所有必填字段');
-      return;
-    }
-    // 模拟提交成功
-    alert('嘻嘻其实这只是个框，你信息我收不到');
-    contactForm.reset();
-  });
-});</script>
-<!-- [/JSMOD] 7a1_表单提交处理 -- 处理联系表单的提交 -->
-<!-- [JSMOD] 2b3_加载更多文章 -->
-<script id='load-more-script'>document.addEventListener('DOMContentLoaded', function () {
-  var loadMoreButton = document.getElementById('load-more-thoughts');
-  loadMoreButton.addEventListener('click', function () {
-    // 显示加载中状态
-    loadMoreButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> 加载中...';
-    loadMoreButton.disabled = true;
-    // 模拟加载延迟
-    setTimeout(function () {
-      // 恢复按钮状态
-      loadMoreButton.innerHTML = '<i class="fas fa-spinner mr-2"></i> 加载更多';
-      loadMoreButton.disabled = false;
-      // 显示没有更多文章的提示
-      var articleContainer = document.querySelector('#thoughts .space-y-8');
-      var noMoreMessage = document.createElement('div');
-      noMoreMessage.className = 'text-center py-8 text-gray-500';
-      noMoreMessage.innerHTML = '<i class="fas fa-book-open text-2xl mb-2"></i><p>没有更多文章了</p>';
-      articleContainer.appendChild(noMoreMessage);
-      // 隐藏加载更多按钮
-      loadMoreButton.classList.add('hidden');
-    }, 1500);
-  });
-});</script>
-<!-- [/JSMOD] 2b3_加载更多文章 -- 处理"加载更多"按钮的点击事件，模拟加载更多文章 -->
-<!-- [JSMOD] 9d1_滚动效果 -->
-<script id='scroll-script'>document.addEventListener('DOMContentLoaded', function () {
-  // 添加滚动时导航栏效果
-  var nav = document.querySelector('nav');
-  var lastScrollY = window.scrollY;
-  window.addEventListener('scroll', function () {
-    if (window.scrollY > 100) {
-      nav.classList.add('shadow-md');
-      nav.classList.remove('shadow-sm');
-    } else {
-      nav.classList.remove('shadow-md');
-      nav.classList.add('shadow-sm');
-    }
-    lastScrollY = window.scrollY;
-  });
-  // 添加元素进入视口时的动画效果
-  var animateOnScroll = function animateOnScroll() {
-    var elements = document.querySelectorAll('.card-hover');
-    elements.forEach(function (element) {
-      var elementPosition = element.getBoundingClientRect().top;
-      var windowHeight = window.innerHeight;
-      if (elementPosition < windowHeight - 100) {
-        element.style.opacity = '1';
-        element.style.transform = 'translateY(0)';
-      }
+    </script>
+
+    <!-- 联系表单提交处理 -->
+    <script id='form-script'>
+    document.addEventListener('DOMContentLoaded', function () {
+      var contactForm = document.getElementById('contact-form');
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var formData = {
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value,
+          subject: document.getElementById('subject').value,
+          message: document.getElementById('message').value
+        };
+        if (!formData.name || !formData.email || !formData.message) {
+          alert('请填写所有必填字段');
+          return;
+        }
+        alert('嘻嘻其实这只是个框，你信息我收不到');
+        contactForm.reset();
+      });
     });
-  };
-  // 初始设置
-  document.querySelectorAll('.card-hover').forEach(function (element) {
-    element.style.opacity = '0';
-    element.style.transform = 'translateY(20px)';
-    element.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-  });
-  // 初始检查
-  animateOnScroll();
-  // 滚动时检查
-  window.addEventListener('scroll', animateOnScroll);
-});</script>
-<!-- [/JSMOD] 9d1_滚动效果 -- 处理滚动时导航栏样式变化和元素进入视口时的动画效果 -->
-<!-- [JSMOD] 1a2_动态免责声明 -->
-<script id='disclaimer-script'>document.addEventListener('DOMContentLoaded', function () {
-  // 动态渲染免责声明文本
-  var disclaimerElement = document.getElementById('disclaimer');
-  disclaimerElement.textContent = '此页面由AI生成，仅做测试用';
-});</script>
-<!-- [/JSMOD] 1a2_动态免责声明 -- 动态渲染首页底部的免责声明文本 -->
-    </body>
-    </html>
+    </script>
+
+    <!-- 加载更多文章逻辑 -->
+    <script id='load-more-script'>
+    document.addEventListener('DOMContentLoaded', function () {
+      var loadMoreButton = document.getElementById('load-more-thoughts');
+      loadMoreButton.addEventListener('click', function () {
+        loadMoreButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> 加载中...';
+        loadMoreButton.disabled = true;
+        setTimeout(function () {
+          loadMoreButton.innerHTML = '<i class="fas fa-spinner mr-2"></i> 加载更多';
+          loadMoreButton.disabled = false;
+          var articleContainer = document.querySelector('#thoughts .space-y-8');
+          var noMoreMessage = document.createElement('div');
+          noMoreMessage.className = 'text-center py-8 text-gray-500';
+          noMoreMessage.innerHTML = '<i class="fas fa-book-open text-2xl mb-2"></i><p>没有更多文章了</p>';
+          articleContainer.appendChild(noMoreMessage);
+          loadMoreButton.classList.add('hidden');
+        }, 1500);
+      });
+    });
+    </script>
+
+    <!-- 滚动视差与动画逻辑 -->
+    <script id='scroll-script'>
+    document.addEventListener('DOMContentLoaded', function () {
+      var nav = document.querySelector('nav');
+      window.addEventListener('scroll', function () {
+        if (window.scrollY > 100) {
+          nav.classList.add('shadow-md');
+          nav.classList.remove('shadow-sm');
+        } else {
+          nav.classList.remove('shadow-md');
+          nav.classList.add('shadow-sm');
+        }
+      });
+
+      var animateOnScroll = function () {
+        var elements = document.querySelectorAll('.card-hover');
+        elements.forEach(function (element) {
+          var elementPosition = element.getBoundingClientRect().top;
+          var windowHeight = window.innerHeight;
+          if (elementPosition < windowHeight - 100) {
+            element.style.opacity = '1';
+            element.style.transform = 'translateY(0)';
+          }
+        });
+      };
+
+      document.querySelectorAll('.card-hover').forEach(function (element) {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        element.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+      });
+
+      animateOnScroll();
+      window.addEventListener('scroll', animateOnScroll);
+    });
+    </script>
+
+    <!-- 免责声明文字动态渲染 -->
+    <script id='disclaimer-script'>
+    document.addEventListener('DOMContentLoaded', function () {
+      var disclaimerElement = document.getElementById('disclaimer');
+      disclaimerElement.textContent = '此页面由AI生成，仅做测试用';
+    });
+    </script>
+
+</body>
+</html>
