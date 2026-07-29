@@ -147,13 +147,24 @@
                         <h1 class='text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight'>
                             你好，我是 <span class='text-primary'>卓德鹏</span> 👋
                         </h1>
-                        <div class='has-tooltip inline-block'>
-                                <p class='text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed min-h-[64px]'>
-                                <span id="typed-text" class="text-primary font-semibold"></span><br />
-                                不只是咸鱼，也爱探索新鲜事物 🌏
-                            </p>
-                            <span class='tooltip left-1/2 transform -translate-x-1/2'>想知道我最近折腾了什么？点我就告诉你！</span>
-                        </div>
+                        <div class='has-tooltip inline-block w-full'>
+    <!-- 增加 min-h-[80px] 保证打字机换行时下方按钮不会上下跳动 -->
+    <div class='mb-8 min-h-[80px]'>
+        
+        <!-- 第一行：动态打字（字号变大 text-3xl，加粗 font-bold） -->
+        <h2 class='text-2xl md:text-3xl text-primary font-bold mb-3'>
+            <span id="typed-text"></span>
+        </h2>
+        
+        <!-- 第二行：静态签名（字号缩小 text-lg，颜色调浅 text-gray-500） -->
+        <p class='text-lg text-gray-500 leading-relaxed'>
+            不只是咸鱼，也爱探索新鲜事物 🌏
+        </p>
+        
+    </div>
+    <span class='tooltip md:left-1/2 transform md:-translate-x-1/2'>想知道我最近折腾了什么？点我就告诉你！</span>
+</div>
+                        
                         <div class='flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4'>
                             <a class='bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg shadow-md transition-custom flex items-center justify-center' href='#about'>
                                 <i class='fas fa-user mr-2'></i> 了解更多
