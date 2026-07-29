@@ -148,8 +148,8 @@
                             你好，我是 <span class='text-primary'>卓德鹏</span> 👋
                         </h1>
                         <div class='has-tooltip inline-block'>
-                            <p class='text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed'>
-                                数据、科技、创意的混合体<br />
+                                <p class='text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed min-h-[64px]'>
+                                <span id="typed-text" class="text-primary font-semibold"></span><br />
                                 不只是咸鱼，也爱探索新鲜事物 🌏
                             </p>
                             <span class='tooltip left-1/2 transform -translate-x-1/2'>想知道我最近折腾了什么？点我就告诉你！</span>
@@ -892,5 +892,32 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     </script>
 
+<!-- 引入动态打字机特效库 -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+<!-- [JSMOD] 首页动态打字机效果 -->
+<script id='typed-script'>
+document.addEventListener('DOMContentLoaded', function () {
+  if (document.getElementById('typed-text')) {
+    var typed = new Typed('#typed-text', {
+      strings: [
+        "数据、科技、创意的混合体",
+        "北美 AI 无人零售柜售前专家",
+        "Excel 数据可视化重度依赖者",
+        "CPE 与网络拓扑折腾能手"
+      ],
+      typeSpeed: 60,      // 打字速度 (毫秒)
+      backSpeed: 30,      // 回退删除速度
+      backDelay: 2000,    // 停留展示时间
+      loop: true,         // 是否无限循环
+      cursorChar: '|',    // 光标样式
+      autoInsertCss: true
+    });
+  }
+});
+</script>
+
+
+    
 </body>
 </html>
