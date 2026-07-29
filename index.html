@@ -968,46 +968,47 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<!-- [JSMOD] 卡片分类动态筛选逻辑 -->
+<!-- [JSMOD] 卡片分类动态筛选逻辑 (修复闪烁与排版跳动) -->
 <script id='filter-script'>
 document.addEventListener('DOMContentLoaded', function () {
-    // 获取所有的过滤按钮和带 portfolio-card 类的卡片
     var filterBtns = document.querySelectorAll('.filter-btn');
     var cards = document.querySelectorAll('.portfolio-card');
 
+    // 1. 预先给所有卡片加上平滑的 CSS 过渡属性
+    cards.forEach(function(card) {
+        card.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    });
+
     filterBtns.forEach(function (btn) {
         btn.addEventListener('click', function () {
-            
-            // 1. 样式重置：把所有按钮变回“未选中”状态（白底灰字）
+            var filterValue = this.getAttribute('data-filter');
+
+            // 2. 按钮样式切换（保持不变）
             filterBtns.forEach(function (b) {
                 b.classList.remove('bg-primary', 'text-white', 'border-primary');
                 b.classList.add('bg-white', 'text-gray-600', 'border-gray-300');
             });
-
-            // 2. 样式高亮：给当前点击的这个按钮加上“已选中”状态（蓝底白字）
             this.classList.remove('bg-white', 'text-gray-600', 'border-gray-300');
             this.classList.add('bg-primary', 'text-white', 'border-primary');
 
-            // 3. 核心过滤逻辑
-            var filterValue = this.getAttribute('data-filter'); // 比如拿到了 'tech' 或者 'all'
-
+            // 3. 核心动画逻辑更新：避免排版冲突
             cards.forEach(function (card) {
-                var cardCategory = card.getAttribute('data-category'); // 拿到卡片自己身上的标签
+                var cardCategory = card.getAttribute('data-category');
                 
                 if (filterValue === 'all' || filterValue === cardCategory) {
-                    // 匹配的留下来：移除隐藏属性，恢复透明度
-                    card.style.display = 'block';
+                    // 【匹配的卡片】：先恢复占位，再执行淡入动画
+                    card.style.display = 'block'; 
+                    
+                    // 延迟 50 毫秒，等待浏览器重绘网格布局后，再改变透明度和大小
                     setTimeout(function() {
                         card.style.opacity = '1';
                         card.style.transform = 'scale(1)';
                     }, 50);
                 } else {
-                    // 不匹配的藏起来：变透明、缩小，然后彻底隐藏
+                    // 【不匹配的卡片】：瞬间隐藏并重置状态，不占用任何时间或空间！
                     card.style.opacity = '0';
                     card.style.transform = 'scale(0.95)';
-                    setTimeout(function() {
-                        card.style.display = 'none';
-                    }, 300); // 等待300毫秒动画播完再隐藏骨架
+                    card.style.display = 'none'; // 直接 display: none，彻底让出位置
                 }
             });
         });
