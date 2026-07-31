@@ -1016,7 +1016,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<!-- ==================== 2. 旗舰版：头像单击真实烟花升空爆炸 (已修复调用Bug) ==================== -->
+<!-- ==================== 1. 供应商进场：引入专门的烟花特效库 ==================== -->
+<script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.14.0/dist/index.umd.js"></script>
+
+<!-- ==================== 2. 点火逻辑：头像单击真实烟花升空爆炸 ==================== -->
 <script id='easter-egg-fireworks-script'>
 document.addEventListener('DOMContentLoaded', function () {
     // 找到头像元素
@@ -1043,7 +1046,7 @@ document.addEventListener('DOMContentLoaded', function () {
             fwContainer.style.pointerEvents = 'none'; // 让鼠标点击穿透幕布
             document.body.appendChild(fwContainer);
 
-            // 第二步：配置烟花参数 (修复了初始化调用方式，去掉了.default)
+            // 第二步：配置烟花参数 
             const fireworks = new Fireworks(fwContainer, {
                 hue: { min: 0, max: 360 },        
                 delay: { min: 15, max: 30 },      
