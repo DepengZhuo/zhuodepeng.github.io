@@ -1016,22 +1016,19 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<!-- ==================== 1. 引入专门的烟花特效库 (替换之前的彩带库) ==================== -->
-<script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.14.0/dist/index.umd.js"></script>
-
-<!-- ==================== 2. 旗舰版：头像单击真实烟花升空爆炸 ==================== -->
+<!-- ==================== 2. 旗舰版：头像单击真实烟花升空爆炸 (已修复调用Bug) ==================== -->
 <script id='easter-egg-fireworks-script'>
 document.addEventListener('DOMContentLoaded', function () {
     // 找到头像元素
     const avatar = document.querySelector('img[alt="卓德鹏头像"]');
-    let isPlaying = false; // 状态锁：防止疯狂连击导致同时生成几百个烟花卡死浏览器
+    let isPlaying = false; 
 
     if (avatar) {
         // 鼠标移上去变成小手
         avatar.style.cursor = 'pointer';
 
         avatar.addEventListener('click', function () {
-            // 如果烟花正在放，就不理会新的点击
+            // 防爆卡死锁
             if (isPlaying) return; 
             isPlaying = true;
 
@@ -1042,26 +1039,26 @@ document.addEventListener('DOMContentLoaded', function () {
             fwContainer.style.left = '0';
             fwContainer.style.width = '100%';
             fwContainer.style.height = '100%';
-            fwContainer.style.zIndex = '9999'; // 保证烟花在最顶层遮盖所有元素
-            fwContainer.style.pointerEvents = 'none'; // 极其重要：让鼠标点击穿透幕布，不影响访客滚动或点击网站其他地方
+            fwContainer.style.zIndex = '9999'; 
+            fwContainer.style.pointerEvents = 'none'; // 让鼠标点击穿透幕布
             document.body.appendChild(fwContainer);
 
-            // 第二步：配置烟花参数（物理引擎级别的真实模拟）
-            const fireworks = new Fireworks.default(fwContainer, {
-                hue: { min: 0, max: 360 },        // 色相全开：赤橙黄绿青蓝紫随机出现
-                delay: { min: 15, max: 30 },      // 升空发射的频率间隔
-                rocketsPoint: { min: 10, max: 90 },// 发射阵地：从屏幕底部宽度的 10% 到 90% 区域随机升空
-                opacity: 0.5,                     // 烟花尾迹透明度
-                acceleration: 1.05,               // 升空加速度
-                friction: 0.97,                   // 空气阻力
-                gravity: 1.5,                     // 重力下坠感
-                particles: 120,                   // 爆炸后的星星粒子数量，越大越震撼
-                traceLength: 3,                   // 升空时的光柱拖尾长度
-                traceSpeed: 10,                   // 拖尾速度
-                explosion: 5,                     // 爆炸范围
-                intensity: 40,                    // 烟花发射密集度
-                flickerParticles: true,           // 开启粒子闪烁效果，更逼真
-                lineStyle: 'round'                // 粒子形状为圆角
+            // 第二步：配置烟花参数 (修复了初始化调用方式，去掉了.default)
+            const fireworks = new Fireworks(fwContainer, {
+                hue: { min: 0, max: 360 },        
+                delay: { min: 15, max: 30 },      
+                rocketsPoint: { min: 10, max: 90 },
+                opacity: 0.5,                     
+                acceleration: 1.05,               
+                friction: 0.97,                   
+                gravity: 1.5,                     
+                particles: 120,                   
+                traceLength: 3,                   
+                traceSpeed: 10,                   
+                explosion: 5,                     
+                intensity: 40,                    
+                flickerParticles: true,           
+                lineStyle: 'round'                
             });
 
             // 第三步：点火升空！
@@ -1072,12 +1069,11 @@ document.addEventListener('DOMContentLoaded', function () {
             setTimeout(() => {
                 fireworks.stop();
                 
-                // 等最后一朵烟花落下后，再把幕布撤走（预留1秒缓冲）
                 setTimeout(() => {
                     document.body.removeChild(fwContainer);
-                    isPlaying = false; // 解锁，允许下次再次点击
+                    isPlaying = false; // 解锁
                 }, 1000);
-            }, 5000); // 这里的 5000 代表烟花持续 5 秒，你可以自己改成 10000（10秒）
+            }, 5000); 
         });
     }
 });
