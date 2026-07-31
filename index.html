@@ -1016,39 +1016,68 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<!-- ==================== 1. 引入第三方彩带特效库 (轻量、高速) ==================== -->
-<!-- 建议放在原先脚本块的结束标签 </script> 之后，以保证加载顺序 -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- ==================== 1. 引入专门的烟花特效库 (替换之前的彩带库) ==================== -->
+<script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.14.0/dist/index.umd.js"></script>
 
-<!-- ==================== 1. 引入第三方彩带特效库 (轻量、高速) ==================== -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-<!-- ==================== 2. 终极版：头像单击全屏大爆发彩蛋 ==================== -->
-<script id='easter-egg-confetti-script'>
+<!-- ==================== 2. 旗舰版：头像单击真实烟花升空爆炸 ==================== -->
+<script id='easter-egg-fireworks-script'>
 document.addEventListener('DOMContentLoaded', function () {
     // 找到头像元素
     const avatar = document.querySelector('img[alt="卓德鹏头像"]');
+    let isPlaying = false; // 状态锁：防止疯狂连击导致同时生成几百个烟花卡死浏览器
 
     if (avatar) {
-        // 鼠标移上去变成小手，提示访客这里可以点击
+        // 鼠标移上去变成小手
         avatar.style.cursor = 'pointer';
 
-        // 监听点击事件，点一下就执行
         avatar.addEventListener('click', function () {
-            
-            // 🚀 核心特效参数（已调至全屏大爆发模式）
-            confetti({
-                particleCount: 250,         // 粒子数量暴增，让画面更满
-                spread: 120,                // 喷射的扇形角度更宽，覆盖全屏
-                startVelocity: 80,          // 初始喷发力度加大，让彩带直接冲到屏幕最上方
-                origin: { x: 0.5, y: 0.9 }, // 发射位置：x为0.5代表屏幕正中，y为0.9代表屏幕最下方
-                ticks: 400,                 // 彩带留存时间加长，飘落更久
-                colors: ['#3B82F6', '#10B981', '#8B5CF6', '#F59E0B', '#EF4444'] // 配色与你网站主题色呼应
+            // 如果烟花正在放，就不理会新的点击
+            if (isPlaying) return; 
+            isPlaying = true;
+
+            // 第一步：在网页最上层动态拉起一块“透明夜空”幕布
+            const fwContainer = document.createElement('div');
+            fwContainer.style.position = 'fixed';
+            fwContainer.style.top = '0';
+            fwContainer.style.left = '0';
+            fwContainer.style.width = '100%';
+            fwContainer.style.height = '100%';
+            fwContainer.style.zIndex = '9999'; // 保证烟花在最顶层遮盖所有元素
+            fwContainer.style.pointerEvents = 'none'; // 极其重要：让鼠标点击穿透幕布，不影响访客滚动或点击网站其他地方
+            document.body.appendChild(fwContainer);
+
+            // 第二步：配置烟花参数（物理引擎级别的真实模拟）
+            const fireworks = new Fireworks.default(fwContainer, {
+                hue: { min: 0, max: 360 },        // 色相全开：赤橙黄绿青蓝紫随机出现
+                delay: { min: 15, max: 30 },      // 升空发射的频率间隔
+                rocketsPoint: { min: 10, max: 90 },// 发射阵地：从屏幕底部宽度的 10% 到 90% 区域随机升空
+                opacity: 0.5,                     // 烟花尾迹透明度
+                acceleration: 1.05,               // 升空加速度
+                friction: 0.97,                   // 空气阻力
+                gravity: 1.5,                     // 重力下坠感
+                particles: 120,                   // 爆炸后的星星粒子数量，越大越震撼
+                traceLength: 3,                   // 升空时的光柱拖尾长度
+                traceSpeed: 10,                   // 拖尾速度
+                explosion: 5,                     // 爆炸范围
+                intensity: 40,                    // 烟花发射密集度
+                flickerParticles: true,           // 开启粒子闪烁效果，更逼真
+                lineStyle: 'round'                // 粒子形状为圆角
             });
 
-            // 在控制台留下你的极客签名
-            console.log("%c🎉 嘭！卓德鹏的全屏彩蛋已触发！", "color: #3B82F6; font-size: 20px; font-weight: bold;");
-            
+            // 第三步：点火升空！
+            fireworks.start();
+            console.log("%c🎆 咻~ 嘭！全屏烟花阵列已启动！", "color: #ef4444; font-size: 20px; font-weight: bold;");
+
+            // 第四步：5秒后自动停止发射，并清理“夜空幕布”
+            setTimeout(() => {
+                fireworks.stop();
+                
+                // 等最后一朵烟花落下后，再把幕布撤走（预留1秒缓冲）
+                setTimeout(() => {
+                    document.body.removeChild(fwContainer);
+                    isPlaying = false; // 解锁，允许下次再次点击
+                }, 1000);
+            }, 5000); // 这里的 5000 代表烟花持续 5 秒，你可以自己改成 10000（10秒）
         });
     }
 });
