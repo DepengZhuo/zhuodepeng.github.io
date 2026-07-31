@@ -1020,55 +1020,35 @@ document.addEventListener('DOMContentLoaded', function () {
 <!-- 建议放在原先脚本块的结束标签 </script> 之后，以保证加载顺序 -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-<!-- ==================== 2. 升级版：头像三连击全屏彩带彩蛋逻辑 ==================== -->
+<!-- ==================== 1. 引入第三方彩带特效库 (轻量、高速) ==================== -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<!-- ==================== 2. 终极版：头像单击全屏大爆发彩蛋 ==================== -->
 <script id='easter-egg-confetti-script'>
 document.addEventListener('DOMContentLoaded', function () {
-    // A. 获取头像元素 (使用您原本代码中的 alt 选择器)
+    // 找到头像元素
     const avatar = document.querySelector('img[alt="卓德鹏头像"]');
-    let clickCount = 0;
-    let clickTimer = null;
 
     if (avatar) {
-        // 增加 hover 时的鼠标手势，提示访客这里可交互
+        // 鼠标移上去变成小手，提示访客这里可以点击
         avatar.style.cursor = 'pointer';
 
+        // 监听点击事件，点一下就执行
         avatar.addEventListener('click', function () {
-            clickCount++;
             
-            // 每次点击清除之前的定时器，重新计时 (500毫秒内不点则清零)
-            clearTimeout(clickTimer);
-            clickTimer = setTimeout(() => {
-                clickCount = 0;
-            }, 500);
+            // 🚀 核心特效参数（已调至全屏大爆发模式）
+            confetti({
+                particleCount: 250,         // 粒子数量暴增，让画面更满
+                spread: 120,                // 喷射的扇形角度更宽，覆盖全屏
+                startVelocity: 80,          // 初始喷发力度加大，让彩带直接冲到屏幕最上方
+                origin: { x: 0.5, y: 0.9 }, // 发射位置：x为0.5代表屏幕正中，y为0.9代表屏幕最下方
+                ticks: 400,                 // 彩带留存时间加长，飘落更久
+                colors: ['#3B82F6', '#10B981', '#8B5CF6', '#F59E0B', '#EF4444'] // 配色与你网站主题色呼应
+            });
 
-            // 【新触发条件】：当连击达到 1 次时触发彩蛋
-            if (clickCount === 1) {
-                
-                // 【新视觉反馈】：调用特效库，发射全屏彩带
-
-                // 效果1：从左上角和右上角同时发射
-                confetti({
-                  particleCount: 100,  // 粒子数量
-                  startVelocity: 30,    // 初始速度
-                  spread: 360,          // 发射角度范围
-                  ticks: 60,            // 特效持续时间计数
-                  origin: { x: 0, y: 0.2 } // 起始位置：左上
-                });
-
-                confetti({
-                  particleCount: 100,
-                  startVelocity: 30,
-                  spread: 360,
-                  ticks: 60,
-                  origin: { x: 1, y: 0.2 } // 起始位置：右上
-                });
-                
-                // 【可选】保留一个简单的文本提示或控制台信息
-                console.log("%c🎉 恭喜你发现了卓德鹏的数字彩蛋！", "color: #3B82F6; font-size: 20px; font-weight: bold;");
-
-                // 重置计数器，允许再次触发
-                clickCount = 0; 
-            }
+            // 在控制台留下你的极客签名
+            console.log("%c🎉 嘭！卓德鹏的全屏彩蛋已触发！", "color: #3B82F6; font-size: 20px; font-weight: bold;");
+            
         });
     }
 });
