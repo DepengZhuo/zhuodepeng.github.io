@@ -1015,6 +1015,43 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+
+<!-- ==================== 头像连击彩蛋逻辑 ==================== -->
+<script id='easter-egg-script'>
+document.addEventListener('DOMContentLoaded', function () {
+    // 1. 获取头像元素 (使用您原本代码中的 class 选择器)
+    const avatar = document.querySelector('img[alt="卓德鹏头像"]');
+    let clickCount = 0;
+    let clickTimer = null;
+
+    if (avatar) {
+        avatar.addEventListener('click', function () {
+            clickCount++;
+            
+            // 每次点击清除之前的定时器，重新计时 (500毫秒内不点则清零)
+            clearTimeout(clickTimer);
+            clickTimer = setTimeout(() => {
+                clickCount = 0;
+            }, 500);
+
+            // 当连击达到 5 次时触发彩蛋
+            if (clickCount === 5) {
+                // 彩蛋效果 1：头像疯狂旋转 (利用 Tailwind 的任意值)
+                avatar.style.transition = 'transform 1s cubic-bezier(0.68, -0.55, 0.26, 1.55)';
+                avatar.style.transform = 'rotate(1080deg) scale(1.2)';
+                
+                // 彩蛋效果 2：弹出隐藏提示 (延迟一点等动画跑完)
+                setTimeout(() => {
+                    alert('🎉 恭喜你发现了隐藏彩蛋！其实我不仅能搞定网络设备，还能手撕前端代码。');
+                    avatar.style.transform = 'none'; // 恢复原状
+                    clickCount = 0; // 重置计数器
+                }, 1200);
+            }
+        });
+    }
+});
+</script>
+<!-- ==================== 头像连击彩蛋逻辑结束 ==================== -->
     
 <!-- ==================== 右下角悬浮操作区 ==================== -->
     <div id="floating-widget" class="fixed bottom-8 right-8 z-50 transition-all duration-500 transform translate-y-20 opacity-0 pointer-events-none">
