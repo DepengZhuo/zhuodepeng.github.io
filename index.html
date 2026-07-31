@@ -1016,7 +1016,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<!-- ==================== 终极防爆版：头像单击动态拉取并燃放烟花 ==================== -->
+<!-- ==================== 终极防爆版：头像单击动态拉取并燃放烟花 (国内加速版) ==================== -->
 <script id='easter-egg-fireworks-script'>
 document.addEventListener('DOMContentLoaded', function () {
     const avatar = document.querySelector('img[alt="卓德鹏头像"]');
@@ -1075,15 +1075,16 @@ document.addEventListener('DOMContentLoaded', function () {
             // 动态拉取“烟花库”：如果不存在，则现场发包请求
             if (typeof window.Fireworks === 'undefined') {
                 const script = document.createElement('script');
-                // 换用 unpkg 镜像
-                script.src = 'https://unpkg.com/fireworks-js@2.14.0/dist/index.umd.js';
+                
+                // 【核心修改】：换用国内的 elemecdn 镜像加速节点，秒级加载
+                script.src = 'https://npm.elemecdn.com/fireworks-js@2.14.0/dist/index.umd.js';
                 
                 script.onload = () => {
                     ignite(); // 加载成功，立刻点火
                 };
                 
                 script.onerror = () => {
-                    alert("网络拦截：无法连接到烟花特效库的 CDN 节点，请检查网络环境或挂代理。");
+                    alert("网络拦截：换了国内节点还是加载失败，请检查是否开了去广告插件拦截了脚本。");
                     isPlaying = false;
                 };
                 
