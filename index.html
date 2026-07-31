@@ -1016,67 +1016,82 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<!-- ==================== 1. 供应商进场：引入专门的烟花特效库 ==================== -->
-<script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.14.0/dist/index.umd.js"></script>
-
-<!-- ==================== 2. 点火逻辑：头像单击真实烟花升空爆炸 ==================== -->
+<!-- ==================== 终极防爆版：头像单击动态拉取并燃放烟花 ==================== -->
 <script id='easter-egg-fireworks-script'>
 document.addEventListener('DOMContentLoaded', function () {
-    // 找到头像元素
     const avatar = document.querySelector('img[alt="卓德鹏头像"]');
     let isPlaying = false; 
 
     if (avatar) {
-        // 鼠标移上去变成小手
         avatar.style.cursor = 'pointer';
 
         avatar.addEventListener('click', function () {
-            // 防爆卡死锁
             if (isPlaying) return; 
             isPlaying = true;
 
-            // 第一步：在网页最上层动态拉起一块“透明夜空”幕布
-            const fwContainer = document.createElement('div');
-            fwContainer.style.position = 'fixed';
-            fwContainer.style.top = '0';
-            fwContainer.style.left = '0';
-            fwContainer.style.width = '100%';
-            fwContainer.style.height = '100%';
-            fwContainer.style.zIndex = '9999'; 
-            fwContainer.style.pointerEvents = 'none'; // 让鼠标点击穿透幕布
-            document.body.appendChild(fwContainer);
+            // 核心功能：点火发射
+            function ignite() {
+                const fwContainer = document.createElement('div');
+                fwContainer.style.position = 'fixed';
+                fwContainer.style.top = '0';
+                fwContainer.style.left = '0';
+                fwContainer.style.width = '100%';
+                fwContainer.style.height = '100%';
+                fwContainer.style.zIndex = '9999'; 
+                fwContainer.style.pointerEvents = 'none';
+                document.body.appendChild(fwContainer);
 
-            // 第二步：配置烟花参数 
-            const fireworks = new Fireworks(fwContainer, {
-                hue: { min: 0, max: 360 },        
-                delay: { min: 15, max: 30 },      
-                rocketsPoint: { min: 10, max: 90 },
-                opacity: 0.5,                     
-                acceleration: 1.05,               
-                friction: 0.97,                   
-                gravity: 1.5,                     
-                particles: 120,                   
-                traceLength: 3,                   
-                traceSpeed: 10,                   
-                explosion: 5,                     
-                intensity: 40,                    
-                flickerParticles: true,           
-                lineStyle: 'round'                
-            });
+                // 兼容不同版本的加载方式，根绝 .default 报错
+                const FW = window.Fireworks.default || window.Fireworks;
+                const fireworks = new FW(fwContainer, {
+                    hue: { min: 0, max: 360 },        
+                    delay: { min: 15, max: 30 },      
+                    rocketsPoint: { min: 10, max: 90 },
+                    opacity: 0.5,                     
+                    acceleration: 1.05,               
+                    friction: 0.97,                   
+                    gravity: 1.5,                     
+                    particles: 120,                   
+                    traceLength: 3,                   
+                    traceSpeed: 10,                   
+                    explosion: 5,                     
+                    intensity: 40,                    
+                    flickerParticles: true,           
+                    lineStyle: 'round'                
+                });
 
-            // 第三步：点火升空！
-            fireworks.start();
-            console.log("%c🎆 咻~ 嘭！全屏烟花阵列已启动！", "color: #ef4444; font-size: 20px; font-weight: bold;");
+                fireworks.start();
+                console.log("%c🎆 咻~ 嘭！全屏烟花阵列已启动！", "color: #ef4444; font-size: 20px; font-weight: bold;");
 
-            // 第四步：5秒后自动停止发射，并清理“夜空幕布”
-            setTimeout(() => {
-                fireworks.stop();
-                
                 setTimeout(() => {
-                    document.body.removeChild(fwContainer);
-                    isPlaying = false; // 解锁
-                }, 1000);
-            }, 5000); 
+                    fireworks.stop();
+                    setTimeout(() => {
+                        document.body.removeChild(fwContainer);
+                        isPlaying = false; 
+                    }, 1000);
+                }, 5000); 
+            }
+
+            // 动态拉取“烟花库”：如果不存在，则现场发包请求
+            if (typeof window.Fireworks === 'undefined') {
+                const script = document.createElement('script');
+                // 换用 unpkg 镜像
+                script.src = 'https://unpkg.com/fireworks-js@2.14.0/dist/index.umd.js';
+                
+                script.onload = () => {
+                    ignite(); // 加载成功，立刻点火
+                };
+                
+                script.onerror = () => {
+                    alert("网络拦截：无法连接到烟花特效库的 CDN 节点，请检查网络环境或挂代理。");
+                    isPlaying = false;
+                };
+                
+                document.body.appendChild(script);
+            } else {
+                // 如果已经加载过，直接点火
+                ignite();
+            }
         });
     }
 });
