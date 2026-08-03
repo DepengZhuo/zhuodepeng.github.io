@@ -1109,7 +1109,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-        <!-- ==================== 投资估值弹窗交互逻辑 ==================== -->
+     <!-- ==================== 投资估值弹窗交互逻辑 ==================== -->
 <script id="valuation-logic-script">
 document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('valuation-modal');
@@ -1123,70 +1123,67 @@ document.addEventListener('DOMContentLoaded', function () {
         openBtn.addEventListener('click', function() {
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            // 延迟一帧执行动画，确保 CSS 过渡生效
             setTimeout(() => {
                 modal.classList.remove('opacity-0');
                 panel.classList.remove('scale-95');
                 panel.classList.add('scale-100');
             }, 10);
-            
-            // 每次打开自动计算一次默认值
             document.getElementById('calc-btn').click();
         });
     }
 
-    // 关闭弹窗功能 (封装)
+    // 关闭弹窗功能
     function closeModal() {
         modal.classList.add('opacity-0');
         panel.classList.remove('scale-100');
         panel.classList.add('scale-95');
-        
-        // 等待 300ms 动画结束后彻底隐藏
         setTimeout(() => {
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }, 300);
     }
 
-    // 绑定关闭事件：点击 X 按钮 或 点击半透明黑底均可关闭
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     if (backdrop) backdrop.addEventListener('click', closeModal);
 
     // 计算器核心逻辑
-    document.getElementById('calc-btn').addEventListener('click', function() {
-        const pe = parseFloat(document.getElementById('input-pe').value);
-        const dividend = parseFloat(document.getElementById('input-dividend').value);
-        const growth = parseFloat(document.getElementById('input-growth').value);
+    const calcBtn = document.getElementById('calc-btn');
+    if (calcBtn) {
+        calcBtn.addEventListener('click', function() {
+            const pe = parseFloat(document.getElementById('input-pe').value);
+            const dividend = parseFloat(document.getElementById('input-dividend').value);
+            const growth = parseFloat(document.getElementById('input-growth').value);
 
-        if (!pe || pe <= 0) return alert('市盈率输入有误');
+            if (!pe || pe <= 0) return alert('市盈率输入有误');
 
-        const earningsYield = (1 / pe) * 100;
-        const bogleReturn = dividend + growth;
+            const earningsYield = (1 / pe) * 100;
+            const bogleReturn = dividend + growth;
 
-        document.getElementById('result-yield').innerText = earningsYield.toFixed(2) + '%';
-        document.getElementById('result-bogle').innerText = bogleReturn.toFixed(2) + '%';
-        document.getElementById('detail-div').innerText = dividend.toFixed(2) + '%';
-        document.getElementById('detail-growth').innerText = growth.toFixed(2) + '%';
+            document.getElementById('result-yield').innerText = earningsYield.toFixed(2) + '%';
+            document.getElementById('result-bogle').innerText = bogleReturn.toFixed(2) + '%';
+            document.getElementById('detail-div').innerText = dividend.toFixed(2) + '%';
+            document.getElementById('detail-growth').innerText = growth.toFixed(2) + '%';
 
-        const badge = document.getElementById('yield-badge');
-        const bar = document.getElementById('yield-bar');
-        const barWidth = Math.min((earningsYield / 15) * 100, 100); 
-        bar.style.width = barWidth + '%';
+            const badge = document.getElementById('yield-badge');
+            const bar = document.getElementById('yield-bar');
+            const barWidth = Math.min((earningsYield / 15) * 100, 100); 
+            bar.style.width = barWidth + '%';
 
-        if (earningsYield >= 10) {
-            badge.innerText = '极度低估 (定投)';
-            badge.className = 'px-2 py-1 text-xs font-bold rounded mb-1 bg-green-100 text-green-700';
-            bar.className = 'bg-green-500 h-2 rounded-full transition-all duration-700';
-        } else if (earningsYield >= 6.4) {
-            badge.innerText = '估值适中 (持有)';
-            badge.className = 'px-2 py-1 text-xs font-bold rounded mb-1 bg-orange-100 text-orange-700';
-            bar.className = 'bg-orange-500 h-2 rounded-full transition-all duration-700';
-        } else {
-            badge.innerText = '估值过高 (减仓)';
-            badge.className = 'px-2 py-1 text-xs font-bold rounded mb-1 bg-red-100 text-red-700';
-            bar.className = 'bg-red-500 h-2 rounded-full transition-all duration-700';
-        }
-    });
+            if (earningsYield >= 10) {
+                badge.innerText = '极度低估 (定投)';
+                badge.className = 'px-2 py-1 text-xs font-bold rounded mb-1 bg-green-100 text-green-700';
+                bar.className = 'bg-green-500 h-2 rounded-full transition-all duration-700';
+            } else if (earningsYield >= 6.4) {
+                badge.innerText = '估值适中 (持有)';
+                badge.className = 'px-2 py-1 text-xs font-bold rounded mb-1 bg-orange-100 text-orange-700';
+                bar.className = 'bg-orange-500 h-2 rounded-full transition-all duration-700';
+            } else {
+                badge.innerText = '估值过高 (减仓)';
+                badge.className = 'px-2 py-1 text-xs font-bold rounded mb-1 bg-red-100 text-red-700';
+                bar.className = 'bg-red-500 h-2 rounded-full transition-all duration-700';
+            }
+        });
+    }
 });
 </script>
 
