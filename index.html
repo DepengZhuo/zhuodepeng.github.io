@@ -971,7 +971,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-<!-- [JSMOD] 卡片分类动态筛选逻辑 (修复闪烁与排版跳动) -->
+<!-- [JSMOD] 卡片分类动态筛选逻辑 (已修复移动端蓝底蓝字幽灵悬浮Bug) -->
 <script id='filter-script'>
 document.addEventListener('DOMContentLoaded', function () {
     var filterBtns = document.querySelectorAll('.filter-btn');
@@ -986,12 +986,15 @@ document.addEventListener('DOMContentLoaded', function () {
         btn.addEventListener('click', function () {
             var filterValue = this.getAttribute('data-filter');
 
-            // 2. 按钮样式切换（保持不变）
+            // 2. 按钮样式切换（核心修复区）
             filterBtns.forEach(function (b) {
+                // 【其他按钮】：恢复白底灰字，并【动态加上】鼠标悬浮变蓝字的效果
                 b.classList.remove('bg-primary', 'text-white', 'border-primary');
-                b.classList.add('bg-white', 'text-gray-600', 'border-gray-300');
+                b.classList.add('bg-white', 'text-gray-600', 'border-gray-300', 'hover:border-primary', 'hover:text-primary');
             });
-            this.classList.remove('bg-white', 'text-gray-600', 'border-gray-300');
+            
+            // 【当前选中按钮】：设置蓝底白字，并【强制剥离】悬浮变蓝的效果，彻底根绝手机端冲突
+            this.classList.remove('bg-white', 'text-gray-600', 'border-gray-300', 'hover:border-primary', 'hover:text-primary');
             this.classList.add('bg-primary', 'text-white', 'border-primary');
 
             // 3. 核心动画逻辑更新：避免排版冲突
@@ -999,19 +1002,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 var cardCategory = card.getAttribute('data-category');
                 
                 if (filterValue === 'all' || filterValue === cardCategory) {
-                    // 【匹配的卡片】：先恢复占位，再执行淡入动画
+                    // 【匹配的卡片】
                     card.style.display = 'block'; 
-                    
-                    // 延迟 50 毫秒，等待浏览器重绘网格布局后，再改变透明度和大小
                     setTimeout(function() {
                         card.style.opacity = '1';
                         card.style.transform = 'scale(1)';
                     }, 50);
                 } else {
-                    // 【不匹配的卡片】：瞬间隐藏并重置状态，不占用任何时间或空间！
+                    // 【不匹配的卡片】
                     card.style.opacity = '0';
                     card.style.transform = 'scale(0.95)';
-                    card.style.display = 'none'; // 直接 display: none，彻底让出位置
+                    card.style.display = 'none'; 
                 }
             });
         });
