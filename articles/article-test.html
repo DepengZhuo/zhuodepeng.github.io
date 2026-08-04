@@ -3,66 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文章阅读 - 自动渲染测试</title>
+    <title>文章阅读 - 卓德鹏的思考</title>
     
-    <!-- 1. 引入 Tailwind CSS 并激活官方 Typography 插件 (这行代码是排版美观的核心) -->
+    <!-- 引入 Tailwind CSS 并激活排版插件 -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    
-    <!-- 2. 引入 marked.js：负责把 Markdown 瞬间翻译成 HTML -->
+    <!-- 引入 Markdown 解析器 -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-</head>
-<body class="bg-gray-50 text-gray-800 font-sans min-h-screen py-10">
-    
-    <div class="container mx-auto px-4 max-w-3xl">
-        <a href="../index.html" class="text-blue-600 hover:text-blue-800 transition flex items-center mb-8 font-medium">
-            ← 返回个人主页
-        </a>
+    <!-- 引入 FontAwesome 图标库 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
-        <!-- 3. 核心容器：加上 'prose' 这个类名，Tailwind 会自动接管内部所有的标题、表格、引用排版 -->
-        <article id="content-container" class="prose prose-slate lg:prose-lg max-w-none bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-gray-200 transition-all duration-300">
-            <!-- 加载骨架屏 (网速慢时显示) -->
-            <div class="animate-pulse flex space-x-4">
-                <div class="flex-1 space-y-6 py-1">
-                    <div class="h-6 bg-gray-200 rounded w-3/4"></div>
-                    <div class="space-y-3">
-                        <div class="h-4 bg-gray-200 rounded"></div>
-                        <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#3B82F6',
+              dark: '#1E293B',
+            }
+          }
+        }
+      };
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-gradient-custom {
+                background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+            }
+            .transition-custom {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+        }
+        
+        /* 深度定制 Markdown 排版细节 */
+        .prose h1 { @apply text-3xl md:text-5xl font-bold text-gray-900 mb-8 pb-4 border-b border-gray-100; }
+        .prose h2 { @apply text-2xl font-bold text-primary mt-12 mb-6 flex items-center; }
+        .prose h2::before { content: ""; @apply block w-2 h-6 bg-primary mr-3 rounded-full; }
+        .prose blockquote { @apply border-l-4 border-primary bg-blue-50/50 py-2 px-4 rounded-r-lg text-gray-600 font-medium italic my-8; }
+        .prose p { @apply text-gray-700 leading-loose mb-6 text-lg; }
+        .prose strong { @apply text-gray-900 font-bold bg-yellow-100/50 px-1 rounded; }
+        .prose img { @apply rounded-xl shadow-md mx-auto my-10 transition-transform duration-500 hover:scale-[1.02]; }
+        .prose table { @apply w-full text-left border-collapse my-8 shadow-sm rounded-lg overflow-hidden; }
+        .prose thead { @apply bg-gray-50 text-gray-700; }
+        .prose th, .prose td { @apply py-4 px-6 border-b border-gray-100; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col relative">
+
+    <!-- 顶部阅读进度条 -->
+    <div class="fixed top-0 left-0 h-1 bg-gradient-custom z-[100] transition-all duration-150 ease-out" id="reading-progress" style="width: 0%;"></div>
+
+    <!-- 简易导航栏 (继承主页风格) -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm border-b border-gray-100">
+        <div class="container mx-auto px-4 max-w-5xl h-16 flex items-center justify-between">
+            <a href="../index.html" class="text-gray-600 hover:text-primary transition-custom flex items-center font-medium group">
+                <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center mr-3 group-hover:bg-blue-100 group-hover:text-primary transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                返回个人主页
+            </a>
+            <div class="text-sm text-gray-400 hidden md:block">
+                <i class="far fa-clock mr-1"></i> 沉浸阅读模式
+            </div>
+        </div>
+    </nav>
+
+    <!-- 文章头部背景区 (创造悬浮层次感) -->
+    <div class="bg-gradient-custom w-full h-64 md:h-80 absolute top-16 left-0 z-0"></div>
+
+    <!-- 核心文章容器 (向上浮动穿透背景) -->
+    <div class="container mx-auto px-4 max-w-4xl relative z-10 mt-12 md:mt-20 mb-20">
+        
+        <!-- 文章白底卡片 -->
+        <article class="bg-white p-8 md:p-14 rounded-2xl shadow-xl border border-gray-100 transition-all duration-300">
+            
+            <!-- 渲染目标容器 -->
+            <div id="content-container" class="prose max-w-none">
+                <!-- 骨架屏加载动画 -->
+                <div class="animate-pulse flex flex-col space-y-8">
+                    <div class="h-12 bg-gray-100 rounded-lg w-3/4 mb-4"></div>
+                    <div class="h-32 bg-gray-50 rounded-lg w-full border-l-4 border-gray-200"></div>
+                    <div class="space-y-4">
+                        <div class="h-4 bg-gray-100 rounded w-full"></div>
+                        <div class="h-4 bg-gray-100 rounded w-5/6"></div>
+                        <div class="h-4 bg-gray-100 rounded w-4/6"></div>
                     </div>
                 </div>
             </div>
-            <p class="text-center text-gray-400 mt-6 text-sm">正在请求服务器拉取文章数据...</p>
+
+            <!-- 文章底部社交互动区 (预留) -->
+            <div class="mt-16 pt-8 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-gray-400 italic">"用你喜欢的方式度过一生。"</p>
+                <div class="flex space-x-3">
+                    <button class="w-10 h-10 bg-gray-50 hover:bg-red-50 hover:text-red-500 text-gray-400 rounded-full flex items-center justify-center transition-custom" title="喜欢">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <button class="w-10 h-10 bg-gray-50 hover:bg-blue-50 hover:text-blue-500 text-gray-400 rounded-full flex items-center justify-center transition-custom" title="分享">
+                        <i class="fas fa-share-alt"></i>
+                    </button>
+                </div>
+            </div>
         </article>
+
     </div>
 
-    <!-- 4. 核心物理引擎：抓取文件并渲染 -->
+    <!-- 右下角悬浮火箭 (返回顶部) -->
+    <div id="floating-widget" class="fixed bottom-8 right-8 z-50 transition-all duration-500 transform translate-y-20 opacity-0 pointer-events-none">
+        <button id="back-to-top" class="w-12 h-12 bg-gray-900 hover:bg-primary text-white rounded-full shadow-lg flex items-center justify-center transition-custom hover:shadow-2xl hover:-translate-y-1 focus:outline-none">
+            <i class="fas fa-rocket"></i>
+        </button>
+    </div>
+
+    <!-- 交互逻辑与渲染引擎 -->
     <script>
-        // 指定我们要拉取的目标文件 (只要换这个名字，就能无限复用这个 HTML 页面)
+        // 1. Markdown 渲染引擎
         const targetArticle = 'mingchao.md';
 
         fetch(targetArticle)
             .then(response => {
-                if (!response.ok) throw new Error('找不到指定的 Markdown 文件');
+                if (!response.ok) throw new Error('网络请求失败');
                 return response.text();
             })
             .then(markdownText => {
-                // 使用 marked 把纯文本解析成 HTML，塞进容器
                 document.getElementById('content-container').innerHTML = marked.parse(markdownText);
+                
+                // 给表格包裹一层横向滚动的 div，防止手机端表格太宽把页面撑爆
+                const tables = document.querySelectorAll('#content-container table');
+                tables.forEach(table => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'overflow-x-auto w-full';
+                    table.parentNode.insertBefore(wrapper, table);
+                    wrapper.appendChild(table);
+                });
             })
             .catch(error => {
-                // 异常处理：如果是直接双击 HTML 打开的，浏览器会因为安全协议拦截 fetch 请求
                 document.getElementById('content-container').innerHTML = `
-                    <div class="bg-red-50 p-6 rounded-xl border border-red-200">
-                        <h3 class="text-red-700 font-bold mb-2">⚠️ 本地跨域安全拦截</h3>
-                        <p class="text-sm text-red-600 mb-4">
-                            您的代码逻辑绝对没问题。但出于安全机制，浏览器不允许直接双击（file:// 协议）读取同目录下的文件。
-                        </p>
-                        <ul class="list-disc pl-5 text-sm text-red-600 space-y-1">
-                            <li><strong>解法 A：</strong>推送到 GitHub Pages 上，它会自动拥有 http 协议，直接就能完美运行。</li>
-                            <li><strong>解法 B：</strong>在 VS Code 中安装 "Live Server" 插件，点击右下角 "Go Live" 开启本地服务器预览。</li>
-                        </ul>
+                    <div class="text-center py-20">
+                        <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">文章拉取失败</h3>
+                        <p class="text-gray-500">请确保 ${targetArticle} 文件存在，且必须通过服务器环境 (如 GitHub Pages 或 Live Server) 访问。</p>
                     </div>
                 `;
             });
+
+        // 2. 顶部阅读进度条逻辑
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('reading-progress').style.width = scrolled + '%';
+        });
+
+        // 3. 返回顶部火箭逻辑
+        const floatingWidget = document.getElementById('floating-widget');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                floatingWidget.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+                floatingWidget.classList.add('translate-y-0', 'opacity-100');
+            } else {
+                floatingWidget.classList.remove('translate-y-0', 'opacity-100');
+                floatingWidget.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+            }
+        });
+        document.getElementById('back-to-top').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     </script>
 </body>
 </html>
