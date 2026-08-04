@@ -1187,70 +1187,110 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-    <!-- ==================== 投资估值弹窗模块 (隐藏状态) ==================== -->
+  <!-- ==================== 投资估值弹窗模块 (已深度优化版) ==================== -->
 <div id="valuation-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center opacity-0 transition-opacity duration-300">
-    <!-- 半透明背景幕布 (点击幕布可关闭) -->
     <div id="modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-pointer"></div>
 
-    <!-- 弹窗白色面板 -->
-    <div id="modal-panel" class="relative bg-white w-full max-w-3xl mx-4 rounded-2xl shadow-2xl z-10 overflow-hidden transform scale-95 transition-transform duration-300">
+    <div id="modal-panel" class="relative bg-white w-full max-w-4xl mx-4 rounded-2xl shadow-2xl z-10 overflow-hidden transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
         
-        <!-- 弹窗头部 (自动调用您的 primary 主题色) -->
-        <div class="bg-primary p-4 md:p-5 text-white flex justify-between items-center">
+        <!-- 头部：调用了您网站自带的紫蓝渐变 (bg-gradient-custom) -->
+        <div class="bg-gradient-custom p-5 text-white flex justify-between items-center shrink-0">
             <div>
-                <h2 class="text-xl font-bold">动态投资估值看板</h2>
-                <p class="text-xs opacity-80 mt-1">输入指数参数，自动计算盈利收益率与博格公式</p>
+                <h2 class="text-2xl font-bold">动态投资估值看板</h2>
+                <p class="text-sm opacity-90 mt-1">摒弃情绪，用第一性原理拆解资产价值</p>
             </div>
             <button id="close-modal-btn" class="text-white hover:text-gray-200 text-3xl leading-none transition-transform hover:rotate-90">&times;</button>
         </div>
 
-        <!-- 弹窗主体内容区 -->
-        <div class="p-5 md:p-6 flex flex-col md:flex-row gap-6">
+        <!-- 核心内容区 (加入纵向滚动防止手机端超长) -->
+        <div class="p-6 overflow-y-auto flex flex-col md:flex-row gap-8">
             
-            <!-- 左侧：参数输入 -->
-            <div class="w-full md:w-1/2 space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">当前市盈率 (PE)</label>
-                    <input type="number" id="input-pe" value="8.5" step="0.1" class="w-full border-2 border-gray-200 rounded-lg p-2 focus:border-primary focus:outline-none transition-colors">
+            <!-- 左侧：参数输入与释义 -->
+            <div class="w-full md:w-1/2 space-y-5">
+                <!-- 参数1 -->
+                <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="font-bold text-gray-800">当前市盈率 (PE)</label>
+                        <span class="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">买入成本</span>
+                    </div>
+                    <input type="number" id="input-pe" value="8.5" step="0.1" class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-primary focus:border-primary transition-colors mb-2">
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        <strong>含义：</strong>投资回本年限。假设利润不变，花 8.5 年能赚回本金。数值越低，代表资产越便宜。
+                    </p>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">当前股息率 (%)</label>
-                    <input type="number" id="input-dividend" value="3.2" step="0.1" class="w-full border-2 border-gray-200 rounded-lg p-2 focus:border-primary focus:outline-none transition-colors">
+
+                <!-- 参数2 -->
+                <div class="bg-green-50 p-4 rounded-lg border border-green-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="font-bold text-gray-800">当前股息率 (%)</label>
+                        <span class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded">确定性收益</span>
+                    </div>
+                    <input type="number" id="input-dividend" value="3.2" step="0.1" class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-primary focus:border-primary transition-colors mb-2">
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        <strong>含义：</strong>即使大盘一动不动，企业每年打到你账户里的真金白银比例（类似银行利息）。
+                    </p>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-600 mb-1">预期盈利增长率 (%)</label>
-                    <input type="number" id="input-growth" value="6.0" step="0.1" class="w-full border-2 border-gray-200 rounded-lg p-2 focus:border-primary focus:outline-none transition-colors">
+
+                <!-- 参数3 -->
+                <div class="bg-purple-50 p-4 rounded-lg border border-purple-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="font-bold text-gray-800">预期盈利增长率 (%)</label>
+                        <span class="text-xs text-purple-600 bg-purple-100 px-2 py-1 rounded">成长性收益</span>
+                    </div>
+                    <input type="number" id="input-growth" value="6.0" step="0.1" class="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-primary focus:border-primary transition-colors mb-2">
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        <strong>含义：</strong>企业赚钱能力的增速。就像设备点位优化后，每年利润的自然增长率。
+                    </p>
                 </div>
-                <button id="calc-btn" class="w-full bg-primary hover:opacity-90 text-white font-bold py-3 rounded-lg shadow-md transition-all active:scale-95 mt-2">
-                    立即生成估值报告
+
+                <button id="calc-btn" class="w-full bg-gradient-custom hover:opacity-90 text-white font-bold py-3 rounded-lg shadow-md transition-all active:scale-95">
+                    <i class="fas fa-sync-alt mr-2"></i> 重新计算估值
                 </button>
             </div>
 
-            <!-- 右侧：数据结果展示 -->
-            <div class="w-full md:w-1/2 bg-gray-50 rounded-xl p-5 border border-gray-100 flex flex-col justify-center">
+            <!-- 右侧：公式拆解与结果 -->
+            <div class="w-full md:w-1/2 flex flex-col gap-5">
                 
-                <!-- 盈利收益率模块 -->
-                <div class="mb-5 bg-white p-4 rounded-lg shadow-sm border border-gray-50">
-                    <p class="text-xs text-gray-500 mb-1">盈利收益率 (1/PE)</p>
+                <!-- 模型1 -->
+                <div class="bg-white p-5 rounded-xl border-2 border-gray-100 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+                    <h3 class="font-bold text-gray-800 mb-2">模型一：盈利收益率法</h3>
+                    <p class="text-xs text-gray-500 mb-4 bg-gray-50 p-2 rounded">
+                        <strong>计算公式：</strong>1 ÷ 市盈率(PE) × 100%<br>
+                        <strong>底层逻辑：</strong>如果你把整个企业全资买下来，它每年的净利润能给你带来的直接回报率。
+                    </p>
+                    
                     <div class="flex items-end gap-3 mb-2">
-                        <span id="result-yield" class="text-2xl font-black text-primary">--%</span>
-                        <span id="yield-badge" class="px-2 py-1 text-xs font-bold rounded bg-gray-200 text-gray-600 mb-1">等待计算</span>
+                        <span id="result-yield" class="text-3xl font-black text-blue-600">--%</span>
+                        <span id="yield-badge" class="px-2 py-1 text-sm font-bold rounded bg-gray-100 text-gray-500 mb-1">等待计算</span>
                     </div>
-                    <!-- 进度条 -->
-                    <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                    <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden mt-2">
                         <div id="yield-bar" class="bg-gray-400 h-2 rounded-full transition-all duration-700" style="width: 0%"></div>
                     </div>
                 </div>
 
-                <!-- 博格公式模块 -->
-                <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-50">
-                    <p class="text-xs text-gray-500 mb-1">博格公式预期年化回报</p>
-                    <div class="flex items-end gap-3 mb-2">
-                        <span id="result-bogle" class="text-2xl font-black text-primary">--%</span>
+                <!-- 模型2 -->
+                <div class="bg-white p-5 rounded-xl border-2 border-gray-100 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
+                    <h3 class="font-bold text-gray-800 mb-2">模型二：博格公式两因子</h3>
+                    <p class="text-xs text-gray-500 mb-4 bg-gray-50 p-2 rounded">
+                        <strong>计算公式：</strong>股息率 + 预期盈利增长率<br>
+                        <strong>底层逻辑：</strong>长期的年化收益 = 赚企业现金分红的钱 + 赚企业体量变大的钱。
+                    </p>
+                    
+                    <div class="mb-2">
+                        <span id="result-bogle" class="text-3xl font-black text-purple-600">--%</span>
                     </div>
-                    <div class="text-xs text-gray-400 flex gap-4">
-                        <p>股息: <span id="detail-div" class="font-bold text-gray-600">--%</span></p>
-                        <p>增长: <span id="detail-growth" class="font-bold text-gray-600">--%</span></p>
+                    <div class="flex gap-4 text-sm mt-3 pt-3 border-t border-gray-100">
+                        <div class="flex flex-col">
+                            <span class="text-gray-400 text-xs">分红收益</span>
+                            <span id="detail-div" class="font-bold text-green-600">--%</span>
+                        </div>
+                        <div class="text-gray-300 font-bold mt-3">+</div>
+                        <div class="flex flex-col">
+                            <span class="text-gray-400 text-xs">成长收益</span>
+                            <span id="detail-growth" class="font-bold text-purple-600">--%</span>
+                        </div>
                     </div>
                 </div>
 
