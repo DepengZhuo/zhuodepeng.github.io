@@ -173,15 +173,15 @@
         </div>
     </div>
 
-   <!-- 前景人像 (Layer 20) -->
-<!-- 1. 外层货槽 (div)：负责绝对的尺寸和位置，不受任何动画干扰 -->
-<div class="absolute bottom-0 left-1/2 z-20 pointer-events-none" 
-     style="transform: translateX(-50%); height: 95vh;">
+<!-- 前景人像 (Layer 20) -->
+<!-- 1. 外层货槽：把 height 移到 class 里，使用 h-[65vh] (手机端) 和 md:h-[95vh] (电脑端) -->
+<div class="absolute bottom-0 left-1/2 z-20 pointer-events-none h-[70vh] md:h-[95vh]" 
+     style="transform: translateX(-50%);">
      
-    <!-- 2. 内层商品 (img)：铺满外层货槽，且单纯负责播放出场动画 -->
-    <img src="images/devin_avatar2.png" 
+    <!-- 2. 内层商品：加入核心破局参数 max-w-none -->
+    <img src="images/image_09e4df.jpg" 
          alt="Devin Portrait" 
-         class="anim-rise-in w-auto h-full object-contain" 
+         class="anim-rise-in w-auto h-full max-w-none object-contain" 
          style="animation-delay: 300ms;" />
 </div>
     
