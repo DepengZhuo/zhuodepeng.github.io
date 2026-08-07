@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>浮光手记 - 手记</title>
+<meta name="description" content="浮光手记：水面的光从来不肯停，可正因为留不住，人才学会低头去看。一篇关于记忆与瞬间的随笔。">
+<style>
+  :root {
+    --bg: #0d0c0a;
+    --bg-soft: #131109;
+    --line: #2b2718;
+    --ink: #e9e2d0;
+    --muted: #b3a98c;
+    --faint: #8a8168;
+    --accent: #c8a45c;
+    --accent-deep: #8f7340;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "STSong", serif;
+    line-height: 1.9;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: rgba(200, 164, 92, 0.28); }
+
+  .home-btn {
+    position: fixed; top: 22px; left: 22px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 999px;
+    background: rgba(13, 12, 10, 0.72); backdrop-filter: blur(8px);
+    border: 1px solid var(--line);
+    color: var(--muted); font-size: 13px; text-decoration: none;
+    font-family: -apple-system, "PingFang SC", sans-serif;
+    transition: all 0.25s ease;
+  }
+  .home-btn:hover { border-color: var(--accent-deep); color: var(--ink); }
+  .home-btn svg { width: 14px; height: 14px; }
+
+  .hero { min-height: 60vh; display: flex; flex-direction: column; justify-content: flex-end; max-width: 720px; margin: 0 auto; padding: 120px 28px 48px; }
+  .eyebrow { font-size: 13px; letter-spacing: 0.35em; color: var(--accent); font-family: -apple-system, "PingFang SC", sans-serif; margin-bottom: 20px; }
+  h1 { font-size: clamp(2.8rem, 8vw, 4.6rem); font-weight: 600; letter-spacing: 0.06em; line-height: 1.12; }
+  .sub { margin-top: 24px; color: var(--muted); font-size: 1.05rem; max-width: 46ch; }
+  .rule { width: 64px; height: 1px; background: var(--accent-deep); margin-top: 30px; }
+
+  article { max-width: 680px; margin: 0 auto; padding: 48px 28px 40px; }
+  .essay p { margin-bottom: 1.6em; font-size: 1.06rem; color: var(--ink); }
+  .essay .lead { font-size: 1.18rem; color: var(--muted); }
+  .essay h2 {
+    font-size: 1.5rem; font-weight: 600; letter-spacing: 0.08em;
+    margin: 2.6em 0 1em; padding-left: 16px; border-left: 2px solid var(--accent-deep);
+  }
+  .essay .quote {
+    margin: 2.4em 0; padding: 28px 30px;
+    background: var(--bg-soft); border: 1px solid var(--line); border-radius: 2px;
+    font-size: 1.2rem; color: var(--accent); line-height: 1.8;
+  }
+  .essay .quote::before { content: "\201C"; display: block; font-size: 2.6rem; line-height: 0.6; color: var(--accent-deep); margin-bottom: 10px; }
+
+  .list { margin-top: 56px; }
+  .list .k { color: var(--accent); font-size: 13px; letter-spacing: 0.25em; font-family: -apple-system, "PingFang SC", sans-serif; }
+  .list ul { list-style: none; margin-top: 18px; }
+  .list li { padding: 14px 0; border-bottom: 1px solid rgba(43, 39, 24, 0.55); color: var(--muted); font-size: 1.02rem; }
+  .list li:first-child { border-top: 1px solid rgba(43, 39, 24, 0.55); }
+  .list li span { color: var(--accent); margin-right: 14px; font-family: -apple-system, "PingFang SC", sans-serif; font-size: 13px; }
+
+  .end { margin-top: 64px; padding-top: 30px; border-top: 1px solid var(--line); color: var(--faint); font-size: 0.95rem; }
+  .end .sig { margin-top: 8px; color: var(--accent); }
+
+  footer { border-top: 1px solid var(--line); padding: 34px 28px 60px; max-width: 680px; margin: 0 auto; color: var(--faint); font-size: 12px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; font-family: -apple-system, "PingFang SC", sans-serif; }
+
+  .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+  .fade.in { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .fade { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+
+<a class="home-btn" href="../index.html">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v11h14V10"/></svg>
+  返回主页
+</a>
+
+<header class="hero">
+  <p class="eyebrow fade">手记</p>
+  <h1 class="fade">浮光手记</h1>
+  <p class="sub fade">水面的光，从来不肯停。它一闪，就滑过去了。可正是因为留不住，人才学会低头去看。</p>
+  <div class="rule fade"></div>
+</header>
+
+<article class="essay">
+  <p class="lead fade">这不是一篇有结论的文章，只是一些被光线照过的片段。把它们记下来，是因为忘得太快了。</p>
+
+  <h2 class="fade">一 清晨</h2>
+  <p class="fade">早晨的光是安静的。它从窗帘的缝隙钻进来，在杯沿上停了一小会儿，又爬过桌面，最后落在墙角。手机还没有亮，世界也还没醒，只有光在一寸一寸地移动。那半小时里，我什么都没做，却觉得日子是完整的。</p>
+  <p class="fade">后来我试过很多次早起，想再抓住那种完整。可一旦开始惦记，光就变快了。它不再是路过，而是在等我，等得让人心慌。于是我知道，有些东西只能偶遇，不能预约。</p>
+
+  <h2 class="fade">二 半路</h2>
+  <p class="fade">大多数日子没有大事，只有光线的变化。通勤的路上，树影从车窗上掠过去，一格一格，像翻页。如果恰好赶上日出，整条街都会被染成浅金色，连写字楼的反光都变得温柔。那一刻所有人都低着头看手机，只有光在认真打量这个世界。</p>
+  <p class="fade">我在地铁口见过一个老人，每天早晨都坐在同一张长椅上。他不看手机，只是坐着，看光从对面楼顶慢慢滑下来。我不知道他在想什么，但我知道他看见了。看见这件事，本身就需要练习。</p>
+
+  <div class="quote fade">人记得住的不是整条河，是河面上闪过的那些光。</div>
+
+  <h2 class="fade">三 夜里</h2>
+  <p class="fade">夜里的光属于屏幕。蓝白色的光从窗口透出去，和路灯的黄撞在一起。我们把自己交给这一小块亮光，刷着别人的日子，忘了自己的灯还亮着。有时候我会关掉屏幕，让房间回到黑暗，然后发现路灯的光其实也很好看，它安安静静地亮一整夜，不为谁。</p>
+  <p class="fade">深夜写完一行代码，屏幕暗下去的那一下，世界会突然安静几秒。那几秒里，我能听见自己的呼吸，也第一次觉得，和代码打了半天交道，真正在发光的是窗外那盏路灯。</p>
+
+  <h2 class="fade">结语</h2>
+  <p class="fade">浮光不是抓不住，是你决定留下哪一束。我选择把清晨的杯沿、半路的树影、夜里的路灯记下来。它们都很小，小到不值得写进履历，但正是这些小东西，把日子撑了起来。</p>
+
+  <div class="list fade">
+    <span class="k">浮光清单</span>
+    <ul>
+      <li><span>01</span>地铁出站时，风正好</li>
+      <li><span>02</span>楼下便利店的豆浆还是热的</li>
+      <li><span>03</span>朋友发来一张旧照片，说，那时候真瘦</li>
+      <li><span>04</span>雨停后，路面亮得像一面镜子</li>
+      <li><span>05</span>深夜关掉屏幕，窗外路灯还亮着</li>
+    </ul>
+  </div>
+
+  <div class="end fade">
+    <p>随手记下，未校对。光不会等，所以写下来。</p>
+    <p class="sig">写于某个有光的下午</p>
+  </div>
+</article>
+
+<footer>
+  <span>浮光手记 · 手记</span>
+  <span>一篇关于记忆与瞬间的随笔</span>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

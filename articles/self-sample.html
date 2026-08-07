@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自我样本 - 数据与自我</title>
+<meta name="description" content="自我样本：与其分析世界，不如先分析自己。给此刻的自己取样，拖动滑块画一张雷达图。">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-soft: #11141c;
+    --card: #151923;
+    --line: #262c3a;
+    --ink: #e7ebf2;
+    --muted: #98a1b3;
+    --faint: #677084;
+    --accent: #5b8cff;
+    --accent-deep: #3d63b8;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: -apple-system, "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: rgba(91, 140, 255, 0.28); }
+
+  .home-btn {
+    position: fixed; top: 22px; left: 22px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px;
+    background: rgba(17, 20, 28, 0.72); backdrop-filter: blur(8px);
+    border: 1px solid var(--line); color: var(--muted); font-size: 13px; text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .home-btn:hover { border-color: var(--accent-deep); color: var(--ink); }
+  .home-btn svg { width: 14px; height: 14px; }
+
+  .hero { min-height: 60vh; display: flex; flex-direction: column; justify-content: flex-end; max-width: 980px; margin: 0 auto; padding: 120px 28px 48px; }
+  .eyebrow { font-size: 13px; letter-spacing: 0.35em; color: var(--accent); text-transform: uppercase; margin-bottom: 18px; }
+  h1 { font-size: clamp(2.6rem, 7vw, 4.4rem); font-weight: 600; letter-spacing: 0.03em; line-height: 1.08; }
+  .sub { margin-top: 22px; max-width: 52ch; color: var(--muted); font-size: clamp(1rem, 2vw, 1.12rem); }
+  .rule { width: 64px; height: 1px; background: var(--accent-deep); margin-top: 28px; }
+
+  main { max-width: 980px; margin: 0 auto; padding: 40px 28px 100px; }
+
+  .panel {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 30px 32px;
+  }
+  .panel h2 { font-size: 1.15rem; font-weight: 600; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .panel .tip { color: var(--faint); font-size: 13px; margin-bottom: 22px; }
+
+  .widget { display: grid; grid-template-columns: 1.1fr 1fr; gap: 34px; align-items: center; }
+  @media (max-width: 820px) { .widget { grid-template-columns: 1fr; } }
+
+  .sliders { display: flex; flex-direction: column; gap: 18px; }
+  .slider-row { }
+  .slider-row .lab { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .slider-row .lab .name { font-size: 14px; color: var(--ink); }
+  .slider-row .lab .val { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; color: var(--accent); }
+  input[type=range] {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px;
+    background: linear-gradient(to right, var(--accent) var(--fill, 50%), var(--line) var(--fill, 50%));
+    outline: none; cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--accent); transition: transform 0.15s ease;
+  }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 2px solid var(--accent); }
+
+  .radar-box { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .radar-box svg { width: min(100%, 320px); height: auto; }
+  .grid-poly { fill: none; stroke: var(--line); stroke-width: 1; }
+  .axis { stroke: var(--line); stroke-width: 1; }
+  .axis-label { fill: var(--muted); font-size: 11px; font-family: -apple-system, "PingFang SC", sans-serif; }
+  .sample-poly { fill: rgba(91, 140, 255, 0.16); stroke: var(--accent); stroke-width: 2; stroke-linejoin: round; transition: all 0.35s ease; }
+  .sample-dot { fill: var(--accent); }
+
+  .readout { text-align: center; }
+  .readout .k { color: var(--faint); font-size: 12px; letter-spacing: 0.2em; }
+  .readout .type { font-size: 1.5rem; font-weight: 600; color: var(--accent); margin-top: 4px; }
+  .readout .desc { color: var(--muted); font-size: 13px; margin-top: 4px; max-width: 26ch; }
+
+  .meta { margin-top: 56px; display: grid; grid-template-columns: 1fr 1.6fr; gap: 26px; }
+  @media (max-width: 820px) { .meta { grid-template-columns: 1fr; } }
+  .meta h3 { font-size: 14px; letter-spacing: 0.12em; color: var(--accent); margin-bottom: 16px; }
+  .meta .rows { display: grid; gap: 0; }
+  .meta .row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(38, 44, 58, 0.7); font-size: 14px; }
+  .meta .row:first-child { border-top: 1px solid rgba(38, 44, 58, 0.7); }
+  .meta .row .k { color: var(--muted); }
+  .meta .row .v { color: var(--ink); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; }
+  .meta .note { color: var(--faint); font-size: 12px; margin-top: 12px; }
+  .meta p.body { color: var(--muted); font-size: 15px; max-width: 55ch; }
+  .meta p.body em { color: var(--ink); font-style: normal; }
+
+  footer { border-top: 1px solid var(--line); padding: 34px 28px 60px; max-width: 980px; margin: 0 auto; color: var(--faint); font-size: 12px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+  .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+  .fade.in { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) { .fade { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+
+<a class="home-btn" href="../index.html">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v11h14V10"/></svg>
+  返回主页
+</a>
+
+<header class="hero">
+  <p class="eyebrow fade">数据与自我</p>
+  <h1 class="fade">自我样本</h1>
+  <p class="sub fade">与其分析世界，不如先分析自己。拖动滑块，给此刻的自己取样。样本会实时画成一张雷达图，而你，是唯一的样本来源。</p>
+  <div class="rule fade"></div>
+</header>
+
+<main>
+  <section class="panel fade">
+    <h2>此刻的取样</h2>
+    <p class="tip">六项维度，每项 0 到 100。没有对错，只有此刻。</p>
+    <div class="widget">
+      <div class="sliders" id="sliders"></div>
+      <div class="radar-box">
+        <svg id="radar" viewBox="0 0 320 320" role="img" aria-label="自我画像雷达图"></svg>
+        <div class="readout">
+          <p class="k">当前样本更接近</p>
+          <p class="type" id="typeName">未取样</p>
+          <p class="desc" id="typeDesc">移动滑块开始</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="meta">
+    <div class="fade">
+      <h3>关于作者的一组样本</h3>
+      <div class="rows" id="authorRows"></div>
+      <p class="note">以上为示例数据，仅作展示，不代表真实统计。</p>
+    </div>
+    <div class="fade">
+      <h3>为什么做这一页</h3>
+      <p class="body">我们习惯了用数据看市场、看用户、看世界，却很少把同一套工具对准自己。这一页不是科学的测量，只是一面镜子：你把滑块放在哪里，镜子里就会出现一个怎样的你。定期回来动一动，看看自己是不是还认得自己。</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>自我样本 · 数据与自我</span>
+  <span>样本是你自己，数据来自你的手感</span>
+</footer>
+
+<script>
+  var dims = [
+    { id: 'focus',  name: '专注力', d: 'deep' },
+    { id: 'curio',  name: '好奇心', d: 'explore' },
+    { id: 'do',     name: '执行力', d: 'action' },
+    { id: 'chill',  name: '松弛感', d: 'relax' },
+    { id: 'empathy',name: '共情力', d: 'connect' },
+    { id: 'voice',  name: '表达欲', d: 'express' }
+  ];
+  var types = {
+    deep:    { name: '深潜者', desc: '一件事能钻很久，世界在你眼里是分层的' },
+    explore: { name: '探索者', desc: '问题比答案更让你上瘾' },
+    action:  { name: '行动派', desc: '先做了再说，边做边想' },
+    relax:   { name: '松弛者', desc: '不赶时间，日子在你这里是慢放的' },
+    connect: { name: '连接者', desc: '你记得别人的细节，也容易被记得' },
+    express: { name: '表达者', desc: '心里有话，写出来才算说完' }
+  };
+
+  var values = { focus: 62, curio: 80, do: 55, chill: 70, empathy: 75, voice: 60 };
+
+  // 渲染滑块
+  var slidersEl = document.getElementById('sliders');
+  slidersEl.innerHTML = dims.map(function (d) {
+    return '<div class="slider-row">' +
+      '<div class="lab"><span class="name">' + d.name + '</span><span class="val" id="val-' + d.id + '">' + values[d.id] + '</span></div>' +
+      '<input type="range" min="0" max="100" value="' + values[d.id] + '" data-id="' + d.id + '" aria-label="' + d.name + '">' +
+    '</div>';
+  }).join('');
+
+  // SVG 雷达图
+  var NS = 'http://www.w3.org/2000/svg';
+  var svg = document.getElementById('radar');
+  var CX = 160, CY = 160, R = 105;
+  function angle(i) { return (-90 + i * 60) * Math.PI / 180; }
+  function pt(i, r) { return [CX + r * Math.cos(angle(i)), CY + r * Math.sin(angle(i))]; }
+
+  // 网格环
+  [0.25, 0.5, 0.75, 1].forEach(function (f) {
+    var p = dims.map(function (_, i) { return pt(i, R * f).join(','); }).join(' ');
+    var poly = document.createElementNS(NS, 'polygon');
+    poly.setAttribute('points', p); poly.setAttribute('class', 'grid-poly');
+    svg.appendChild(poly);
+  });
+  // 轴线与标签
+  dims.forEach(function (d, i) {
+    var line = document.createElementNS(NS, 'line');
+    line.setAttribute('x1', CX); line.setAttribute('y1', CY);
+    line.setAttribute('x2', pt(i, R)[0]); line.setAttribute('y2', pt(i, R)[1]);
+    line.setAttribute('class', 'axis');
+    svg.appendChild(line);
+    var lab = document.createElementNS(NS, 'text');
+    var lp = pt(i, R + 22);
+    lab.setAttribute('x', lp[0]); lab.setAttribute('y', lp[1]);
+    lab.setAttribute('text-anchor', 'middle'); lab.setAttribute('dominant-baseline', 'middle');
+    lab.setAttribute('class', 'axis-label'); lab.textContent = d.name;
+    svg.appendChild(lab);
+  });
+  var samplePoly = document.createElementNS(NS, 'polygon');
+  samplePoly.setAttribute('class', 'sample-poly');
+  svg.appendChild(samplePoly);
+
+  function draw() {
+    var pts = dims.map(function (d, i) { return pt(i, R * values[d.id] / 100).join(','); }).join(' ');
+    samplePoly.setAttribute('points', pts);
+    dims.forEach(function (d, i) {
+      var c = pt(i, R * values[d.id] / 100);
+      var dot = svg.querySelector('.sample-dot-' + i);
+      if (!dot) {
+        dot = document.createElementNS(NS, 'circle');
+        dot.setAttribute('r', '3'); dot.setAttribute('class', 'sample-dot sample-dot-' + i);
+        svg.appendChild(dot);
+      }
+      dot.setAttribute('cx', c[0]); dot.setAttribute('cy', c[1]);
+    });
+    // 类型判定
+    var top = dims.slice().sort(function (a, b) { return values[b.id] - values[a.id]; })[0];
+    var t = types[top.d];
+    document.getElementById('typeName').textContent = t.name;
+    document.getElementById('typeDesc').textContent = t.desc;
+  }
+
+  // 滑块事件
+  slidersEl.addEventListener('input', function (e) {
+    var id = e.target.dataset.id;
+    values[id] = +e.target.value;
+    document.getElementById('val-' + id).textContent = e.target.value;
+    var pct = (e.target.value / 100) * 100;
+    e.target.style.setProperty('--fill', pct + '%');
+    draw();
+  });
+  document.querySelectorAll('input[type=range]').forEach(function (r) {
+    r.style.setProperty('--fill', (r.value / 100) * 100 + '%');
+  });
+  draw();
+
+  // 作者示例数据
+  var author = [
+    { k: '平均睡眠', v: '6h 42m' },
+    { k: '每周跑步', v: '3 次' },
+    { k: '已读的书', v: '12 本 / 年' },
+    { k: '写过的代码行', v: '约 240k' },
+    { k: '深夜灵感', v: '7 成在 23 点后' }
+  ];
+  document.getElementById('authorRows').innerHTML = author.map(function (r) {
+    return '<div class="row"><span class="k">' + r.k + '</span><span class="v">' + r.v + '</span></div>';
+  }).join('');
+
+  // 滚动渐入
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade').forEach(function (el) { io.observe(el); });
+</script>
+</body>
+</html>

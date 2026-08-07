@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拾光集 - 视觉收集册</title>
+<meta name="description" content="拾光集：把散落的光收进一页。晨光、旧巷、雨后的街道，一些被记住的瞬间。">
+<style>
+  :root {
+    --bg: #0b0b0e;
+    --bg-soft: #121217;
+    --card: #16161c;
+    --line: #2a2a33;
+    --ink: #e8e6e1;
+    --muted: #9a978f;
+    --faint: #6b6862;
+    --accent: #a9b4c6;
+    --accent-deep: #7d8aa0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: rgba(169, 180, 198, 0.25); }
+
+  .home-btn {
+    position: fixed; top: 22px; left: 22px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 999px;
+    background: rgba(18, 18, 23, 0.72); backdrop-filter: blur(8px);
+    border: 1px solid var(--line);
+    color: var(--muted); font-size: 13px; text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .home-btn:hover { border-color: var(--accent-deep); color: var(--ink); }
+  .home-btn svg { width: 14px; height: 14px; }
+
+  .hero {
+    min-height: 68vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 120px 24px 56px;
+    max-width: 1180px; margin: 0 auto;
+  }
+  .eyebrow {
+    font-size: 13px; letter-spacing: 0.35em; color: var(--accent);
+    text-transform: uppercase; margin-bottom: 18px;
+  }
+  h1 {
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    font-weight: 600; letter-spacing: 0.04em; line-height: 1.05;
+  }
+  .sub {
+    margin-top: 22px; max-width: 46ch;
+    color: var(--muted); font-size: clamp(1rem, 2vw, 1.15rem);
+  }
+  .rule { width: 64px; height: 1px; background: var(--accent-deep); margin-top: 28px; }
+
+  main { max-width: 1180px; margin: 0 auto; padding: 40px 24px 120px; }
+
+  .gallery {
+    display: grid; grid-template-columns: repeat(12, 1fr);
+    gap: 14px; grid-auto-flow: dense;
+  }
+  .shot { position: relative; overflow: hidden; border-radius: 4px; cursor: zoom-in; background: var(--card); }
+  .shot img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease; filter: saturate(0.92); }
+  .shot:hover img { transform: scale(1.04); filter: saturate(1.05); }
+  .cap {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 26px 14px 12px;
+    background: linear-gradient(to top, rgba(11, 11, 14, 0.9), transparent);
+    color: var(--ink); font-size: 13px; letter-spacing: 0.08em;
+    opacity: 0; transform: translateY(6px); transition: all 0.4s ease;
+  }
+  .shot:hover .cap { opacity: 1; transform: translateY(0); }
+
+  .s1 { grid-column: span 5;  aspect-ratio: 4 / 5; }
+  .s2 { grid-column: span 7;  aspect-ratio: 16 / 10; }
+  .s3 { grid-column: span 4;  aspect-ratio: 1 / 1; }
+  .s4 { grid-column: span 4;  aspect-ratio: 1 / 1; }
+  .s5 { grid-column: span 4;  aspect-ratio: 1 / 1; }
+  .s6 { grid-column: span 7;  aspect-ratio: 16 / 9; }
+  .s7 { grid-column: span 5;  aspect-ratio: 4 / 5; }
+  .s8 { grid-column: span 4;  aspect-ratio: 1 / 1; }
+  .s9 { grid-column: span 4;  aspect-ratio: 4 / 3; }
+  .s10{ grid-column: span 4;  aspect-ratio: 4 / 3; }
+  .s11{ grid-column: span 6;  aspect-ratio: 16 / 10; }
+  .s12{ grid-column: span 6;  aspect-ratio: 16 / 10; }
+
+  @media (max-width: 760px) {
+    .gallery { grid-template-columns: repeat(2, 1fr); }
+    .s1, .s2, .s3, .s4, .s5, .s6, .s7, .s8, .s9, .s10, .s11, .s12 { grid-column: span 1; aspect-ratio: 1 / 1; }
+  }
+
+  .outro { margin-top: 72px; display: grid; grid-template-columns: 1fr 2fr; gap: 24px; align-items: start; }
+  .outro .k { color: var(--accent); font-size: 13px; letter-spacing: 0.2em; }
+  .outro p { color: var(--muted); max-width: 60ch; }
+  @media (max-width: 760px) { .outro { grid-template-columns: 1fr; } }
+
+  footer {
+    border-top: 1px solid var(--line); padding: 34px 24px 60px;
+    color: var(--faint); font-size: 12px; max-width: 1180px; margin: 0 auto;
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+
+  /* 灯箱 */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 90;
+    background: rgba(8, 8, 11, 0.94);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .lightbox.open { opacity: 1; visibility: visible; }
+  .lightbox img { max-width: 88vw; max-height: 82vh; border-radius: 4px; box-shadow: 0 24px 80px rgba(0,0,0,0.5); }
+  .lightbox .lb-cap { position: absolute; bottom: 34px; left: 0; right: 0; text-align: center; color: var(--muted); font-size: 13px; letter-spacing: 0.1em; }
+  .lightbox .lb-close {
+    position: absolute; top: 26px; right: 30px; cursor: pointer;
+    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: 20px; transition: all 0.25s ease;
+  }
+  .lightbox .lb-close:hover { color: var(--ink); border-color: var(--accent-deep); }
+
+  .fade { opacity: 0; transform: translateY(22px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+  .fade.in { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .fade { opacity: 1; transform: none; transition: none; }
+    .shot img, .cap { transition: none; }
+    .shot:hover img { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<a class="home-btn" href="../index.html">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v11h14V10"/></svg>
+  返回主页
+</a>
+
+<header class="hero">
+  <p class="eyebrow fade">视觉收集册</p>
+  <h1 class="fade">拾光集</h1>
+  <p class="sub fade">把散落的光，收进一页。光落在桌上、水面、街道，我负责捡起。</p>
+  <div class="rule fade"></div>
+</header>
+
+<main>
+  <div class="gallery" id="gallery">
+    <figure class="shot s1 fade" data-cap="晨光"><img src="https://picsum.photos/seed/morning-window/800/1000" alt="晨光穿过窗帘" loading="lazy"><figcaption class="cap">晨光</figcaption></figure>
+    <figure class="shot s2 fade" data-cap="旧巷"><img src="https://picsum.photos/seed/old-alley/1200/750" alt="旧巷的光影" loading="lazy"><figcaption class="cap">旧巷</figcaption></figure>
+    <figure class="shot s3 fade" data-cap="窗台"><img src="https://picsum.photos/seed/windowsill/700/700" alt="窗台上的光" loading="lazy"><figcaption class="cap">窗台</figcaption></figure>
+    <figure class="shot s4 fade" data-cap="雨停之后"><img src="https://picsum.photos/seed/rain-after/700/700" alt="雨停后的路面" loading="lazy"><figcaption class="cap">雨停之后</figcaption></figure>
+    <figure class="shot s5 fade" data-cap="街角的猫"><img src="https://picsum.photos/seed/corner-cat/700/700" alt="街角的猫" loading="lazy"><figcaption class="cap">街角的猫</figcaption></figure>
+    <figure class="shot s6 fade" data-cap="蓝色时刻"><img src="https://picsum.photos/seed/blue-hour/1200/675" alt="日落前的蓝色时刻" loading="lazy"><figcaption class="cap">蓝色时刻</figcaption></figure>
+    <figure class="shot s7 fade" data-cap="灯下"><img src="https://picsum.photos/seed/lamp-shadow/800/1000" alt="灯下的影子" loading="lazy"><figcaption class="cap">灯下</figcaption></figure>
+    <figure class="shot s8 fade" data-cap="一杯热茶"><img src="https://picsum.photos/seed/hot-tea/700/700" alt="一杯热茶" loading="lazy"><figcaption class="cap">一杯热茶</figcaption></figure>
+    <figure class="shot s9 fade" data-cap="雪后"><img src="https://picsum.photos/seed/after-snow/800/600" alt="雪后的街道" loading="lazy"><figcaption class="cap">雪后</figcaption></figure>
+    <figure class="shot s10 fade" data-cap="海面"><img src="https://picsum.photos/seed/sea-glass/800/600" alt="海面的光" loading="lazy"><figcaption class="cap">海面</figcaption></figure>
+    <figure class="shot s11 fade" data-cap="自行车"><img src="https://picsum.photos/seed/bicycle/1100/680" alt="路边的自行车" loading="lazy"><figcaption class="cap">自行车</figcaption></figure>
+    <figure class="shot s12 fade" data-cap="晚归"><img src="https://picsum.photos/seed/back-home/1100/680" alt="晚归的路灯" loading="lazy"><figcaption class="cap">晚归</figcaption></figure>
+  </div>
+
+  <div class="outro fade">
+    <span class="k">关于这一页</span>
+    <p>这里的照片目前是占位素材，用来撑起"光"的感觉。它们随时可以换成你自己的照片，把真正属于你的瞬间放进来。光的形状有很多种，这一页只是其中一种。</p>
+  </div>
+</main>
+
+<footer>
+  <span>拾光集 · 视觉收集册</span>
+  <span>图片为占位素材，可替换为你自己的照片</span>
+</footer>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <span class="lb-close" id="lb-close">×</span>
+  <img id="lb-img" src="" alt="">
+  <p class="lb-cap" id="lb-cap"></p>
+</div>
+
+<script>
+  // 滚动渐入
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach(el => io.observe(el));
+
+  // 灯箱
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbCap = document.getElementById('lb-cap');
+  document.querySelectorAll('.shot').forEach(shot => {
+    shot.addEventListener('click', () => {
+      const img = shot.querySelector('img');
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lbCap.textContent = shot.dataset.cap || '';
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+    });
+  });
+  function closeLb() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+  }
+  document.getElementById('lb-close').addEventListener('click', closeLb);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLb(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLb(); });
+</script>
+</body>
+</html>
