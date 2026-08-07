@@ -5,6 +5,7 @@
     <meta charset='utf-8'/>
     <meta name="baidu-site-verification" content="codeva-5WJZ7zBbwD" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="卓德鹏 (Devin) 的个人主页：数据、科技、创意的混合体。项目、灵感与思考、小互动。">
     <title>卓德鹏 - 个人主页</title>
 
 <!-- 👇👇👇 把新代码直接【新增】塞在这里，上下都不删 👇👇👇 -->
@@ -20,8 +21,7 @@
     <meta property="og:type" content="website">
     <!-- 👆👆👆 新代码结束，下面是你原本自带的代码，原封不动 👆👆👆 -->
     
-    <script src='https://res.gemcoder.com/js/reload.js'></script>
-    <script src='https://cdn.tailwindcss.com'></script>
+        <script src='https://cdn.tailwindcss.com'></script>
     <link href='https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css' rel='stylesheet'/>
     
     <script>
@@ -76,6 +76,19 @@
             }
         }
     </style>
+
+<style>
+    #secret-tip {
+        position: fixed; z-index: 9999; max-width: 260px;
+        padding: 9px 16px; border-radius: 999px;
+        background: #1e293b; color: #fff; font-size: 13px; white-space: nowrap;
+        border: 1px solid rgba(255,255,255,0.14);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.22);
+        opacity: 0; transform: translateY(6px) scale(0.96); pointer-events: none;
+        transition: opacity .25s ease, transform .25s cubic-bezier(.16,1,.3,1);
+    }
+    #secret-tip.show { opacity: 1; transform: translateY(0) scale(1); }
+</style>
 </head>
 
 <body class='bg-gray-50 text-gray-800 font-sans'>
@@ -89,7 +102,7 @@
             <div class='container mx-auto px-4 sm:px-6 lg:px-8'>
                 <div class='flex justify-between h-16'>
                     <div class='flex items-center'>
-                        <a class='flex-shrink-0 flex items-center' href='javascript:void(0);'>
+                        <a class='flex-shrink-0 flex items-center' href='index.html'>
                             <span class='text-primary font-bold text-xl'>卓德鹏</span>
                         </a>
                     </div>
@@ -102,7 +115,7 @@
                         <a class='text-gray-600 hover:text-primary transition-custom px-3 py-2 text-base font-medium' href='#contact'>联系我</a>
                     </div>
                     <div class='md:hidden flex items-center'>
-                        <button class='text-gray-500 hover:text-primary focus:outline-none' id='mobile-menu-button'>
+                        <button type='button' class='text-gray-500 hover:text-primary focus:outline-none' id='mobile-menu-button'>
                             <i class='fas fa-bars text-xl'></i>
                         </button>
                     </div>
@@ -121,6 +134,8 @@
                 </div>
             </div>
         </nav>
+
+        <main id='main-content'>
 
         <!-- ================================================================= -->
 <!-- 视觉过渡区：极简艺术横幅 (Devin 专属版)                           -->
@@ -358,11 +373,11 @@
         <!-- 👇 新增：分类筛选按钮区 👇 -->
         <div class="flex flex-wrap justify-center gap-4 mb-12" id="portfolio-filters">
             <!-- 默认选中的按钮：蓝底白字 -->
-            <button class="filter-btn px-6 py-2 rounded-full border border-primary bg-primary text-white font-medium transition-custom shadow-sm" data-filter="all">全部</button>
+            <button type='button' class="filter-btn px-6 py-2 rounded-full border border-primary bg-primary text-white font-medium transition-custom shadow-sm" data-filter="all">全部</button>
             <!-- 其他未选中的按钮：白底灰字 -->
-            <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 bg-white text-gray-600 font-medium transition-custom hover:border-primary hover:text-primary hover:shadow-sm" data-filter="tech">科技与折腾</button>
-            <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 bg-white text-gray-600 font-medium transition-custom hover:border-primary hover:text-primary hover:shadow-sm" data-filter="reading">阅读与思考</button>
-            <button class="filter-btn px-6 py-2 rounded-full border border-gray-300 bg-white text-gray-600 font-medium transition-custom hover:border-primary hover:text-primary hover:shadow-sm" data-filter="tools">实用工具</button>
+            <button type='button' class="filter-btn px-6 py-2 rounded-full border border-gray-300 bg-white text-gray-600 font-medium transition-custom hover:border-primary hover:text-primary hover:shadow-sm" data-filter="tech">科技与折腾</button>
+            <button type='button' class="filter-btn px-6 py-2 rounded-full border border-gray-300 bg-white text-gray-600 font-medium transition-custom hover:border-primary hover:text-primary hover:shadow-sm" data-filter="reading">阅读与思考</button>
+            <button type='button' class="filter-btn px-6 py-2 rounded-full border border-gray-300 bg-white text-gray-600 font-medium transition-custom hover:border-primary hover:text-primary hover:shadow-sm" data-filter="tools">实用工具</button>
         </div>
 
         <!-- 卡片网格容器 -->
@@ -380,7 +395,7 @@
                         <span class='tooltip left-1/2 transform -translate-x-1/2'>圣诞节快乐，一颗圣诞树送给大家 📡</span>
                     </div>
                     <p class='text-gray-600 mb-4'>Light up the night. Merry Christmas.</p>
-                    <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Christmas Tree.html' target='_blank'>
+                    <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Christmas Tree.html' target='_blank' rel='noopener'>
                         了解更多 <i class='fas fa-arrow-right ml-2'></i>
                     </a>
                 </div>
@@ -399,7 +414,7 @@
         <p class='text-gray-600 mb-4'>所谓百年功名，千秋霸业，万古流芳，与一件事情相比，其实算不了什么，这件事情就是用你喜欢的方式度过一生。</p>
         
         <!-- 💡 核心修改点：这里的链接指向新的 article-test.html -->
-        <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/article-test.html' target='_blank'>
+        <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/article-test.html' target='_blank' rel='noopener'>
             阅读全文 <i class='fas fa-arrow-right ml-2'></i>
         </a>
     </div>
@@ -417,7 +432,7 @@
                         <span class='tooltip left-1/2 transform -translate-x-1/2'>AI导AI弄出来的价值计算器，你值得拥有🔥</span>
                     </div>
                     <p class='text-gray-600 mb-4'>把需要的原始数据复制丢给AI，就会给出买入建议</p>
-                    <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Value_Calculator_V3.html' target='_blank'>
+                    <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/Value_Calculator_V3.html' target='_blank' rel='noopener'>
                         点击计算 <i class='fas fa-arrow-right ml-2'></i>
                     </a>
                 </div>
@@ -457,7 +472,7 @@
                         <span class='tooltip left-1/2 transform -translate-x-1/2'>on my way</span>
                     </div>
                     <p class='text-gray-600 mb-4'>人生海海，山山而川</p>
-                    <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/collected-light.html' target='_blank'>
+                    <a class='text-primary font-medium inline-flex items-center transition-custom hover:text-primary/80' href='articles/collected-light.html' target='_blank' rel='noopener'>
                         打开相册 <i class='fas fa-arrow-right ml-2'></i>
                     </a>
                 </div>
@@ -565,13 +580,6 @@
                     </div>
                     <!-- 文章列表容器结束 -->
 
-                    <!-- 加载更多按钮 -->
-                    <div class='text-center mt-12'>
-                        <button class='bg-white border border-gray-300 text-gray-700 font-medium py-3 px-6 rounded-lg shadow-sm transition-custom hover:bg-gray-50' id='load-more-thoughts'>
-                            <i class='fas fa-spinner mr-2'></i> 加载更多
-                        </button>
-                    </div>
-
                 </div>
             </div>
         </section>
@@ -598,10 +606,10 @@
                         <h3 class='text-xl font-semibold text-gray-800 mb-2'>猜猜我今天走了多少步？</h3>
                         <p class='text-gray-500 text-sm mb-4'>👣 日常活动的小挑战</p>
                         <div class='has-tooltip mb-6'>
-                            <input class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom mb-2' id='step-guess' placeholder='输入你的猜测' type='number'/>
+                            <input class='w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-custom mb-2' id='step-guess' placeholder='输入你的猜测' type='number' aria-label='猜测今天走了多少步'/>
                             <span class='tooltip left-1/2 transform -translate-x-1/2'>别作弊哦，我可是有记录的 📊</span>
                         </div>
-                        <button class='w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-custom' id='check-step-guess'>提交猜测</button>
+                        <button type='button' class='w-full bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg transition-custom' id='check-step-guess'>提交猜测</button>
                         <p class='mt-4 text-gray-600 hidden' id='step-result'></p>
                     </div>
 
@@ -613,7 +621,7 @@
                         <h3 class='text-xl font-semibold text-gray-800 mb-2'>随机建议</h3>
                         <p class='text-gray-500 text-sm mb-6'>💡 生活小贴士</p>
                         <div class='has-tooltip'>
-                            <button class='w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-lg transition-custom' id='random-tip'>点我，我给你生活小贴士</button>
+                            <button type='button' class='w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-lg transition-custom' id='random-tip'>点我，我给你生活小贴士</button>
                             <span class='tooltip left-1/2 transform -translate-x-1/2'>可能很管用，也可能只是个笑话 😜</span>
                         </div>
                         <div class='mt-6 p-4 bg-gray-50 rounded-lg text-gray-700 min-h-20 flex items-center justify-center' id='tip-result'>点击上方按钮获取随机小贴士</div>
@@ -627,7 +635,7 @@
                         <h3 class='text-xl font-semibold text-gray-800 mb-2'>计划安排</h3>
                         <p class='text-gray-500 text-sm mb-6'>🎲 工作与健身平衡</p>
                         <div class='has-tooltip'>
-                            <button class='w-full bg-purple-500 hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-lg transition-custom' id='generate-schedule'>帮我安排一周计划</button>
+                            <button type='button' class='w-full bg-purple-500 hover:bg-purple-600 text-white font-medium py-3 px-4 rounded-lg transition-custom' id='generate-schedule'>帮我安排一周计划</button>
                             <span class='tooltip left-1/2 transform -translate-x-1/2'>你敢试试吗？有点难哦 😎</span>
                         </div>
                         <div class='mt-6 p-4 bg-gray-50 rounded-lg text-gray-700 min-h-20 flex items-center justify-center' id='schedule-result'>点击上方按钮生成一周计划</div>
@@ -671,7 +679,7 @@
                                 </div>
 
                                 <div class='has-tooltip'>
-                                    <a class='flex items-center text-gray-700 hover:text-primary transition-custom' href='javascript:void(0);'>
+                                    <a aria-label='LinkedIn' onclick='showSecret(this)' class='flex items-center text-gray-700 hover:text-primary transition-custom' href='javascript:void(0);'>
                                         <div class='w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4'>
                                             <i class='fab fa-linkedin text-blue-600'></i>
                                         </div>
@@ -684,7 +692,7 @@
                                 </div>
 
                                 <div class='has-tooltip'>
-                                    <a class='flex items-center text-gray-700 hover:text-primary transition-custom' href='javascript:void(0);'>
+                                    <a aria-label='GitHub' onclick='showSecret(this)' class='flex items-center text-gray-700 hover:text-primary transition-custom' href='javascript:void(0);'>
                                         <div class='w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mr-4'>
                                             <i class='fab fa-github text-gray-800'></i>
                                         </div>
@@ -700,10 +708,10 @@
                             <div class='mt-10'>
                                 <h4 class='text-lg font-medium text-gray-800 mb-4'>关注我</h4>
                                 <div class='flex space-x-4'>
-                                    <a class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'><i class='fab fa-twitter text-gray-700'></i></a>
-                                    <a class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'><i class='fab fa-instagram text-gray-700'></i></a>
-                                    <a class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'><i class='fab fa-weixin text-gray-700'></i></a>
-                                    <a class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'><i class='fab fa-weibo text-gray-700'></i></a>
+                                    <a aria-label='Twitter' onclick='showSecret(this)' class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'><i class='fab fa-twitter text-gray-700'></i></a>
+                                    <a aria-label='Instagram' onclick='showSecret(this)' class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'><i class='fab fa-instagram text-gray-700'></i></a>
+                                    <a aria-label='微信' onclick='showSecret(this)' class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'><i class='fab fa-weixin text-gray-700'></i></a>
+                                    <a aria-label='微博' onclick='showSecret(this)' class='w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center transition-custom' href='javascript:void(0);'><i class='fab fa-weibo text-gray-700'></i></a>
                                 </div>
                             </div>
                         </div>
@@ -741,6 +749,8 @@
         </section>
 
 
+        </main>
+
         <!-- ================================================================= -->
         <!-- 8. 页脚区域 (FOOTER)                                              -->
         <!-- ================================================================= -->
@@ -751,10 +761,10 @@
                         <h3 class='text-xl font-bold mb-4'>卓德鹏</h3>
                         <p class='text-gray-400 max-w-md'>数据、科技、创意的混合体。不只是咸鱼，也爱探索新鲜事物。</p>
                         <div class='flex space-x-4 mt-6'>
-                            <a class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'><i class='fab fa-twitter'></i></a>
-                            <a class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'><i class='fab fa-linkedin'></i></a>
-                            <a class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'><i class='fab fa-github'></i></a>
-                            <a class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'><i class='fab fa-weixin'></i></a>
+                            <a aria-label='Twitter' onclick='showSecret(this)' class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'><i class='fab fa-twitter'></i></a>
+                            <a aria-label='LinkedIn' onclick='showSecret(this)' class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'><i class='fab fa-linkedin'></i></a>
+                            <a aria-label='GitHub' onclick='showSecret(this)' class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'><i class='fab fa-github'></i></a>
+                            <a aria-label='微信' onclick='showSecret(this)' class='text-gray-400 hover:text-white transition-custom' href='javascript:void(0);'><i class='fab fa-weixin'></i></a>
                         </div>
                     </div>
                     <div>
@@ -959,27 +969,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
-
-    <!-- 加载更多文章逻辑 -->
-    <script id='load-more-script'>
-    document.addEventListener('DOMContentLoaded', function () {
-      var loadMoreButton = document.getElementById('load-more-thoughts');
-      loadMoreButton.addEventListener('click', function () {
-        loadMoreButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> 加载中...';
-        loadMoreButton.disabled = true;
-        setTimeout(function () {
-          loadMoreButton.innerHTML = '<i class="fas fa-spinner mr-2"></i> 加载更多';
-          loadMoreButton.disabled = false;
-          var articleContainer = document.querySelector('#thoughts .space-y-8');
-          var noMoreMessage = document.createElement('div');
-          noMoreMessage.className = 'text-center py-8 text-gray-500';
-          noMoreMessage.innerHTML = '<i class="fas fa-book-open text-2xl mb-2"></i><p>没有更多文章了</p>';
-          articleContainer.appendChild(noMoreMessage);
-          loadMoreButton.classList.add('hidden');
-        }, 1500);
-      });
-    });
-    </script>
 
     <!-- 滚动视差与动画逻辑 -->
     <script id='scroll-script'>
@@ -1241,7 +1230,7 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
             <div class="flex items-center gap-3">
                 <p class="hidden text-xs text-slate-500 sm:block">摒弃情绪 · 第一性原理拆解资产</p>
-                <button id="close-modal-btn" class="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-slate-400 transition-all hover:border-rose-400/40 hover:text-rose-300 hover:rotate-90" aria-label="关闭弹窗">&times;</button>
+                <button type='button' id="close-modal-btn" class="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-slate-400 transition-all hover:border-rose-400/40 hover:text-rose-300 hover:rotate-90" aria-label="关闭弹窗">&times;</button>
             </div>
         </div>
 
@@ -1305,7 +1294,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>
 
                 <div class="flex gap-3">
-                    <button id="calc-btn" class="flex-1 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 py-3 font-bold text-white shadow-[0_0_24px_rgba(34,211,238,0.35)] transition-all hover:brightness-110 hover:shadow-[0_0_36px_rgba(34,211,238,0.5)] active:scale-[.98]">
+                    <button type='button' id="calc-btn" class="flex-1 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 py-3 font-bold text-white shadow-[0_0_24px_rgba(34,211,238,0.35)] transition-all hover:brightness-110 hover:shadow-[0_0_36px_rgba(34,211,238,0.5)] active:scale-[.98]">
                         <i class="fas fa-sync-alt mr-2"></i> 重新计算估值
                     </button>
                     <button id="reset-btn" class="rounded-xl border border-white/15 px-4 py-3 text-sm font-semibold text-slate-400 transition-all hover:border-white/30 hover:text-white" type="button">重置</button>
@@ -1375,7 +1364,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <!-- ==================== 右下角悬浮操作区 ==================== -->
     <div id="floating-widget" class="fixed bottom-8 right-8 z-50 transition-all duration-500 transform translate-y-20 opacity-0 pointer-events-none">
         <div class="has-tooltip">
-            <button id="back-to-top" class="w-12 h-12 bg-gray-900 hover:bg-primary text-white rounded-full shadow-lg flex items-center justify-center transition-custom hover:shadow-2xl hover:-translate-y-1 focus:outline-none">
+            <button type='button' id="back-to-top" class="w-12 h-12 bg-gray-900 hover:bg-primary text-white rounded-full shadow-lg flex items-center justify-center transition-custom hover:shadow-2xl hover:-translate-y-1 focus:outline-none">
                 <i class="fas fa-rocket"></i>
             </button>
             <span class="tooltip right-full top-1/2 transform -translate-y-1/2 mr-3 whitespace-nowrap bg-gray-800 text-white text-xs px-2 py-1 rounded">
@@ -1533,5 +1522,37 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
     
+
+<script>
+  var SECRETS = [
+    '你猜我不说 😏',
+    '秘密都藏在拾光集里',
+    '这个问题，连我自己都没答案',
+    '猜对了也不告诉你',
+    '等我哪天想通了，第一个告诉你',
+    '嘘，这是个小秘密 🤫',
+    '在写了在写了（并没有）',
+    '这里真的什么都没有'
+  ];
+  function showSecret(el) {
+    var tip = document.getElementById('secret-tip');
+    if (!tip) {
+      tip = document.createElement('div');
+      tip.id = 'secret-tip';
+      document.body.appendChild(tip);
+    }
+    tip.textContent = SECRETS[Math.floor(Math.random() * SECRETS.length)];
+    var r = el.getBoundingClientRect();
+    var tw = tip.offsetWidth || 160;
+    var left = Math.min(Math.max(r.left + r.width / 2 - tw / 2, 12), window.innerWidth - tw - 12);
+    tip.style.left = left + 'px';
+    tip.style.top = Math.max(r.top - 44, 12) + 'px';
+    tip.classList.remove('show');
+    void tip.offsetWidth;
+    tip.classList.add('show');
+    clearTimeout(tip._timer);
+    tip._timer = setTimeout(function () { tip.classList.remove('show'); }, 2200);
+  }
+</script>
 </body> <!-- 这是你网页原本自带的结束标签 -->
 </html>
