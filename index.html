@@ -1362,6 +1362,155 @@ document.addEventListener('DOMContentLoaded', function () {
             </span>
         </div>
     </div>
+
+<!-- ==================== 投资估值弹窗交互逻辑 ==================== -->
+<script id='valuation-modal-script'>
+document.addEventListener('DOMContentLoaded', function () {
+    // 1. 抓取开关弹窗的关键元素
+    const modal = document.getElementById('valuation-modal');
+    const panel = document.getElementById('modal-panel');
+    const openBtn = document.getElementById('open-valuation-btn');
+    const closeBtn = document.getElementById('close-modal-btn');
+    const backdrop = document.getElementById('modal-backdrop');
+
+    // 2. 打开弹窗的动画逻辑
+    function openModal() {
+        modal.classList.remove('hidden'); // 先让元素在页面上占位
+        modal.classList.add('flex');
+        
+        // 延迟 10 毫秒执行透明度和缩放变化，强制浏览器渲染过渡动画
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            panel.classList.remove('scale-95');
+        }, 10);
+    }
+
+    // 3. 关闭弹窗的动画逻辑
+    function closeModal() {
+        modal.classList.add('opacity-0');
+        panel.classList.add('scale-95');
+        
+        // 等待 300 毫秒（跟 CSS 里的 duration-300 一致）动画播完后，再彻底隐藏元素
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }, 300);
+    }
+
+    // 4. 绑定点击事件
+    if(openBtn) openBtn.addEventListener('click', openModal);
+    if(closeBtn) closeBtn.addEventListener('click', closeModal);
+    // 点击半透明黑色背景也能关闭弹窗
+    if(backdrop) backdrop.addEventListener('click', closeModal);
+
+
+    // ==================== 以下为计算器联动逻辑 ====================
+    // 双向绑定：让滑动条和输入框的数字实时同步
+    function syncInputAndRange(inputId, rangeId) {
+        const input = document.getElementById(inputId);
+        const range = document.getElementById(rangeId);
+        if(!input || !range) return;
+
+        input.addEventListener('input', () => range.value = input.value);
+        range.addEventListener('input', () => input.value = range.value);
+    }
+    
+    syncInputAndRange('input-pe', 'range-pe');
+    syncInputAndRange('input-dividend', 'range-dividend');
+    syncInputAndRange('input-growth', 'range-growth');
+
+    // 预设按钮一键填入数据
+    document.querySelectorAll('.vm-preset').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.getElementById('input-pe').value = this.dataset.pe;
+            document.getElementById('range-pe').value = this.dataset.pe;
+            
+            document.getElementById('input-dividend').value = this.dataset.dividend;
+            document.getElementById('range-dividend').value = this.dataset.dividend;
+            
+            document.getElementById('input-growth').value = this.dataset.growth;
+            document.getElementById('range-growth').value = this.dataset.growth;
+        });
+    });
+
+    // 核心计算逻辑
+    const calcBtn = document.getElementById('calc-btn');
+    if(calcBtn) {
+        calcBtn.addEventListener('click', function() {
+            // 获取输入值
+            const pe = parseFloat(document.getElementById('input-pe').value) || 1;
+            const div = parseFloat(document.getElementById('input-dividend').value) || 0;
+            const growth = parseFloat(document.getElementById('input-growth').value) || 0;
+
+            // 模型一：盈利收益率 (1 / PE)
+            const yieldRate = ((1 / pe) * 100).toFixed(2);
+            document.getElementById('formula-yield').innerText = `1 ÷ ${pe} × 100%`;
+            document.getElementById('result-yield').innerText = `${yieldRate}%`;
+            
+            const yieldBadge = document.getElementById('yield-badge');
+            const yieldBar = document.getElementById('yield-bar');
+            
+            // 盈利收益率水位判定
+            if(yieldRate >= 10) {
+                yieldBadge.innerText = "严重低估 (击球区)";
+                yieldBadge.className = "mb-1 rounded-md bg-emerald-500/20 px-2.5 py-1 text-xs font-bold text-emerald-400";
+                yieldBar.style.width = "90%";
+                yieldBar.className = "vm-bar h-2 rounded-full transition-all duration-700 bg-emerald-400";
+            } else if(yieldRate >= 6.5) {
+                yieldBadge.innerText = "估值合理";
+                yieldBadge.className = "mb-1 rounded-md bg-cyan-500/20 px-2.5 py-1 text-xs font-bold text-cyan-400";
+                yieldBar.style.width = "50%";
+                yieldBar.className = "vm-bar h-2 rounded-full transition-all duration-700 bg-cyan-400";
+            } else {
+                yieldBadge.innerText = "高估风险";
+                yieldBadge.className = "mb-1 rounded-md bg-rose-500/20 px-2.5 py-1 text-xs font-bold text-rose-400";
+                yieldBar.style.width = "15%";
+                yieldBar.className = "vm-bar h-2 rounded-full transition-all duration-700 bg-rose-400";
+            }
+
+            // 模型二：博格公式 (股息率 + 利润增长率)
+            const bogleRate = (div + growth).toFixed(2);
+            document.getElementById('detail-div').innerText = div.toFixed(1);
+            document.getElementById('detail-growth').innerText = growth.toFixed(1);
+            document.getElementById('result-bogle').innerText = `${bogleRate}%`;
+
+            // 综合判定结果
+            const signalBadge = document.getElementById('verdict-signal');
+            const signalText = document.getElementById('verdict-text');
+            
+            if(yieldRate >= 10 && bogleRate >= 10) {
+                signalBadge.innerText = "STRONG BUY · 极具性价比";
+                signalBadge.className = "rounded-md px-2.5 py-1 text-xs font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+                signalText.innerHTML = `当前资产处于<strong>绝对低估区间</strong>。买入后不仅拥有极高的安全边际（盈利收益率 ${yieldRate}%），长期持有预期回报（${bogleRate}%）也跑赢大多数资产。建议逐步建仓。`;
+            } else if (yieldRate < 6.5) {
+                signalBadge.innerText = "WARNING · 估值过高";
+                signalBadge.className = "rounded-md px-2.5 py-1 text-xs font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30";
+                signalText.innerHTML = `当前市盈率（${pe}）过高，透支了未来的成长空间。除非企业能维持罕见的超高速增长，否则当前位置买入<strong>极易引发永久性本金损失</strong>。建议观望。`;
+            } else {
+                signalBadge.innerText = "HOLD · 估值合理";
+                signalBadge.className = "rounded-md px-2.5 py-1 text-xs font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30";
+                signalText.innerHTML = `当前资产估值处于中性区域。赚的是企业成长的钱，而不是估值修复的钱。如果你已经持有，可以继续拿着；如果准备新建仓，性价比一般，可以等待更好的击球区。`;
+            }
+        });
+    }
+
+    // 重置按钮逻辑
+    const resetBtn = document.getElementById('reset-btn');
+    if(resetBtn) {
+        resetBtn.addEventListener('click', function() {
+            document.getElementById('input-pe').value = 8.5;
+            document.getElementById('range-pe').value = 8.5;
+            document.getElementById('input-dividend').value = 3.2;
+            document.getElementById('range-dividend').value = 3.2;
+            document.getElementById('input-growth').value = 6.0;
+            document.getElementById('range-growth').value = 6.0;
+            
+            // 触发一次点击，刷新数据
+            if(calcBtn) calcBtn.click();
+        });
+    }
+});
+</script>
     
 </body> <!-- 这是你网页原本自带的结束标签 -->
 </html>
