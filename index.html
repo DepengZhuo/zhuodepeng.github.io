@@ -761,7 +761,7 @@
         <script>
           // ===== 页脚切换开关 =====
           // 想换页脚，把下面这一行改成 'footer-dark.html' 即可，其他不用动
-          var FOOTER_SRC = 'footer-taped.html';
+          var FOOTER_SRC = 'footer-dark.html';
           fetch(FOOTER_SRC)
             .then(function (r) { if (!r.ok) { throw new Error('HTTP ' + r.status); } return r.text(); })
             .then(function (html) { document.getElementById('footer-slot').innerHTML = html; })
