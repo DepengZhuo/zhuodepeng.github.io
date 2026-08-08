@@ -3,52 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lithos — Layers hold tales of time</title>
+<title>Lithos — 岩层之下，皆是时间</title>
 <meta name="description" content="Lithos 岩层之上：一个关于地质、深时与设计的地球实验室落地页。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-    * { font-family: 'Inter', sans-serif; }
-    .font-playfair { font-family: 'Playfair Display', serif; }
+    * { font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    .font-playfair { font-family: 'Playfair Display', 'Songti SC', 'Noto Serif CJK SC', serif; }
 
-    /* ===== 液态玻璃 (来自三份 prompt) ===== */
     .liquid-glass {
-        background: rgba(255,255,255,0.01);
-        background-blend-mode: luminosity;
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        border: none;
-        box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
-        position: relative;
-        overflow: hidden;
-    }
-    .liquid-glass::before {
-        content: '';
-        position: absolute; inset: 0; border-radius: inherit; padding: 1.4px;
-        background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
-        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-        pointer-events: none;
-    }
-    .liquid-glass-strong {
-        background: rgba(255,255,255,0.01);
-        backdrop-filter: blur(50px);
-        -webkit-backdrop-filter: blur(50px);
-        box-shadow: 4px 4px 4px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.15);
+        background: rgba(255,255,255,0.01); background-blend-mode: luminosity;
+        backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+        border: none; box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
         position: relative; overflow: hidden;
     }
-    .liquid-glass-strong::before {
+    .liquid-glass::before {
         content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px;
-        background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.2) 80%, rgba(255,255,255,0.5) 100%);
+        background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
         -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-        -webkit-mask-composite: xor; mask-composite: exclude;
-        pointer-events: none;
+        -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
     }
 
-    /* ===== hero 动画 (原有) ===== */
     @keyframes heroReveal { 0%{opacity:0;transform:translateY(28px);filter:blur(12px)} 100%{opacity:1;transform:translateY(0);filter:blur(0)} }
     @keyframes heroFadeUp { 0%{opacity:0;transform:translateY(20px)} 100%{opacity:1;transform:translateY(0)} }
     @keyframes heroZoom { 0%{transform:scale(1.12)} 100%{transform:scale(1)} }
@@ -57,15 +34,10 @@
     .hero-fade { animation-name:heroFadeUp; animation-duration:1s; }
     .hero-zoom { animation:heroZoom 1.8s cubic-bezier(0.16,1,0.3,1) forwards; }
 
-    /* ===== 滚动显现 ===== */
     .reveal { opacity:0; transform:translateY(30px); filter:blur(10px); transition:opacity .8s ease, transform .8s cubic-bezier(.16,1,.3,1), filter .8s ease; }
     .reveal.in { opacity:1; transform:none; filter:none; }
 
-    /* ===== 视频淡入 ===== */
     .fade-video { opacity:0; transition:opacity .6s ease; }
-
-    .scrollbar-hide::-webkit-scrollbar { display:none; }
-    .scrollbar-hide { scrollbar-width:none; }
 
     @media (prefers-reduced-motion: reduce){
         .hero-anim,.hero-zoom{ animation:none; opacity:1; }
@@ -74,9 +46,9 @@
     }
 </style>
 </head>
-<body class="min-h-screen bg-black text-white tracking-[-0.02em]" style="font-family:'Inter',sans-serif">
+<body class="min-h-screen bg-black text-white tracking-[-0.02em]" style="font-family:'Inter','PingFang SC',sans-serif">
 
-<!-- ======================= 导航 (固定) ======================= -->
+<!-- ======================= 导航 ======================= -->
 <nav class="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-4 sm:p-5">
     <div class="flex items-center gap-3">
         <a href="../index.html" class="liquid-glass rounded-full px-3 py-1.5 text-xs text-white/70 hover:text-white transition-colors" title="返回主页">← 返回主页</a>
@@ -88,23 +60,16 @@
         </a>
     </div>
     <div class="hidden md:flex absolute left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-2 py-2 items-center gap-1">
-        <a href="#capabilities" class="px-4 py-1.5 rounded-full text-sm font-medium text-white">Course</a>
-        <a href="#fieldlab" class="px-4 py-1.5 rounded-full text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors">Field Guides</a>
-        <a href="#philosophy" class="px-4 py-1.5 rounded-full text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors">Geology</a>
-        <a href="#services" class="px-4 py-1.5 rounded-full text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors">Plans</a>
-        <a href="#cta" class="px-4 py-1.5 rounded-full text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors">Live Tour</a>
+        <a href="#capabilities" class="px-4 py-1.5 rounded-full text-sm font-medium text-white">课程</a>
+        <a href="#fieldlab" class="px-4 py-1.5 rounded-full text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors">实地指南</a>
+        <a href="#philosophy" class="px-4 py-1.5 rounded-full text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors">地质学</a>
+        <a href="#services" class="px-4 py-1.5 rounded-full text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors">计划</a>
+        <a href="#cta" class="px-4 py-1.5 rounded-full text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition-colors">现场之旅</a>
     </div>
-    <div class="flex items-center gap-3">
-        <a href="#cta" class="hidden md:block bg-white text-gray-900 text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-gray-100">Sign Up</a>
-        <button class="md:hidden text-white" aria-label="Menu">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/>
-            </svg>
-        </button>
-    </div>
+    <a href="#cta" class="liquid-glass rounded-full px-5 py-2 text-sm text-white font-medium hover:bg-white/10 transition-colors">开始挖掘</a>
 </nav>
 
-<!-- ======================= HERO (原有聚光) ======================= -->
+<!-- ======================= HERO ======================= -->
 <section id="hero" class="relative w-full overflow-hidden h-screen bg-black" style="height:100dvh">
     <div class="absolute inset-0 bg-center bg-cover bg-no-repeat hero-zoom"
          style="z-index:10; background-image:url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85')"></div>
@@ -113,39 +78,39 @@
     <canvas id="spotlight-canvas" class="absolute inset-0 pointer-events-none" style="display:none"></canvas>
 
     <div class="absolute top-[14%] left-0 right-0 flex flex-col items-center text-center px-5 pointer-events-none" style="z-index:50">
-        <h1 class="text-white leading-[0.95]">
-            <span class="block font-playfair italic font-normal text-5xl sm:text-7xl md:text-8xl hero-anim hero-reveal" style="letterSpacing:'-0.05em'; animationDelay:'0.25s'">Layers hold</span>
-            <span class="block font-normal text-5xl sm:text-7xl md:text-8xl -mt-1 hero-anim hero-reveal" style="letterSpacing:'-0.08em'; animationDelay:'0.42s'">tales of time</span>
+        <h1 class="text-white leading-[1.02]">
+            <span class="block font-playfair italic font-normal text-5xl sm:text-7xl md:text-8xl hero-anim hero-reveal" style="letterSpacing:'0.02em'; animationDelay:'0.25s'">岩层之下</span>
+            <span class="block font-normal text-5xl sm:text-7xl md:text-8xl -mt-1 hero-anim hero-reveal" style="letterSpacing:'0.08em'; animationDelay:'0.42s'">皆是时间</span>
         </h1>
     </div>
 
-    <div class="hidden sm:block absolute bottom-14 left-10 md:left-14 max-w-[260px] hero-anim hero-fade" style="z-index:50; animationDelay:'0.7s'">
-        <p class="text-sm text-white/80 leading-relaxed">Every layer of sediment records a chapter of our planet, from ancient seabeds to drifting ash, layered across millions of years beneath us.</p>
+    <div class="hidden sm:block absolute bottom-14 left-10 md:left-14 max-w-[280px] hero-anim hero-fade" style="z-index:50; animationDelay:'0.7s'">
+        <p class="text-sm text-white/80 leading-relaxed">每一层沉积物，都记录着这颗星球的一章：从远古海床，到飘落的火山灰，数百万年在我们脚下层层叠起。</p>
     </div>
 
-    <div class="absolute bottom-10 sm:bottom-24 left-5 right-5 sm:left-auto sm:right-10 md:right-14 max-w-full sm:max-w-[260px] flex flex-col items-start gap-4 sm:gap-5 hero-anim hero-fade" style="z-index:50; animationDelay:'0.85s'">
-        <p class="text-xs sm:text-sm text-white/80 leading-relaxed">Our interactive maps let you peel back the crust to trace how stones, fossils, and deep time combine to shape the ground beneath your feet.</p>
-        <a href="#cta" class="bg-[#e8702a] hover:bg-[#d2611f] text-white text-sm font-medium px-7 py-3 rounded-full transition-all hover:scale-[1.03] active:scale-95 hover:shadow-lg hover:shadow-[#e8702a]/30">Start Digging</a>
+    <div class="absolute bottom-10 sm:bottom-24 left-5 right-5 sm:left-auto sm:right-10 md:right-14 max-w-full sm:max-w-[280px] flex flex-col items-start gap-4 sm:gap-5 hero-anim hero-fade" style="z-index:50; animationDelay:'0.85s'">
+        <p class="text-xs sm:text-sm text-white/80 leading-relaxed">我们的交互地图，能一层层揭开地壳：看石头、化石与深时，如何共同塑造你脚下的土地。</p>
+        <a href="#cta" class="bg-[#e8702a] hover:bg-[#d2611f] text-white text-sm font-medium px-7 py-3 rounded-full transition-all hover:scale-[1.03] active:scale-95 hover:shadow-lg hover:shadow-[#e8702a]/30">开始挖掘</a>
     </div>
 </section>
 
-<!-- ======================= 信任条 + 统计 (prompt 2) ======================= -->
+<!-- ======================= 信任条 ======================= -->
 <section class="bg-black pt-24 pb-10 px-6">
     <div class="max-w-5xl mx-auto flex flex-col items-center gap-8">
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <div class="liquid-glass p-5 w-[220px] rounded-[1.25rem] reveal">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/70"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                <p class="text-4xl font-playfair italic tracking-[-1px] leading-none mt-4">4.5B</p>
-                <p class="text-sm text-white/50 mt-2">Years of Strata on Record</p>
+                <p class="text-4xl font-playfair italic tracking-[-1px] leading-none mt-4">45亿</p>
+                <p class="text-sm text-white/50 mt-2">年的地层记录</p>
             </div>
             <div class="liquid-glass p-5 w-[220px] rounded-[1.25rem] reveal">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-white/70"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18Z"/></svg>
                 <p class="text-4xl font-playfair italic tracking-[-1px] leading-none mt-4">120+</p>
-                <p class="text-sm text-white/50 mt-2">Formations Mapped Worldwide</p>
+                <p class="text-sm text-white/50 mt-2">处全球地貌测绘</p>
             </div>
         </div>
         <div class="flex flex-col items-center gap-4">
-            <div class="liquid-glass rounded-full px-6 py-2 text-sm text-white/60">Trusted by geologists, collectors, and deep-time dreamers</div>
+            <div class="liquid-glass rounded-full px-6 py-2 text-sm text-white/60">地质学家、收藏家与深时梦想家的信赖之选</div>
             <div class="flex flex-wrap justify-center gap-8 md:gap-14">
                 <span class="font-playfair italic text-2xl md:text-3xl tracking-tight text-white/70">Strata</span>
                 <span class="font-playfair italic text-2xl md:text-3xl tracking-tight text-white/70">Basalt</span>
@@ -157,14 +122,14 @@
     </div>
 </section>
 
-<!-- ======================= CAPABILITIES (prompt 2) ======================= -->
+<!-- ======================= 能力 (capabilities) ======================= -->
 <section id="capabilities" class="relative min-h-screen overflow-hidden bg-black py-28 md:py-36 px-6">
     <video class="fade-video absolute inset-0 w-full h-full object-cover z-0" autoplay muted loop playsinline preload="auto"
            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260622_093722_ccfc7ebf-182f-419f-8a62-2dc02db7dd9d.mp4"></video>
     <div class="relative z-10 max-w-6xl mx-auto flex flex-col min-h-[70vh]">
         <div class="mb-10 reveal">
-            <p class="text-sm text-white/80 mb-6 font-light">// Capabilities</p>
-            <h2 class="font-playfair italic text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-[-2px]">Fieldcraft,<br>end to end</h2>
+            <p class="text-sm text-white/80 mb-6 font-light">// 能力</p>
+            <h2 class="font-playfair italic text-5xl md:text-6xl lg:text-7xl leading-[0.95] tracking-[-1px]">从野外到成图，<br>一步到位</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
             <div class="liquid-glass rounded-[1.25rem] p-6 min-h-[340px] flex flex-col reveal">
@@ -173,15 +138,15 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18v14H3zM5 7v10h14V7z"/></svg>
                     </div>
                     <div class="flex flex-wrap gap-1.5 justify-end">
-                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">Field Maps</span>
-                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">Strata Logs</span>
-                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">Fossils</span>
-                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">Sections</span>
+                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">野外地图</span>
+                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">地层记录</span>
+                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">化石标本</span>
+                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">剖面</span>
                     </div>
                 </div>
                 <div class="flex-1"></div>
-                <h3 class="font-playfair italic text-3xl md:text-4xl tracking-[-1px] leading-none mb-3">Fieldcraft</h3>
-                <p class="text-sm text-white/80 font-light leading-snug max-w-[32ch]">We sketch the ground as it is: outcrops, contacts, and bedding planes turned into maps that scale from a single cliff to a whole basin.</p>
+                <h3 class="font-playfair italic text-3xl md:text-4xl tracking-[-1px] leading-none mb-3">野外测绘</h3>
+                <p class="text-sm text-white/80 font-light leading-snug max-w-[32ch]">我们把地面画成它本来的样子：露头、接触面与层理，从一座悬崖到一个盆地，都能随意缩放。</p>
             </div>
             <div class="liquid-glass rounded-[1.25rem] p-6 min-h-[340px] flex flex-col reveal">
                 <div class="flex items-start justify-between gap-3">
@@ -189,15 +154,15 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16v4H4zm0 6h10v4H4zm0 6h16v4H4z"/></svg>
                     </div>
                     <div class="flex flex-wrap gap-1.5 justify-end">
-                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">Geochron</span>
-                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">Isotopes</span>
-                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">Models</span>
-                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">Viz</span>
+                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">年代学</span>
+                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">同位素</span>
+                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">建模</span>
+                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">可视化</span>
                     </div>
                 </div>
                 <div class="flex-1"></div>
-                <h3 class="font-playfair italic text-3xl md:text-4xl tracking-[-1px] leading-none mb-3">Analysis</h3>
-                <p class="text-sm text-white/80 font-light leading-snug max-w-[32ch]">Dating, chemistry, and geometry turned into timelines and cross-sections, so a million years fits on a single readable page.</p>
+                <h3 class="font-playfair italic text-3xl md:text-4xl tracking-[-1px] leading-none mb-3">室内分析</h3>
+                <p class="text-sm text-white/80 font-light leading-snug max-w-[32ch]">测年、化学与几何，被整理成时间轴和剖面图，让一百万年也能装进一页纸上。</p>
             </div>
             <div class="liquid-glass rounded-[1.25rem] p-6 min-h-[340px] flex flex-col reveal">
                 <div class="flex items-start justify-between gap-3">
@@ -205,83 +170,82 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-4 12.7V17H8v2h2v3h4v-3h2v-2h0A7 7 0 0 0 12 2Z"/></svg>
                     </div>
                     <div class="flex flex-wrap gap-1.5 justify-end">
-                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">Expeditions</span>
-                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">Cores</span>
-                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">Sampling</span>
-                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">Discovery</span>
+                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">远征</span>
+                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">岩芯</span>
+                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">采样</span>
+                        <span class="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 whitespace-nowrap">发现</span>
                     </div>
                 </div>
                 <div class="flex-1"></div>
-                <h3 class="font-playfair italic text-3xl md:text-4xl tracking-[-1px] leading-none mb-3">Expedition</h3>
-                <p class="text-sm text-white/80 font-light leading-snug max-w-[32ch]">Every answer starts with a hammer and a question. We plan routes, pull cores, and bring back rocks worth arguing about.</p>
+                <h3 class="font-playfair italic text-3xl md:text-4xl tracking-[-1px] leading-none mb-3">远征勘探</h3>
+                <p class="text-sm text-white/80 font-light leading-snug max-w-[32ch]">每个答案都始于一把地质锤和一个问题。我们规划路线、取出岩芯，带回值得争论的石头。</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ======================= FIELD LAB 仪表盘 (prompt 1) ======================= -->
-<section id="fieldlab" class="bg-black py-28 px-6 overflow-hidden">
-    <div class="max-w-6xl mx-auto">
-        <div class="max-w-[480px] mb-12 reveal">
-            <p class="text-sm text-white/60 mb-4 font-light">// Field Lab</p>
-            <h2 class="font-playfair italic text-4xl md:text-5xl tracking-[-1px] leading-[1.05]">Learn to read the rocks with AI.</h2>
-            <p class="mt-5 text-white/60 text-base leading-[1.6]">The same skills field teams spend years acquiring, compressed into a guided session. Ask questions, get answers, go outside.</p>
+<!-- ======================= 野外实验室 (草地背景) ======================= -->
+<section id="fieldlab" class="relative bg-black pt-28 pb-[300px] sm:pb-[360px] px-6 overflow-hidden">
+    <div class="max-w-6xl mx-auto relative z-10">
+        <div class="max-w-[520px] mb-12 reveal">
+            <p class="text-sm text-white/60 mb-4 font-light">// 野外实验室</p>
+            <h2 class="font-playfair italic text-4xl md:text-5xl tracking-[-1px] leading-[1.1]">跟着 AI 读懂石头。</h2>
+            <p class="mt-5 text-white/60 text-base leading-[1.7]">把野外团队多年练就的本领，压缩成一场有引导的旅程：提问，得到答案，然后走出去，亲自看看。</p>
         </div>
 
-        <div class="liquid-glass w-full max-w-[1100px] aspect-[3/4] sm:aspect-[16/10] rounded-2xl mx-auto overflow-hidden p-2 sm:p-3 reveal">
+        <div class="liquid-glass w-full max-w-[1100px] aspect-[3/4] sm:aspect-[16/10] rounded-2xl mx-auto overflow-hidden p-2 sm:p-3">
             <div class="grid h-full grid-cols-1 sm:grid-cols-[minmax(220px,320px)_1fr] gap-2 sm:gap-3">
-                <!-- 左侧聊天 -->
+                <!-- 左侧静态对话 -->
                 <div class="min-h-0 hidden sm:flex flex-col rounded-2xl" style="background:rgba(8,8,10,0.6); backdrop-filter:blur(24px); border:1px solid rgba(255,255,255,0.1)">
                     <div class="flex items-center gap-3 px-4 py-3 border-b border-white/10">
                         <div class="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center text-white/80">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-4 12.7V17H8v2h2v3h4v-3h2v-2h0A7 7 0 0 0 12 2Z"/></svg>
                         </div>
                         <div class="leading-tight">
-                            <p class="text-sm font-medium text-white">Deep Time Field School</p>
-                            <p class="text-[11px] text-white/40">Learn how to read the rocks with AI</p>
+                            <p class="text-sm font-medium text-white">深时野外学堂</p>
+                            <p class="text-[11px] text-white/40">跟着 AI 读地层、认化石</p>
                         </div>
                     </div>
-                    <div class="flex-1 overflow-y-auto scrollbar-hide space-y-4 px-4 py-5" id="chat-messages">
-                        <div class="max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed bg-white/5 text-white/70 border border-white/5">Welcome to the Deep Time Field School! I’ll guide you through reading strata, identifying fossils, and mapping outcrops. What would you like to learn first?</div>
-                        <div class="max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed bg-white/15 text-white/90 ml-auto">How do I tell a marine layer from a river deposit?</div>
-                        <div class="max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed bg-white/5 text-white/70 border border-white/5">Look for the clues: ripple marks and cross-bedding hint at moving water, while burrows and shell beds whisper of the sea. Want to try identifying one together?</div>
-                    </div>
-                    <div class="liquid-glass rounded-2xl m-3 flex items-end gap-2 p-2">
-                        <textarea id="chat-input" rows="1" placeholder="Ask about the field... " class="flex-1 bg-transparent text-sm text-white placeholder-white/40 outline-none resize-none px-2 py-2"></textarea>
-                        <button id="chat-send" class="bg-white text-black rounded-xl p-2" aria-label="Send">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-                        </button>
+                    <div class="flex-1 overflow-y-auto space-y-4 px-4 py-5">
+                        <div class="max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed bg-white/5 text-white/70 border border-white/5">欢迎来到深时野外学堂！我会带你读地层、认化石、画剖面。想先从哪儿开始？</div>
+                        <div class="max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed bg-white/15 text-white/90 ml-auto">怎么分辨海相层和河流沉积？</div>
+                        <div class="max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed bg-white/5 text-white/70 border border-white/5">看线索：波痕与交错层理，暗示流动的水；而潜穴和贝壳层，则低语着海洋。要一起试试辨认一块吗？</div>
                     </div>
                 </div>
-                <!-- 右侧视频预览 -->
+                <!-- 右侧视频 -->
                 <div class="min-h-0 relative w-full h-full overflow-hidden rounded-2xl" style="background-color:hsl(201 100% 13%)">
                     <video class="fade-video absolute inset-0 w-full h-full object-cover z-0" autoplay muted loop playsinline preload="auto"
                            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4"></video>
                     <div class="absolute inset-0 z-10 flex flex-col justify-end p-4 sm:p-6 bg-gradient-to-t from-black/50 to-transparent pointer-events-none">
-                        <p class="font-playfair italic text-lg sm:text-xl text-white tracking-tight">Field session 01</p>
-                        <p class="text-white/60 text-xs sm:text-sm mt-1">Mapping an outcrop, one layer at a time.</p>
+                        <p class="font-playfair italic text-lg sm:text-xl text-white tracking-tight">野外第一课</p>
+                        <p class="text-white/60 text-xs sm:text-sm mt-1">一处露头，一层一层地读。</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- 草地前景（z-30 盖在仪表盘之下部） -->
+    <div id="grass" class="pointer-events-none select-none absolute left-0 right-0 bottom-0 w-full z-30" aria-hidden="true">
+        <svg class="w-full h-auto" viewBox="0 0 1440 200" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M0,200 L0,200 L8,81 L13,200 L21,159 L29,200 L37,131 L44,200 L52,145 L57,200 L65,76 L77,200 L85,151 L95,200 L103,158 L107,200 L115,151 L122,200 L130,133 L142,200 L150,85 L154,200 L162,91 L169,200 L177,71 L189,200 L197,109 L204,200 L212,105 L220,200 L228,59 L232,200 L240,65 L246,200 L254,73 L264,200 L272,119 L280,200 L288,143 L295,200 L303,65 L312,200 L320,149 L325,200 L333,114 L338,200 L346,117 L355,200 L363,85 L371,200 L379,59 L383,200 L391,69 L402,200 L410,94 L415,200 L423,114 L428,200 L436,92 L444,200 L452,56 L461,200 L469,89 L476,200 L484,72 L489,200 L497,157 L504,200 L512,64 L520,200 L528,152 L535,200 L543,52 L548,200 L556,114 L564,200 L572,104 L581,200 L589,142 L598,200 L606,117 L613,200 L621,77 L629,200 L637,73 L642,200 L650,85 L656,200 L664,94 L671,200 L679,142 L690,200 L698,114 L706,200 L714,81 L726,200 L734,134 L743,200 L751,55 L755,200 L763,133 L767,200 L775,59 L784,200 L792,111 L800,200 L808,154 L815,200 L823,90 L832,200 L840,135 L851,200 L859,112 L870,200 L878,144 L886,200 L894,145 L901,200 L909,67 L921,200 L929,94 L937,200 L945,67 L955,200 L963,88 L973,200 L981,116 L988,200 L996,145 L1008,200 L1016,99 L1021,200 L1029,66 L1033,200 L1041,52 L1046,200 L1054,143 L1060,200 L1068,61 L1078,200 L1086,86 L1091,200 L1099,113 L1109,200 L1117,86 L1128,200 L1136,95 L1144,200 L1152,92 L1156,200 L1164,75 L1169,200 L1177,75 L1189,200 L1197,66 L1205,200 L1213,64 L1222,200 L1230,148 L1238,200 L1246,107 L1252,200 L1260,104 L1264,200 L1272,70 L1280,200 L1288,98 L1294,200 L1302,98 L1307,200 L1315,51 L1323,200 L1331,55 L1343,200 L1351,85 L1358,200 L1366,143 L1375,200 L1383,65 L1389,200 L1397,93 L1409,200 L1417,162 L1426,200 L1434,100 L1438,200 L1446,148 L1454,200 L1440,200 Z" fill="#08090b"/></svg>
+    </div>
 </section>
 
-<!-- ======================= ABOUT + PHILOSOPHY (prompt 3) ======================= -->
+<!-- ======================= 关于我们 ======================= -->
 <section id="about" class="bg-black pt-28 md:pt-40 pb-10 px-6 overflow-hidden">
     <div class="relative max-w-6xl mx-auto" style="background:radial-gradient(ellipse at top, rgba(255,255,255,0.03) 0%, transparent 70%)">
-        <p class="text-white/40 text-sm tracking-widest uppercase reveal">About Us</p>
-        <h2 class="mt-6 text-4xl md:text-6xl lg:text-7xl text-white leading-[1.1] tracking-tight reveal">
-            <span class="font-playfair italic text-white/60">Pioneering</span> ideas for<br class="hidden md:block">
-            minds that <span class="font-playfair italic text-white/60">dig deeper</span>.
+        <p class="text-white/40 text-sm tracking-widest uppercase reveal">关于我们</p>
+        <h2 class="mt-6 text-4xl md:text-6xl lg:text-7xl text-white leading-[1.15] tracking-tight reveal">
+            <span class="font-playfair italic text-white/60">先锋般的想法</span>，为<br class="hidden md:block">
+            愿意<span class="font-playfair italic text-white/60">深挖</span>的头脑而生。
         </h2>
     </div>
 </section>
 
+<!-- ======================= 哲学：层岩 × 时间 ======================= -->
 <section id="philosophy" class="bg-black py-24 md:py-32 px-6 overflow-hidden">
     <div class="max-w-6xl mx-auto">
         <h2 class="text-5xl md:text-7xl lg:text-8xl text-white tracking-tight mb-16 md:mb-24 reveal">
-            Layers <span class="font-playfair italic text-white/40">×</span> Time
+            层岩 <span class="font-playfair italic text-white/40">×</span> 时间
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             <div class="rounded-3xl overflow-hidden aspect-[4/3] reveal">
@@ -290,20 +254,20 @@
             </div>
             <div class="flex flex-col reveal">
                 <div class="pb-8">
-                    <p class="text-white/40 text-xs tracking-widest uppercase mb-4">Choose your ground</p>
-                    <p class="text-white/70 text-base md:text-lg leading-relaxed">Every meaningful breakthrough begins where patient observation meets bold curiosity. We stand at that outcrop, turning raw stone into readable stories that move people and reshape how the ground is understood.</p>
+                    <p class="text-white/40 text-xs tracking-widest uppercase mb-4">选择你的土地</p>
+                    <p class="text-white/70 text-base md:text-lg leading-relaxed">每一个真正的突破，都始于耐心观察与大胆好奇的交汇。我们站在那处露头，把粗糙的石头变成可读的故事，让人重新理解脚下的大地。</p>
                 </div>
                 <div class="w-full h-px bg-white/10"></div>
                 <div class="pt-8">
-                    <p class="text-white/40 text-xs tracking-widest uppercase mb-4">Shape the deep future</p>
-                    <p class="text-white/70 text-base md:text-lg leading-relaxed">The best work emerges when curiosity meets conviction. Our process uncovers hidden layers and translates them into experiences that resonate long after the first glance at the rock.</p>
+                    <p class="text-white/40 text-xs tracking-widest uppercase mb-4">塑造深远的未来</p>
+                    <p class="text-white/70 text-base md:text-lg leading-relaxed">最好的工作，出现在好奇心与信念相遇的时候。我们的流程揭开隐藏的层次，把它们变成初次相见之后仍能长久回响的体验。</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ======================= FEATURED VIDEO (prompt 3) ======================= -->
+<!-- ======================= 精选视频 ======================= -->
 <section id="featured" class="bg-black pt-6 md:pt-10 pb-20 md:pb-32 px-6 overflow-hidden">
     <div class="max-w-6xl mx-auto rounded-3xl overflow-hidden aspect-video relative reveal">
         <video class="fade-video w-full h-full object-cover" autoplay muted loop playsinline preload="auto"
@@ -311,20 +275,20 @@
         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
         <div class="absolute bottom-0 left-0 right-0 p-6 md:p-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div class="liquid-glass rounded-2xl p-6 md:p-8 max-w-md">
-                <p class="text-white/50 text-xs tracking-widest uppercase mb-3">Our Approach</p>
-                <p class="text-white text-sm md:text-base leading-relaxed">We believe in the power of curiosity-driven exploration. Every project starts with a question, and every answer opens a new door to what lies beneath.</p>
+                <p class="text-white/50 text-xs tracking-widest uppercase mb-3">我们的方法</p>
+                <p class="text-white text-sm md:text-base leading-relaxed">我们相信好奇心驱动的探索。每个项目都始于一个问题，而每一个答案，都会打开一扇通往地下的新门。</p>
             </div>
-            <a href="#cta" class="liquid-glass rounded-full px-8 py-3 text-white text-sm font-medium hover:bg-white/5 transition-all hover:scale-[1.03] active:scale-95 shrink-0">Explore more</a>
+            <a href="#cta" class="liquid-glass rounded-full px-8 py-3 text-white text-sm font-medium hover:bg-white/5 transition-all hover:scale-[1.03] active:scale-95 shrink-0">探索更多</a>
         </div>
     </div>
 </section>
 
-<!-- ======================= SERVICES (prompt 3) ======================= -->
+<!-- ======================= 服务 ======================= -->
 <section id="services" class="bg-black py-24 md:py-32 px-6 overflow-hidden">
     <div class="max-w-6xl mx-auto" style="background:radial-gradient(ellipse at center, rgba(255,255,255,0.02) 0%, transparent 60%)">
         <div class="flex items-end justify-between mb-12 reveal">
-            <h2 class="text-3xl md:text-5xl text-white tracking-tight">What we do</h2>
-            <p class="text-white/40 text-sm hidden md:block">Field services</p>
+            <h2 class="text-3xl md:text-5xl text-white tracking-tight">我们在做什么</h2>
+            <p class="text-white/40 text-sm hidden md:block">野外服务</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             <div class="liquid-glass rounded-3xl overflow-hidden group reveal">
@@ -335,13 +299,13 @@
                 </div>
                 <div class="p-6 md:p-8">
                     <div class="flex items-center justify-between mb-4">
-                        <span class="uppercase tracking-widest text-white/40 text-xs">Survey</span>
+                        <span class="uppercase tracking-widest text-white/40 text-xs">勘测</span>
                         <span class="liquid-glass rounded-full p-2 flex items-center justify-center">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
                         </span>
                     </div>
-                    <h3 class="text-white text-xl md:text-2xl mb-3 tracking-tight">Recon &amp; Insight</h3>
-                    <p class="text-white/50 text-sm leading-relaxed">We comb the terrain, the data, and the sediment to surface the findings that drive meaningful, lasting understanding.</p>
+                    <h3 class="text-white text-xl md:text-2xl mb-3 tracking-tight">侦察与洞察</h3>
+                    <p class="text-white/50 text-sm leading-relaxed">我们梳理地形、数据与沉积物，把那些能带来持久理解的发现，摆到台面上。</p>
                 </div>
             </div>
             <div class="liquid-glass rounded-3xl overflow-hidden group reveal">
@@ -352,57 +316,47 @@
                 </div>
                 <div class="p-6 md:p-8">
                     <div class="flex items-center justify-between mb-4">
-                        <span class="uppercase tracking-widest text-white/40 text-xs">Craft</span>
+                        <span class="uppercase tracking-widest text-white/40 text-xs">工艺</span>
                         <span class="liquid-glass rounded-full p-2 flex items-center justify-center">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
                         </span>
                     </div>
-                    <h3 class="text-white text-xl md:text-2xl mb-3 tracking-tight">Specimen &amp; Story</h3>
-                    <p class="text-white/50 text-sm leading-relaxed">From outcrop to exhibit, we refine every detail so the deep time feels effortless and looks extraordinary.</p>
+                    <h3 class="text-white text-xl md:text-2xl mb-3 tracking-tight">标本与故事</h3>
+                    <p class="text-white/50 text-sm leading-relaxed">从露头到展厅，我们打磨每一个细节，让深时显得毫不费力，又格外非凡。</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ======================= FINAL CTA (prompt 1 + 3) ======================= -->
+<!-- ======================= 结尾 CTA（故事收束，无表单） ======================= -->
 <section id="cta" class="relative w-full" style="background:linear-gradient(to bottom, transparent 0%, #14191E 100%)">
-    <div class="relative mx-auto max-w-[1080px] px-4 sm:px-6 pt-24 sm:pt-32 md:pt-40 pb-[320px] sm:pb-[380px] md:pb-[340px]">
-        <div class="max-w-[520px] reveal">
-            <p class="text-sm text-white/50 mb-4 font-light">// Join the field school</p>
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-normal tracking-[-0.02em] leading-[1.05]">
-                Start digging into <span class="font-playfair italic text-[#e8702a]">deep time</span>.
+    <div class="relative mx-auto max-w-[1080px] px-4 sm:px-6 py-28 sm:py-36 md:py-44 text-center">
+        <div class="max-w-[620px] mx-auto reveal">
+            <p class="text-sm text-white/50 mb-5 font-light">// 出发之前</p>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-normal tracking-[-0.02em] leading-[1.15]">
+                大地已经等了<span class="font-playfair italic text-[#e8702a]">四十五亿年</span>，<br class="hidden sm:block">再等一分钟也无妨。
             </h2>
-            <p class="mt-6 text-white/60 text-base sm:text-lg leading-[1.6] max-w-[440px]">Get field notes, specimen drops, and expedition invites. The ground has been waiting 4.5 billion years; a minute more won’t hurt.</p>
-            <form id="signup-form" class="mt-8 max-w-xl w-full liquid-glass rounded-full pl-6 pr-2 py-2 flex items-center gap-3">
-                <input type="email" required placeholder="Enter your email" aria-label="Email"
-                       class="flex-1 bg-transparent text-sm text-white placeholder-white/40 outline-none">
-                <button type="submit" class="bg-[#e8702a] hover:bg-[#d2611f] text-white rounded-full p-3 transition-colors" aria-label="Subscribe">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                </button>
-            </form>
-            <p class="mt-3 text-xs text-white/40" id="signup-note">No spam. Just rocks, and occasionally a fossil.</p>
-            <div class="mt-8">
-                <a href="#hero" class="liquid-glass rounded-full px-8 py-3 text-white text-sm font-medium hover:bg-white/5 transition-colors">Back to the surface</a>
+            <p class="mt-6 text-white/60 text-base sm:text-lg leading-[1.7] max-w-[520px] mx-auto">带上你的好奇心。下一场远征，从脚下这片土地开始，你只需要带上锤子，和问题。</p>
+            <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#hero" class="liquid-glass rounded-full px-8 py-3 text-white text-sm font-medium hover:bg-white/5 transition-colors">回到地表</a>
+                <a href="../index.html" class="liquid-glass rounded-full px-8 py-3 text-white text-sm font-medium hover:bg-white/5 transition-colors">返回主页</a>
             </div>
         </div>
     </div>
-    <div id="grass" class="pointer-events-none select-none absolute left-0 right-0 bottom-0 w-full z-30" aria-hidden="true">
-        <svg class="w-full h-auto" viewBox="0 0 1440 200" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><path d="M0,200 L0,200 L8,81 L13,200 L21,159 L29,200 L37,131 L44,200 L52,145 L57,200 L65,76 L77,200 L85,151 L95,200 L103,158 L107,200 L115,151 L122,200 L130,133 L142,200 L150,85 L154,200 L162,91 L169,200 L177,71 L189,200 L197,109 L204,200 L212,105 L220,200 L228,59 L232,200 L240,65 L246,200 L254,73 L264,200 L272,119 L280,200 L288,143 L295,200 L303,65 L312,200 L320,149 L325,200 L333,114 L338,200 L346,117 L355,200 L363,85 L371,200 L379,59 L383,200 L391,69 L402,200 L410,94 L415,200 L423,114 L428,200 L436,92 L444,200 L452,56 L461,200 L469,89 L476,200 L484,72 L489,200 L497,157 L504,200 L512,64 L520,200 L528,152 L535,200 L543,52 L548,200 L556,114 L564,200 L572,104 L581,200 L589,142 L598,200 L606,117 L613,200 L621,77 L629,200 L637,73 L642,200 L650,85 L656,200 L664,94 L671,200 L679,142 L690,200 L698,114 L706,200 L714,81 L726,200 L734,134 L743,200 L751,55 L755,200 L763,133 L767,200 L775,59 L784,200 L792,111 L800,200 L808,154 L815,200 L823,90 L832,200 L840,135 L851,200 L859,112 L870,200 L878,144 L886,200 L894,145 L901,200 L909,67 L921,200 L929,94 L937,200 L945,67 L955,200 L963,88 L973,200 L981,116 L988,200 L996,145 L1008,200 L1016,99 L1021,200 L1029,66 L1033,200 L1041,52 L1046,200 L1054,143 L1060,200 L1068,61 L1078,200 L1086,86 L1091,200 L1099,113 L1109,200 L1117,86 L1128,200 L1136,95 L1144,200 L1152,92 L1156,200 L1164,75 L1169,200 L1177,75 L1189,200 L1197,66 L1205,200 L1213,64 L1222,200 L1230,148 L1238,200 L1246,107 L1252,200 L1260,104 L1264,200 L1272,70 L1280,200 L1288,98 L1294,200 L1302,98 L1307,200 L1315,51 L1323,200 L1331,55 L1343,200 L1351,85 L1358,200 L1366,143 L1375,200 L1383,65 L1389,200 L1397,93 L1409,200 L1417,162 L1426,200 L1434,100 L1438,200 L1446,148 L1454,200 L1440,200 Z" fill="#08090b"/></svg>
-    </div>
 </section>
 
-<!-- ======================= FOOTER ======================= -->
+<!-- ======================= 页脚 ======================= -->
 <footer class="relative z-40 bg-black border-t border-white/10 py-10 px-6">
     <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/40">
         <span class="font-playfair italic text-white/70 text-lg">Lithos</span>
-        <span>Layers hold tales of time · © 2026</span>
+        <span>岩层之下，皆是时间 · © 2026</span>
         <a href="../index.html" class="hover:text-white transition-colors">返回主页</a>
     </div>
 </footer>
 
 <script>
-  // ===== HERO 聚光 (原有) =====
+  // ===== HERO 聚光 =====
   var SPOTLIGHT_R = 260;
   var mouse = { x: -999, y: -999 };
   var smooth = { x: -999, y: -999 };
@@ -447,66 +401,21 @@
     v.addEventListener('canplay', function () { v.style.opacity = '1'; });
   });
 
-  // ===== 草地视差 (CTA) =====
+  // ===== 草地视差 =====
   var grass = document.getElementById('grass');
-  var grassParallax = false;
+  var grassBusy = false;
   if (grass) {
     window.addEventListener('scroll', function () {
-      if (!grassParallax) {
-        grassParallax = true;
+      if (!grassBusy) {
+        grassBusy = true;
         requestAnimationFrame(function () {
           var r = grass.getBoundingClientRect();
           var p = Math.max(-0.5, Math.min(0.2, (window.innerHeight - r.top) / window.innerHeight - 0.3));
-          grass.style.transform = 'translateY(' + (p * -80) + 'px)';
-          grassParallax = false;
+          grass.style.transform = 'translateY(' + (p * -60) + 'px)';
+          grassBusy = false;
         });
       }
     }, { passive: true });
-  }
-
-  // ===== 聊天模拟 =====
-  var chatInput = document.getElementById('chat-input');
-  var chatSend = document.getElementById('chat-send');
-  var chatBox = document.getElementById('chat-messages');
-  var replies = [
-    'Good eye. Now look at the bedding: is it graded, cross, or flat?',
-    'That layer is probably a transgressive lag. Check the base for pebbles.',
-    'Fossils love a quiet sea. Count the burrows and the story writes itself.',
-    'Let’s log it and move up-section. Ten centimeters at a time.'
-  ];
-  var replyIdx = 0;
-  function pushMsg(text, who) {
-    var d = document.createElement('div');
-    d.className = 'max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ' +
-      (who === 'user' ? 'bg-white/15 text-white/90 ml-auto' : 'bg-white/5 text-white/70 border border-white/5');
-    d.textContent = text;
-    chatBox.appendChild(d);
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
-  function sendChat() {
-    var v = chatInput.value.trim();
-    if (!v) return;
-    pushMsg(v, 'user');
-    chatInput.value = '';
-    setTimeout(function () { pushMsg(replies[replyIdx % replies.length], 'ai'); replyIdx++; }, 600);
-  }
-  if (chatSend && chatInput) {
-    chatSend.addEventListener('click', sendChat);
-    chatInput.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
-    });
-  }
-
-  // ===== 邮件订阅 =====
-  var form = document.getElementById('signup-form');
-  var note = document.getElementById('signup-note');
-  if (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      note.textContent = '收到！第一批现场笔记已经在路上了。';
-      note.style.color = 'rgba(232,112,42,0.9)';
-      form.reset();
-    });
   }
 </script>
 </body>
