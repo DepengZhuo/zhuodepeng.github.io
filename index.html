@@ -754,74 +754,22 @@
         <!-- ================================================================= -->
         <!-- 8. 页脚区域 (FOOTER)                                              -->
         <!-- ================================================================= -->
-        <footer class='py-14 bg-[#F0F0F0]'>
-            <div class='relative bg-white rounded-3xl max-w-5xl mx-auto px-4 py-10 flex flex-col md:flex-row justify-between items-center gap-8 shadow-sm'>
-
-                <!-- 胶带贴纸（左右上角） -->
-                <div class='hidden md:block absolute -top-4 -left-7 w-[84px] h-[30px] -rotate-3' aria-hidden='true'>
-                    <svg class='w-full h-full' viewBox='0 0 100 34' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                        <path d='M3 4 L97 1 L99 30 L5 33 Z' fill='#f8d877' fill-opacity='0.92'/>
-                        <path d='M3 4 L99 30' stroke='#d9b34a' stroke-opacity='0.5' stroke-width='1.2'/>
-                        <path d='M18 6 L19 29 M38 7.5 L39 30 M58 9 L59 31 M78 10.5 L79 31.5' stroke='#e9c75f' stroke-opacity='0.4' stroke-width='0.9'/>
-                    </svg>
-                </div>
-                <div class='hidden md:block absolute -top-4 -right-7 rotate-90 w-[84px] h-[30px]' aria-hidden='true'>
-                    <svg class='w-full h-full' viewBox='0 0 100 34' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                        <path d='M3 4 L97 1 L99 30 L5 33 Z' fill='#f8d877' fill-opacity='0.92'/>
-                        <path d='M3 4 L99 30' stroke='#d9b34a' stroke-opacity='0.5' stroke-width='1.2'/>
-                        <path d='M18 6 L19 29 M38 7.5 L39 30 M58 9 L59 31 M78 10.5 L79 31.5' stroke='#e9c75f' stroke-opacity='0.4' stroke-width='0.9'/>
-                    </svg>
-                </div>
-
-                <!-- 品牌区 -->
-                <div class='flex flex-col items-start gap-3 px-2 md:px-8 flex-1'>
-                    <a href='index.html' class='flex items-center gap-1 text-2xl font-extrabold text-gray-900 hover:text-primary transition-custom'>卓德鹏</a>
-                    <p class='text-gray-500 font-medium text-base w-full md:w-4/5'>数据、科技、创意的混合体。不只是咸鱼，也爱探索新鲜事物。</p>
-                    <div class='flex gap-3 mt-1'>
-                        <a aria-label='Twitter' onclick='showSecret(this)' href='javascript:void(0);' class='w-9 h-9 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-custom'><i class='fab fa-twitter text-gray-600'></i></a>
-                        <a aria-label='LinkedIn' onclick='showSecret(this)' href='javascript:void(0);' class='w-9 h-9 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-custom'><i class='fab fa-linkedin text-gray-600'></i></a>
-                        <a aria-label='GitHub' onclick='showSecret(this)' href='javascript:void(0);' class='w-9 h-9 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-custom'><i class='fab fa-github text-gray-600'></i></a>
-                        <a aria-label='微信' onclick='showSecret(this)' href='javascript:void(0);' class='w-9 h-9 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-custom'><i class='fab fa-weixin text-gray-600'></i></a>
-                    </div>
-                </div>
-
-                <!-- 链接列 -->
-                <div class='flex flex-col sm:flex-row gap-8 md:gap-14 items-start px-2 md:px-6'>
-                    <div class='flex flex-col gap-2.5'>
-                        <h4 class='uppercase text-sm text-gray-400 font-semibold tracking-wider'>快速链接</h4>
-                        <a class='text-gray-500 font-medium hover:text-gray-900 transition-custom' href='#welcome'>首页</a>
-                        <a class='text-gray-500 font-medium hover:text-gray-900 transition-custom' href='#about'>关于我</a>
-                        <a class='text-gray-500 font-medium hover:text-gray-900 transition-custom' href='#universe'>我的世界</a>
-                        <a class='text-gray-500 font-medium hover:text-gray-900 transition-custom' href='#thoughts'>灵感与思考</a>
-                        <a class='text-gray-500 font-medium hover:text-gray-900 transition-custom' href='#fun'>小互动</a>
-                    </div>
-                    <div class='flex flex-col gap-2.5'>
-                        <h4 class='uppercase text-sm text-gray-400 font-semibold tracking-wider'>灵感</h4>
-                        <a class='text-gray-500 font-medium hover:text-gray-900 transition-custom' href='articles/collected-light.html'>拾光集</a>
-                        <a class='text-gray-500 font-medium hover:text-gray-900 transition-custom' href='articles/drifting-notes.html'>浮光手记</a>
-                        <a class='text-gray-500 font-medium hover:text-gray-900 transition-custom' href='articles/self-sample.html'>自我样本</a>
-                        <a class='pointer-events-none text-gray-400 font-medium whitespace-nowrap'>更多 <span class='inline-flex ml-1 py-0.5 px-3 bg-gray-200 text-gray-500 text-xs rounded-xl -rotate-3'>soon</span></a>
-                    </div>
-                    <div class='flex flex-col gap-2.5'>
-                        <h4 class='uppercase text-sm text-gray-400 font-semibold tracking-wider'>联系我</h4>
-                        <a class='text-gray-500 font-medium hover:text-gray-900 transition-custom' href='mailto:zhuodepeng@gmail.com'>zhuodepeng@gmail.com</a>
-                        <a class='pointer-events-none text-gray-400 font-medium whitespace-nowrap'>朋友圈 <span class='inline-flex ml-1 py-0.5 px-3 bg-gray-200 text-gray-500 text-xs rounded-xl rotate-3'>soon</span></a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 底栏 -->
-            <div class='my-3 px-4 md:px-8 max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500'>
-                <div class='flex flex-col sm:flex-row gap-2 sm:gap-8 items-center'>
-                    <p class='whitespace-nowrap'>© 2026 卓德鹏. 保留所有权利.</p>
-                    <div class='flex flex-row gap-4'>
-                        <a class='hover:text-gray-900 transition-custom' href='#contact'>联系我</a>
-                        <a class='hover:text-gray-900 transition-custom' href='index.html'>返回顶部</a>
-                    </div>
-                </div>
-                <p class='text-gray-400'>灵感与思考 · 数据、科技、创意的混合体</p>
-            </div>
-        </footer>
+                <!-- ================================================================= -->
+        <!-- 8. 页脚区域：由独立文件注入，切换页脚只改 FOOTER_SRC 一行即可      -->
+        <!-- ================================================================= -->
+        <div id='footer-slot'></div>
+        <script>
+          // ===== 页脚切换开关 =====
+          // 想换页脚，把下面这一行改成 'footer-dark.html' 即可，其他不用动
+          var FOOTER_SRC = 'footer-taped.html';
+          fetch(FOOTER_SRC)
+            .then(function (r) { if (!r.ok) { throw new Error('HTTP ' + r.status); } return r.text(); })
+            .then(function (html) { document.getElementById('footer-slot').innerHTML = html; })
+            .catch(function () {
+              document.getElementById('footer-slot').innerHTML =
+                "<footer class='py-12 text-center text-gray-400 text-sm'>页脚加载失败，请检查 FOOTER_SRC 指向的文件是否存在</footer>";
+            });
+        </script>
 
     </div>
 
