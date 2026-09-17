@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>桥上的两个人</title>
+    
+    <!-- 引入外部字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 引入 Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 引入 Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: {
+                            50: '#f2f9f4',
+                            100: '#e1f2e6',
+                            200: '#c3e3cc',
+                            300: '#96cdab',
+                            400: '#63af82',
+                            500: '#409163',
+                            600: '#2e754d',
+                            700: '#265d3f',
+                            800: '#214a34',
+                            900: '#1c3d2c',
+                        },
+                        paper: {
+                            50: '#ffffff',
+                            100: '#fdf8f0',
+                            200: '#f7ebd5',
+                            300: '#efdbb5',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Georgia', 'Cambria', '"Noto Serif SC"', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义 CSS 样式与原生动画定义 -->
+    <style>
+        body {
+            background-color: #fdf8f0;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(150, 205, 171, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(99, 175, 130, 0.1) 0%, transparent 40%);
+            background-attachment: fixed;
+            font-family: Georgia, Cambria, "Noto Serif SC", serif;
+        }
+
+        .text-shadow-sm {
+            text-shadow: 1px 1px 3px rgba(33, 74, 52, 0.15);
+        }
+
+        .prose-custom p {
+            line-height: 2;
+            font-size: 1.125rem;
+            margin-bottom: 1.5rem;
+            color: #4b5563; 
+        }
+
+        .prose-custom blockquote {
+            border-left: 4px solid #2e754d;
+            background-color: rgba(150, 205, 171, 0.15);
+            font-style: italic;
+            border-radius: 0.375rem;
+            padding: 1.25rem 1.5rem;
+            margin: 2rem 0;
+            color: #265d3f;
+        }
+
+        .section-divider {
+            position: relative;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #96cdab, transparent);
+            margin: 4rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .section-divider::after {
+            content: "🍃";
+            position: absolute;
+            background: #fdf8f0;
+            padding: 0 1rem;
+            font-size: 1.25rem;
+            color: #409163;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #409163;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            z-index: 50;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background: #409163;
+            color: #ffffff;
+            transform: translateX(-5px);
+        }
+
+        .math-formula {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            text-align: center;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            font-family: Georgia, Cambria, serif;
+            color: #1c3d2c;
+            max-width: 90%;
+            border: 1px solid rgba(150, 205, 171, 0.2);
+            font-size: 1.25rem;
+            letter-spacing: 0.05em;
+        }
+
+        #scrollProgress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(to right, #63af82, #2e754d);
+            width: 0%;
+            z-index: 100;
+        }
+
+        /* 封面悬浮动画 */
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float {
+            animation: floatAnim 6s ease-in-out infinite;
+        }
+
+        /* 滚动渐入动画原生定义 */
+        @keyframes scrollFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes scrollSlide {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-section {
+            opacity: 0;
+            will-change: opacity, transform;
+        }
+
+        .animate-scroll-in {
+            animation: scrollFade 1s ease-out forwards, scrollSlide 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 1. 滚动进度条 -->
+    <div id="scrollProgress"></div>
+    
+    <!-- 2. 左上角返回按钮 -->
+    <a id="backHomeBtn" href="#" class="back-button" title="回到顶部">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <!-- 3. main主容器 -->
+    <main class="max-w-3xl mx-auto px-6 py-16 md:py-24">
+        
+        <!-- 头部信息区 -->
+        <header class="text-center mb-16 fade-section">
+            <img src="https://picsum.photos/1200/800?grayscale&blur=2" 
+                 alt="迷雾中的石桥" 
+                 class="w-full h-64 md:h-80 object-cover rounded-2xl shadow-md mb-10 animate-float opacity-90 hover:opacity-100 transition-opacity duration-500">
+            
+            <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold text-forest-800 text-shadow-sm leading-tight mb-6 tracking-wide">
+                《桥上的两个人》
+            </h1>
+            
+            <div class="w-16 h-1.5 bg-forest-500 mx-auto rounded-full mb-6"></div>
+            
+            <p class="text-gray-500 text-base md:text-lg tracking-wider">
+                命运有时也偷偷拿着一支笔，参与了那份判决
+            </p>
+        </header>
+
+        <!-- 故事正文内容 -->
+        <article class="prose-custom">
+            <div class="fade-section">
+                <p>山谷里有一座很高的石桥。桥只有一条路。所有进城的人，都必须从这里经过。</p>
+                <p>桥中央有一块石碑，上面写着：</p>
+            </div>
+
+            <blockquote class="fade-section">
+                <p>“过桥时，必须放慢马车。”</p>
+            </blockquote>
+
+            <div class="fade-section">
+                <p>城里的老人说，这条规矩已经有两百年了。因为两百年前，有一个车夫赶着马车过桥。那天，他喝了酒，马匹跑得很快。车夫没有减速。</p>
+                <p>就在桥中央，一块车轮突然松脱。整辆马车翻了过去。一个路人被撞死。从那以后，城里就立下了石碑。</p>
+            </div>
+
+            <section class="section-divider fade-section"></section>
+
+            <div class="fade-section">
+                <p>很多年后，有两个车夫。他们叫：阿尔文和布莱恩。</p>
+                <p>两个人都很能干。也都急着赶路。一天早晨，他们同时从城外出发。两个人的马车几乎一模一样。两个人都喝了一点酒。两个人都知道：过桥的时候应该减速。</p>
+                <p>可那天，他们都没有减速。</p>
+            </div>
+
+            <div class="fade-section">
+                <p>阿尔文先到了桥。他听见桥下有水声。远处的钟刚好敲了十二下。他挥了一下马鞭。马跑得更快了。</p>
+                <p>就在他冲过桥中央的时候——一阵大风突然刮来。桥边的老树晃了一下。一根断枝掉下来。马受惊。缰绳猛地一偏。马车撞向石栏。一块石头从车厢里掉了出去。</p>
+                <p>而桥下，恰好有一个人经过。那个人被砸中了。死了。</p>
+            </div>
+
+            <div class="fade-section">
+                <p>阿尔文后来被抓进了牢房。所有人都说：“他害死了一个人。”</p>
+                <p>他自己也没有辩解。他说：</p>
+            </div>
+
+            <blockquote class="fade-section">
+                <p>“是我的错。”</p>
+            </blockquote>
+
+            <section class="section-divider fade-section"></section>
+
+            <div class="fade-section">
+                <p>第二天，布莱恩也来了。他同样喝了酒。同样没有减速。甚至比阿尔文跑得还快。</p>
+                <p>可他刚驶到桥中央——一只野兔突然从路边窜出来。马看见兔子，猛地偏了一下方向。车轮擦着桥边掠过去。但没有撞上石栏。</p>
+                <p>马车安全地穿过了桥。布莱恩回头看了一眼。然后继续赶路。</p>
+            </div>
+
+            <div class="fade-section">
+                <p>那天晚上，他回到家。妻子问：“今天顺利吗？”布莱恩说：“还不错。”</p>
+                <p>他没有提桥上的事情。也没有觉得自己做错了什么。毕竟：没有人受伤。</p>
+            </div>
+
+            <div class="fade-section">
+                <p>几天以后，两个人的故事都传遍了城里。人们开始谈论他们。</p>
+                <p>有人说：“阿尔文就是个危险的人。”</p>
+                <p>有人说：“布莱恩虽然喝了酒，但总算没出事。”</p>
+                <p>甚至有人开始称赞布莱恩：“至少他没有伤害别人。”</p>
+            </div>
+
+            <section class="section-divider fade-section"></section>
+
+            <div class="fade-section">
+                <p>可城里的书记官觉得事情有点奇怪。于是他把两个人当天的行动记录全部找了出来。他一项一项地比对：</p>
+                <p>喝酒。一样。超速。一样。没有减速。一样。知道桥上有规定。一样。</p>
+                <p>唯一的区别是：阿尔文遇到了一阵风。而布莱恩遇到了一只兔子。</p>
+            </div>
+
+            <div class="fade-section">
+                <p>书记官把记录交给法官。法官看完以后，沉默了很久。最后，他问书记官：</p>
+                <p>“如果那天阿尔文没有遇到那阵风呢？”</p>
+                <p>书记官回答：“那个人就不会死。”</p>
+                <p>法官又问：“如果那天布莱恩遇到的是阿尔文的风，而不是兔子呢？”</p>
+                <p>书记官说：“那可能也会死人。”</p>
+            </div>
+
+            <div class="fade-section">
+                <p>法官点点头。然后问了第三个问题：</p>
+            </div>
+
+            <blockquote class="fade-section">
+                <p>“那么，他们两个到底差在哪里？”</p>
+            </blockquote>
+
+            <div class="fade-section">
+                <p>书记官想了一会儿。“结果不同。”</p>
+                <p>法官说：“我问的不是结果。”</p>
+                <p>书记官沉默了。</p>
+            </div>
+
+            <section class="section-divider fade-section"></section>
+
+            <div class="fade-section">
+                <p>第二天，法官把两个人都叫到大厅。他问阿尔文：</p>
+                <p>“你认为自己做错了吗？”</p>
+                <p>阿尔文说：“是。”</p>
+                <p>“为什么？”</p>
+                <p>“因为有人死了。”</p>
+            </div>
+
+            <div class="fade-section">
+                <p>法官又看向布莱恩。“你呢？”</p>
+                <p>布莱恩沉默了一下。“我……”他想了很久。最后说：“我不知道。”</p>
+                <p>大厅里没有人说话。法官转过身，看着窗外的桥。过了很久，他说：</p>
+            </div>
+
+            <blockquote class="fade-section">
+                <p>“如果你们两个在出发之前，把当天的行为全部写在纸上——而我不知道后来发生了什么——我会说你们做了同样危险的事情。”</p>
+                <p>“可是现在，我知道一个人死了，另一个人没有。于是我发现——我很难再用同样的方式看待你们。”</p>
+            </blockquote>
+
+            <div class="fade-section">
+                <p>那天晚上，法官没有判决。他独自走到了桥上。桥下的水很平静。</p>
+                <p>他想起很多年前那场事故。又想起今年这两个车夫。他忽然意识到一个让自己非常不安的问题：</p>
+                <p>如果结果真的是一个人的道德价值的重要组成部分，那么命运本身，似乎也参与了对人的审判。</p>
+            </div>
+
+            <div class="fade-section">
+                <p>一阵风吹过桥面。法官低头看着自己脚下的石头。他不知道该相信哪一个答案。</p>
+                <p>第二天早晨，他回到法庭。拿起那两张记录。他把阿尔文的名字和布莱恩的名字放在一起。然后写下了一句话：</p>
+            </div>
+
+            <blockquote class="fade-section">
+                <p>“他们做了同样的事。”</p>
+            </blockquote>
+
+            <div class="fade-section">
+                <p>写完以后，他停了一下。又在下面写：</p>
+            </div>
+
+            <blockquote class="fade-section">
+                <p>“但我们无法对待他们，好像他们经历了同样的命运。”</p>
+            </blockquote>
+
+            <div class="fade-section">
+                <p>最后，他把笔放下。那一天，法官第一次意识到：</p>
+                <p>也许一个人能不能成为“坏人”，有时并不完全由他自己决定。</p>
+            </div>
+        </article>
+
+        <section class="section-divider fade-section"></section>
+
+        <!-- 故事之后的拓展解读板块 -->
+        <section class="fade-section">
+            <h2 class="text-2xl md:text-3xl font-bold text-forest-700 mb-8 text-center tracking-wide">故事背后的科学：道德运气（Moral Luck）</h2>
+            
+            <div class="prose-custom">
+                <p>这个故事真正讲的是现代伦理学里一个非常重要的问题，尤其与<strong>伯纳德·威廉斯（Bernard Williams）</strong>和<strong>托马斯·内格尔（Thomas Nagel）</strong>的讨论密切相关。</p>
+                
+                <p>它所触碰的，是一个看起来非常合理、却会不断制造矛盾的原则：</p>
+
+                <blockquote class="fade-section">
+                    <p>“一个人只能因为自己能够控制的事情而受到道德评价。”</p>
+                </blockquote>
+                
+                <p>这个原则听起来很公平。问题是：现实世界好像并不按照这个原则运作。</p>
+
+                <h3 class="text-xl font-bold text-forest-600 mt-10 mb-4">1. 阿尔文和布莱恩做了一模一样的事情</h3>
+                <p>假设我们把两个人当天的行为拆开：</p>
+
+                <div class="fade-section overflow-x-auto my-6">
+                    <table class="w-full text-left border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+                        <thead>
+                            <tr>
+                                <th class="border-b-2 border-forest-300 py-3 px-6 text-forest-800 font-bold bg-forest-50">行为</th>
+                                <th class="border-b-2 border-forest-300 py-3 px-6 text-forest-800 font-bold bg-forest-50">阿尔文</th>
+                                <th class="border-b-2 border-forest-300 py-3 px-6 text-forest-800 font-bold bg-forest-50">布莱恩</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">喝酒</td>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">是</td>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">是</td>
+                            </tr>
+                            <tr>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">超速</td>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">是</td>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">是</td>
+                            </tr>
+                            <tr>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">知道规则</td>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">是</td>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">是</td>
+                            </tr>
+                            <tr>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">没有减速</td>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">是</td>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">是</td>
+                            </tr>
+                            <tr class="bg-red-50/30">
+                                <td class="py-3 px-6 text-gray-800 font-bold">有人死亡</td>
+                                <td class="py-3 px-6 text-red-600 font-bold">是</td>
+                                <td class="py-3 px-6 text-forest-600 font-bold">否</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>最诡异的地方就在这里：前四项由他们自己决定。最后一项却不是。阿尔文不能决定“今天请刮一阵风”，布莱恩也不能决定“今天请出来一只兔子”。然而，在我们的道德判断中，两个人却发生了巨大的差异。</p>
+
+                <h3 class="text-xl font-bold text-forest-600 mt-10 mb-4">2. 这就是 Moral Luck 最核心的矛盾</h3>
+                <p>我们通常认为：</p>
+                <div class="math-formula fade-section">
+                    Moral Responsibility &approx; Control
+                </div>
+                <p>也就是：道德责任应该与一个人能够控制的事情有关。</p>
+
+                <p>但是现实生活里，我们却经常：</p>
+                <div class="math-formula fade-section">
+                    Moral Judgment &approx; Outcome
+                </div>
+                <p>也就是说：结果越严重，我们往往越严厉地评价行为者。于是出现冲突：<strong>如果控制程度相同，为什么道德评价不同？</strong> 这就是道德运气问题。</p>
+
+                <h3 class="text-xl font-bold text-forest-600 mt-10 mb-4">3. 为什么叫“运气”？</h3>
+                <p>因为这里的关键变量不是努力、意图或者能力。而是：一个人无法控制的外部因素。</p>
+                <p>比如一个人酒后开车。如果他一路平安到家，人们可能会说：“他做了危险的事情。”但如果他撞死一个人：“他毁掉了一个家庭。”他的选择本身可能几乎没有变化，改变的是世界给了他什么结果。而这个结果可能具有巨大的道德后果。</p>
+                <p>所以 Nagel 提出的核心困惑之一就是：如果我们把所有不由自己控制的因素都剔除，那么真正能够归咎于一个人的东西可能远比我们想象的少。</p>
+
+                <h3 class="text-xl font-bold text-forest-600 mt-10 mb-4">4. 更麻烦的是，道德运气其实不只有一种</h3>
+                <p>哲学里通常会进一步区分几类：</p>
+                <ul class="list-disc pl-8 mb-6 space-y-3 text-[#4b5563] text-[1.125rem] leading-[2]">
+                    <li><strong>① Resultant Luck（结果运气）：</strong> 这就是故事里的阿尔文和布莱恩。同样的行为，一个死人了，一个没有。结果不同，评价随之改变。</li>
+                    <li><strong>② Circumstantial Luck（情境运气）：</strong> 你出生在什么时代、什么地方、面对什么社会环境。一个人出生在战争年代，另一个在和平年代，他们面对的道德选择空间可能完全不同。</li>
+                    <li><strong>③ Constitutive Luck（构成性运气）：</strong> 你生来是什么样的人。性格、气质、冲动程度。一个人天生谨慎，另一个天生冲动。我们当然会评价他们的行为，但他们自己又有多少机会选择“让我从今天开始成为一个完全不同的人”？</li>
+                    <li><strong>④ Causal Luck（因果运气）：</strong> 这是最彻底的一层。你今天成为这个人，是不是整个因果链条共同造成的？如果把父母、童年、基因、偶然事件全部往前追……“一个人究竟有多少事情是完全由自己造成的？”</li>
+                </ul>
+
+                <h3 class="text-xl font-bold text-forest-600 mt-10 mb-4">5. 这也是为什么 Moral Luck 会碰到“自由意志”</h3>
+                <p>因为它最终会把问题推得非常远。假设一个人：性格是天生的 &rarr; 性格影响选择 &rarr; 经历影响性格 &rarr; 经历又受到家庭和社会环境影响。那么，我们到底在什么意义上能够说：一个人“本来可以选择另一种人生”？</p>
+                <p>这已经不只是伦理学的问题，它触碰到了自由意志（Free Will）、决定论（Determinism）以及责任（Responsibility）。</p>
+
+                <h3 class="text-xl font-bold text-forest-600 mt-10 mb-4">6. 但是这里最重要的一点是：</h3>
+                <p>Moral Luck 不是在说“既然有运气，所以人就没有责任”。它真正做的是：<strong>逼你区分“一个人造成了什么结果”与“一个人应该因此受到多少道德评价”。</strong></p>
+                <p>阿尔文导致了一个人的死亡，客观上非常严重。但哲学家进一步追问：“这种严重性有多少应该归属于他的道德责任？”这就复杂了。</p>
+
+                <h3 class="text-xl font-bold text-forest-600 mt-10 mb-4">7. 无论往哪边走，都要付出哲学上的代价</h3>
+                <p>故事最后那两句话其实是故意矛盾的。</p>
+                <p>如果你坚持道德责任必须完全取决于可控因素，那么你应该倾向于认为，两个人的责任差异不应该那么大。但如果你坚持结果真的具有道德意义，那么两个人就不能完全被同等看待。</p>
+                
+                <section class="section-divider fade-section"></section>
+
+                <p><strong>最后留给你一个现实里的版本：</strong></p>
+                <p>以后你再看到两个人：一个人创业失败了，一个人成功了。一个人因为冲动失去了机会，另一个同样冲动却遇到了宽容的人。一个人努力十年终于成功，另一个同样努力十年却因为一次疾病错过了机会。</p>
+                <p>我们很容易说：“他们选择不同，所以结果不同。”但哲学家会提醒你：<strong>等等，你真的确定，决定他们命运的全部东西，都在他们自己的控制范围之内吗？</strong></p>
+
+                <blockquote class="fade-section">
+                    <p>我们可以要求一个人对自己的选择负责。<br>但当我们开始根据结果评价一个人的时候，也许应该记得——<br>命运有时也偷偷拿着一支笔，参与了那份判决。</p>
+                </blockquote>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="mt-24 text-center fade-section pb-8">
+            <div class="w-12 h-1 bg-forest-300 mx-auto rounded-full mb-6"></div>
+            <p class="text-sm md:text-base text-gray-400 font-serif tracking-widest">
+                我们通常根据结果判断一个人，但结果往往并不完全由他决定。
+            </p>
+        </footer>
+
+    </main>
+
+    <!-- 脚本区 -->
+    <script>
+        // 1. 顶部固定滚动进度条
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+            document.getElementById('scrollProgress').style.width = progress + '%';
+        });
+
+        // 2. 左上角悬浮返回按钮，点击平滑滚动回到页面顶部
+        const backBtn = document.getElementById('backHomeBtn');
+        backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 3. 滚动渐入动画 (IntersectionObserver)
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeSections = document.querySelectorAll('.fade-section');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -10% 0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-scroll-in');
+                        // 解除观察，确保动画只播放一次
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            fadeSections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
