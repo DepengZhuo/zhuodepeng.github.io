@@ -1,0 +1,1039 @@
+<html lang='zh-CN'>
+        <head >
+        <meta charset='UTF-8'/>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+<title >森林里的第二条路 - 沉浸式阅读</title>
+<script src='https://res.gemcoder.com/js/reload.js'></script>
+<script src='https://cdn.tailwindcss.com'></script>
+<link rel='stylesheet' href='https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css'/>
+<script src='https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js'></script>
+<script >tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        forest: {
+          50: '#f0f7f0',
+          100: '#d9e8d9',
+          200: '#b7d6b7',
+          300: '#8bc08b',
+          400: '#5ca65c',
+          500: '#3d8a3d',
+          600: '#2e6e2e',
+          700: '#275727',
+          800: '#214521',
+          900: '#1b371b'
+        },
+        paper: {
+          50: '#fefcf8',
+          100: '#fdf8f0',
+          200: '#fbf2e3',
+          300: '#f8e9d1'
+        }
+      },
+      fontFamily: {
+        serif: ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        sans: ['Inter', 'system-ui', 'sans-serif']
+      },
+      animation: {
+        'fade-in': 'fadeIn 1s ease-in-out',
+        'slide-up': 'slideUp 0.8s ease-out',
+        'float': 'float 6s ease-in-out infinite'
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': {
+            opacity: '0'
+          },
+          '100%': {
+            opacity: '1'
+          }
+        },
+        slideUp: {
+          '0%': {
+            transform: 'translateY(20px)',
+            opacity: '0'
+          },
+          '100%': {
+            transform: 'translateY(0)',
+            opacity: '1'
+          }
+        },
+        float: {
+          '0%, 100%': {
+            transform: 'translateY(0)'
+          },
+          '50%': {
+            transform: 'translateY(-10px)'
+          }
+        }
+      }
+    }
+  }
+};</script>
+<style >
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Noto Serif SC', Georgia, serif;
+            background-color: #fdf8f0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(183, 214, 183, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(183, 214, 183, 0.1) 0%, transparent 50%);
+        }
+        
+        .text-shadow-sm {
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .prose-custom p {
+            line-height: 2;
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            color: #374151;
+        }
+        
+        .prose-custom blockquote {
+            border-left: 4px solid #3d8a3d;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #1f2937;
+            background-color: rgba(240, 247, 240, 0.6);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            padding-right: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #b7d6b7, transparent);
+            margin: 4rem 0;
+            position: relative;
+        }
+        
+        .section-divider::after {
+            content: '🌲';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fdf8f0;
+            padding: 0 1rem;
+        }
+        
+        .back-button {
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background-color: rgba(61, 138, 61, 0.9);
+            color: white;
+            transform: translateX(-3px);
+        }
+        
+        .math-formula {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.25rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(to right, #3d8a3d, #5ca65c);
+            z-index: 50;
+            transition: width 0.1s ease;
+        }
+        
+        .fade-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .fade-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    </head>
+<body class='min-h-screen'>
+        <!-- [MODULE] xyz_滚动进度条 -->
+<div class='scroll-progress' id='scrollProgress'>
+        </div>
+<!-- [/MODULE] xyz_滚动进度条 -- 显示当前阅读进度的顶部进度条 -->
+<!-- [MODULE] a1b_返回主页按钮 -->
+<a href='javascript:void(0);' class='back-button fixed top-6 left-6 z-50 p-3 rounded-full shadow-lg border border-forest-200' id='backHomeBtn'>
+        <i class='fas fa-arrow-left text-forest-700 text-lg'>
+        </i>
+    </a>
+<!-- [/MODULE] a1b_返回主页按钮 -- 左上角悬浮的返回主页按钮，带有悬停效果 -->
+<!-- [MODULE] c2v_主内容区域 -->
+<main class='max-w-3xl mx-auto px-6 py-16 sm:py-24'>
+        <!-- [MODULE] d3e_故事页面:标题区域 -->
+<header class='text-center mb-20 fade-section'>
+        <div class='mb-8 animate-float'>
+        <img src='https://design.gemcoder.com/staticResource/echoAiSystemImages/a0d2095e54b2fec8dd7aeb3d72992bf4.png' alt='森林小径' class='w-full h-64 object-cover rounded-xl shadow-lg mb-8'/>
+    </div>
+<h1 class='text-[clamp(2rem,5vw,3.5rem)] font-bold text-forest-900 mb-6 leading-tight text-shadow-sm'>
+        森林里的第二条路
+    </h1>
+<div class='w-24 h-1 bg-forest-500 mx-auto rounded-full mb-6'>
+        </div>
+<p class='text-gray-600 text-lg'>
+        一个关于记忆、恐惧与成长的故事
+    </p>
+    </header>
+<!-- [/MODULE] d3e_故事页面:标题区域 -- 包含故事标题、副标题和森林插图 -->
+<!-- [MODULE] f4g_故事页面:故事正文 -->
+<article class='prose-custom'>
+        <div class='fade-section'>
+        <p >
+        很久以前，有一座被群山包围的城。
+    </p>
+<p >
+        城外有一片森林。
+    </p>
+<p >
+        森林里有两条路，都能通往山另一边。
+    </p>
+<p >
+        第一条路又宽又平，商人们每天都从那里经过。
+    </p>
+<p >
+        第二条路非常窄，杂草丛生，只有一块旧木牌挂在入口：
+    </p>
+<blockquote >
+        <strong >
+        “不要走这条路。”
+    </strong>
+    </blockquote>
+<p >
+        没有人知道是谁立下的木牌。
+    </p>
+<p >
+        城里的人也从来不问。
+    </p>
+<p >
+        因为三十年前，这条路上发生过一场事故。
+    </p>
+<p >
+        那一年，一个年轻的猎人走进森林。
+    </p>
+<p >
+        走到半路，他听见草丛里传来巨大的咆哮声。
+    </p>
+<p >
+        紧接着，一头熊冲了出来。
+    </p>
+<p >
+        猎人拼命逃跑。
+    </p>
+<p >
+        最后，他活着回到了城里。
+    </p>
+<p >
+        从那天开始，他再也没有走过那条路。
+    </p>
+<p >
+        后来，城里的人发现了一件奇怪的事情。
+    </p>
+<p >
+        只要有人从那条路经过，听见灌木丛里轻微的沙沙声，就会立刻停下来。
+    </p>
+<p >
+        有人甚至会立刻转身逃回城里。
+    </p>
+<p >
+        于是大家逐渐得出一个结论：
+    </p>
+<blockquote >
+        <strong >
+        那条路很危险。
+    </strong>
+    </blockquote>
+    </div>
+<div class='section-divider fade-section'>
+        </div>
+<div class='fade-section'>
+        <h2 class='text-2xl font-semibold text-forest-800 mb-6'>
+        一年以后
+    </h2>
+<p >
+        城主听说了这件事。
+    </p>
+<p >
+        他觉得奇怪。
+    </p>
+<p >
+        于是他带着几个士兵，走进了那条路。
+    </p>
+<p >
+        走了很久。
+    </p>
+<p >
+        没有熊。
+    </p>
+<p >
+        他们又走了一遍。
+    </p>
+<p >
+        还是没有。
+    </p>
+<p >
+        第三遍。
+    </p>
+<p >
+        依然没有。
+    </p>
+<p >
+        后来城主终于发现，那头熊早就死了。
+    </p>
+<p >
+        它甚至已经死了二十多年。
+    </p>
+<p >
+        于是城主把旧木牌拆掉。
+    </p>
+<p >
+        并告诉城里的人：
+    </p>
+<blockquote >
+        “这条路现在是安全的。”
+    </blockquote>
+<p >
+        最开始，没有人相信。
+    </p>
+<p >
+        于是城主让几个士兵每天走一次。
+    </p>
+<p >
+        第一天。
+    </p>
+<p >
+        没人敢跟。
+    </p>
+<p >
+        第二天。
+    </p>
+<p >
+        还是没人。
+    </p>
+<p >
+        第十天。
+    </p>
+<p >
+        有一个年轻人跟了过去。
+    </p>
+<p >
+        他们走完全程，没有发生任何事情。
+    </p>
+<p >
+        第二十天。
+    </p>
+<p >
+        已经有很多人敢走了。
+    </p>
+<p >
+        三个月以后，甚至有人在那条路旁摆了一个水果摊。
+    </p>
+<p >
+        大家开始觉得：
+    </p>
+<blockquote >
+        “看吧，根本没有什么可怕的。”
+    </blockquote>
+    </div>
+<div class='section-divider fade-section'>
+        </div>
+<div class='fade-section'>
+        <h2 class='text-2xl font-semibold text-forest-800 mb-6'>
+        可是有一天，暴雨来了。
+    </h2>
+<p >
+        雷声非常大。
+    </p>
+<p >
+        森林里风吹得树枝不断摇晃。
+    </p>
+<p >
+        一个年轻人走到那条路上。
+    </p>
+<p >
+        突然——
+    </p>
+<p class='text-center text-2xl font-bold my-6'>
+        **沙沙。**
+    </p>
+<p >
+        灌木丛动了一下。
+    </p>
+<p >
+        年轻人的心脏瞬间加快。
+    </p>
+<p >
+        他的手开始出汗。
+    </p>
+<p >
+        呼吸变得急促。
+    </p>
+<p >
+        身体几乎在他思考之前，就已经往后退了一步。
+    </p>
+<p >
+        他愣住了。
+    </p>
+<p >
+        然后对自己说：
+    </p>
+<blockquote >
+        “熊早就死了。”
+    </blockquote>
+<p >
+        他甚至笑了一下。
+    </p>
+<p >
+        “我知道这里很安全。”
+    </p>
+<p >
+        于是他继续往前。
+    </p>
+    </div>
+<div class='fade-section'>
+        <p >
+        又走了几十步。
+    </p>
+<p >
+        突然，一道闪电划过天空。
+    </p>
+<p >
+        紧接着：
+    </p>
+<p class='text-center text-3xl font-bold my-6'>
+        **轰——！**
+    </p>
+<p >
+        年轻人猛地转身，拔腿就跑。
+    </p>
+<p >
+        跑了很远以后，他才停下来。
+    </p>
+<p >
+        他喘着气。
+    </p>
+<p >
+        他很生气。
+    </p>
+<p >
+        不是气森林。
+    </p>
+<p >
+        而是气自己。
+    </p>
+<p >
+        他回头看着那条路。
+    </p>
+<p >
+        低声说道：
+    </p>
+<blockquote >
+        “我明明知道它没有危险。”
+    </blockquote>
+    </div>
+<div class='fade-section'>
+        <p >
+        第二天，他又来了。
+    </p>
+<p >
+        这一次是晴天。
+    </p>
+<p >
+        森林里很安静。
+    </p>
+<p >
+        他重新走那条路。
+    </p>
+<p >
+        很顺利。
+    </p>
+<p >
+        第三天，他又走了一遍。
+    </p>
+<p >
+        第四天。
+    </p>
+<p >
+        第五天。
+    </p>
+<p >
+        后来，他每天都走。
+    </p>
+<p >
+        慢慢地，他不再害怕。
+    </p>
+    </div>
+<div class='fade-section'>
+        <p >
+        半年以后，他带着女儿经过那里。
+    </p>
+<p >
+        女儿问：
+    </p>
+<p >
+        “爸爸，为什么以前大家都害怕这条路？”
+    </p>
+<p >
+        他说：
+    </p>
+<p >
+        “因为这里以前有一头熊。”
+    </p>
+<p >
+        女儿笑了。
+    </p>
+<p >
+        “可是熊已经死了呀。”
+    </p>
+<p >
+        “对。”
+    </p>
+<p >
+        “那大家为什么还害怕？”
+    </p>
+<p >
+        年轻人沉默了一会儿。
+    </p>
+<p >
+        然后说：
+    </p>
+<blockquote >
+        <strong >
+        “听见那个声音，就赶紧逃。”
+    </strong>
+    </blockquote>
+<p >
+        女儿想了一会儿。
+    </p>
+<p >
+        又问：
+    </p>
+<p >
+        “那后来呢？”
+    </p>
+<p >
+        父亲说：
+    </p>
+<blockquote >
+        “后来我们又学会了一件事。”
+    </blockquote>
+    </div>
+<div class='fade-section'>
+        <p >
+        晚上回到城里，女儿睡着以后，父亲独自坐在窗边。
+    </p>
+<p >
+        他忽然想起那场暴雨。
+    </p>
+<p >
+        想起自己奔跑时的心跳。
+    </p>
+<p >
+        他终于明白：
+    </p>
+<p class='text-center text-xl font-semibold my-8 text-forest-800'>
+        **第二件事，并没有让第一件事消失。**
+    </p>
+    </div>
+<div class='section-divider fade-section'>
+        </div>
+<div class='fade-section'>
+        <h2 class='text-2xl font-semibold text-forest-800 mb-6'>
+        多年以后
+    </h2>
+<p >
+        那条森林小路已经变成城里最热闹的一条路。
+    </p>
+<p >
+        有商店。
+    </p>
+<p >
+        有酒馆。
+    </p>
+<p >
+        有花园。
+    </p>
+<p >
+        每天都有很多人经过。
+    </p>
+<p >
+        大多数时候，没有任何人害怕。
+    </p>
+<p >
+        但有一天，一场暴风雪来了。
+    </p>
+<p >
+        风声穿过灌木。
+    </p>
+<p >
+        树枝不断撞击木屋。
+    </p>
+<p >
+        整个森林又发出几十年前那种低沉的声音。
+    </p>
+<p >
+        街上的一个老人突然停住了。
+    </p>
+<p >
+        他看着那片树林。
+    </p>
+<p >
+        脸色变得很难看。
+    </p>
+<p >
+        一个孩子问他：
+    </p>
+<p >
+        “爷爷，你在害怕什么？”
+    </p>
+<p >
+        老人摇摇头。
+    </p>
+<p >
+        “没什么。”
+    </p>
+<p >
+        “这里不是很安全吗？”
+    </p>
+<p >
+        老人点点头。
+    </p>
+<p >
+        “是。”
+    </p>
+<p >
+        “那你为什么还害怕？”
+    </p>
+<p >
+        老人沉默了很久。
+    </p>
+<p >
+        然后他说：
+    </p>
+<blockquote >
+        <strong >
+        “因为安全，并不意味着危险的记忆已经消失。”
+    </strong>
+    </blockquote>
+    </div>
+<div class='section-divider fade-section'>
+        </div>
+    </article>
+<!-- [/MODULE] f4g_故事页面:故事正文 -- 包含完整的故事内容、引用块和分隔线 -->
+<!-- [MODULE] h7j_故事页面:心理学知识部分 -->
+<section class='mt-20 fade-section'>
+        <h2 class='text-3xl font-bold text-center text-forest-900 mb-12'>
+        你刚刚读的，其实不是一个关于熊的故事
+    </h2>
+<p class='text-center text-xl mb-10'>
+        它讲的是心理学里的：
+    </p>
+<h3 class='text-3xl font-bold text-center text-forest-700 mb-12'>
+        **抑制性学习（Inhibitory Learning）**
+    </h3>
+<p class='text-center mb-10'>
+        更准确地说，是现代心理学对
+<strong >
+        恐惧消退（fear extinction）
+    </strong>
+的一种重要理解。
+    </p>
+<p >
+        最容易产生的直觉是：
+    </p>
+<blockquote >
+        一个人害怕某个东西 → 后来发现它没危险 → 于是原来的恐惧记忆被“纠正”或者“删除”。
+    </blockquote>
+<p >
+        但现代学习理论认为，事情往往不是这么发生的。
+    </p>
+<div class='section-divider'>
+        </div>
+<h3 class='text-2xl font-semibold text-forest-800 mb-6'>
+        1. 第一条记忆没有消失
+    </h3>
+<p >
+        年轻猎人第一次遇到熊以后，大脑学到了一条非常重要的规则：
+    </p>
+<div class='math-formula'>
+        森林声音 → 危险
+    </div>
+<p >
+        这是一条非常强的联结。
+    </p>
+<p >
+        后来，即使熊死了，这条旧联结也不一定被彻底删除。
+    </p>
+<p >
+        更准确地说，是：
+    </p>
+<div class='math-formula'>
+        森林声音 →
+<div class='mt-2'>
+        <p >
+        危险
+    </p>
+<p >
+        安全
+    </p>
+    </div>
+    </div>
+<p >
+        大脑后来学到的是：
+    </p>
+<blockquote >
+        <strong >
+        “正常情况下，这个声音并不意味着危险。”
+    </strong>
+    </blockquote>
+<p >
+        这就是第二条学习。
+    </p>
+<div class='section-divider'>
+        </div>
+<h3 class='text-2xl font-semibold text-forest-800 mb-6'>
+        2. 第二条学习为什么叫“Inhibitory”？
+    </h3>
+<p >
+        因为它并不是简单地说：
+    </p>
+<blockquote >
+        “旧规则不存在了。”
+    </blockquote>
+<p >
+        而更像是：
+    </p>
+<blockquote >
+        <strong >
+        当特定条件出现时，新规则抑制了旧规则的表达。
+    </strong>
+    </blockquote>
+<p >
+        原来的规则：
+    </p>
+<blockquote >
+        <strong >
+        声音 → 熊 → 逃跑
+    </strong>
+    </blockquote>
+<p >
+        后来形成了：
+    </p>
+<blockquote >
+        <strong >
+        声音 + 安全环境 → 不需要逃跑
+    </strong>
+    </blockquote>
+<p >
+        所以心理学家经常把它理解成两个记忆之间的竞争：
+    </p>
+<p class='font-semibold mt-6'>
+        Excitatory association
+    </p>
+<blockquote >
+        “这个东西意味着危险。”
+    </blockquote>
+<p class='text-center my-4'>
+        ↓
+    </p>
+<p class='font-semibold'>
+        Inhibitory association
+    </p>
+<blockquote >
+        “在当前条件下，它其实是安全的。”
+    </blockquote>
+<p class='text-xl font-bold text-center my-8'>
+        注意：
+<br />
+“抑制”≠“删除”。
+    </p>
+<p >
+        这就是整个故事最重要的地方。
+    </p>
+<div class='section-divider'>
+        </div>
+<h3 class='text-2xl font-semibold text-forest-800 mb-6'>
+        3. 所以为什么“好了很久”，恐惧还可能回来？
+    </h3>
+<p >
+        这也是这个理论非常有意思的地方。
+    </p>
+<p >
+        假设一个人已经很长时间不怕森林了。
+    </p>
+<p >
+        但突然出现一些新的条件：
+    </p>
+<p class='font-semibold my-4'>
+        暴雨、黑暗、陌生环境、身体疲劳、类似原始情境的声音……
+    </p>
+<p >
+        旧记忆可能再次被激活。
+    </p>
+<p >
+        心理学里有几个经典现象：
+    </p>
+<h4 class='text-xl font-semibold mt-8 mb-4'>
+        Renewal
+    </h4>
+<p >
+        换了环境以后，原来的恐惧可能重新出现。
+    </p>
+<p >
+        比如：
+    </p>
+<blockquote >
+        在治疗室里已经不害怕 → 换一个环境，又开始害怕。
+    </blockquote>
+<h4 class='text-xl font-semibold mt-8 mb-4'>
+        Reinstatement
+    </h4>
+<p >
+        经历一次新的不良事件以后，原本消退的恐惧可能回来。
+    </p>
+<h4 class='text-xl font-semibold mt-8 mb-4'>
+        Spontaneous Recovery
+    </h4>
+<p >
+        时间过去以后，已经消退的反应可能再次出现。
+    </p>
+<p class='mt-8'>
+        所以：
+    </p>
+<blockquote >
+        “我以前已经不怕了，为什么现在又怕了？”
+    </blockquote>
+<p >
+        并不一定意味着之前的学习完全白费了。
+    </p>
+<p >
+        有可能只是：
+    </p>
+<blockquote >
+        “旧记忆和新记忆之间的竞争，在当前条件下发生了变化。”
+    </blockquote>
+<div class='section-divider'>
+        </div>
+<h3 class='text-2xl font-semibold text-forest-800 mb-6'>
+        4. 这会改变我们理解“克服恐惧”的方式
+    </h3>
+<p >
+        传统直觉很容易把目标想成：
+    </p>
+<blockquote >
+        <strong >
+        把恐惧记忆消灭。
+    </strong>
+    </blockquote>
+<p >
+        但抑制性学习的视角更接近：
+    </p>
+<blockquote >
+        <strong >
+        建立一个足够强、足够灵活的安全预测。
+    </strong>
+    </blockquote>
+<p >
+        所以真正重要的不是：
+    </p>
+<blockquote >
+        “我绝对不能再害怕。”
+    </blockquote>
+<p >
+        而是：
+    </p>
+<blockquote >
+        <strong >
+        “即使身体偶尔发出警报，我也知道这不等于真的存在危险。”
+    </strong>
+    </blockquote>
+<p >
+        故事里的年轻人已经知道：
+    </p>
+<blockquote >
+        “熊死了。”
+    </blockquote>
+<p >
+        但暴雨里他的心跳仍然加快。
+    </p>
+<p >
+        这两个事情完全可以同时成立：
+    </p>
+<blockquote >
+        <strong >
+        认知上知道安全。
+    </strong>
+<br />
+<strong >
+        身体仍然短暂地触发旧反应。
+    </strong>
+    </blockquote>
+<p >
+        这并不逻辑矛盾。
+    </p>
+<div class='section-divider'>
+        </div>
+<h3 class='text-2xl font-semibold text-forest-800 mb-6'>
+        5. 还有一个很漂亮的地方
+    </h3>
+<p >
+        你仔细回想故事。
+    </p>
+<p >
+        城主拆掉木牌，并不能立刻让所有人走进森林。
+    </p>
+<p >
+        为什么？
+    </p>
+<p >
+        因为
+<strong >
+        新信息本身不等于新学习
+    </strong>
+。
+    </p>
+<p >
+        “有人告诉你安全”是一回事。
+    </p>
+<p >
+        “你亲自走进去，什么都没发生”是另一回事。
+    </p>
+<p >
+        而后者才是在不断强化：
+    </p>
+<div class='math-formula'>
+        进入森林 → 没有灾难
+    </div>
+<p >
+        于是新的安全模型越来越强。
+    </p>
+<p >
+        这也是为什么故事里的人不是听到城主宣布“安全”以后立刻康复，而是需要：
+    </p>
+<blockquote >
+        <strong >
+        一次一次地走进去。
+    </strong>
+    </blockquote>
+<div class='section-divider'>
+        </div>
+<h3 class='text-2xl font-semibold text-forest-800 mb-6'>
+        最后，你再回头看那个老人
+    </h3>
+<p >
+        他说：
+    </p>
+<blockquote >
+        <strong >
+        “安全，并不意味着危险的记忆已经消失。”
+    </strong>
+    </blockquote>
+<p >
+        这句话其实就是整个概念。
+    </p>
+<p >
+        心理学里一个非常重要的思想是：
+    </p>
+<blockquote >
+        <strong >
+        改变行为，不一定意味着删除过去的学习。
+    </strong>
+    </blockquote>
+<p >
+        过去的经验仍然可能在那里。
+    </p>
+<p >
+        真正发生的事情可能是：
+    </p>
+<blockquote >
+        你学会了一个更新、更强、更具体的新规则，并逐渐学会什么时候应该让新规则压过旧规则。
+    </blockquote>
+<p >
+        所以有时候，真正的“痊愈”并不是：
+    </p>
+<blockquote >
+        <strong >
+        “我再也不会害怕。”
+    </strong>
+    </blockquote>
+<p >
+        而是：
+    </p>
+<blockquote >
+        <strong >
+        “我可能还会害怕，但我已经不再把‘害怕’自动当成‘危险’。”
+    </strong>
+    </blockquote>
+<p class='mt-8'>
+        这也是为什么这个概念比一句简单的“克服恐惧”要深得多。
+    </p>
+    </section>
+<!-- [/MODULE] h7j_故事页面:心理学知识部分 -- 包含抑制性学习的完整心理学解释、公式和要点总结 -->
+<!-- [MODULE] k9l_故事页面:页脚区域 -->
+<footer class='mt-24 text-center fade-section'>
+        <div class='w-16 h-1 bg-forest-300 mx-auto rounded-full mb-8'>
+        </div>
+<p class='text-gray-600 mb-4'>
+        感谢阅读
+    </p>
+<p class='text-gray-500 text-sm'>
+        森林里的第二条路 · 一个关于记忆与成长的故事
+    </p>
+    </footer>
+<!-- [/MODULE] k9l_故事页面:页脚区域 -- 包含页脚致谢信息 -->
+    </main>
+<!-- [/MODULE] c2v_主内容区域 -- 包含整个故事页面的所有内容 -->
+<!-- [JSMOD] m3n_滚动进度条功能 -->
+<script id='scrollProgressScript'>window.addEventListener('scroll', function () {
+  var scrollTop = document.documentElement.scrollTop;
+  var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  var progress = scrollTop / scrollHeight * 100;
+  document.getElementById('scrollProgress').style.width = progress + '%';
+});</script>
+<!-- [/JSMOD] m3n_滚动进度条功能 -- 实现顶部阅读进度条的实时更新 -->
+<!-- [JSMOD] p5q_返回主页按钮功能 -->
+<script id='backHomeScript'>document.getElementById('backHomeBtn').addEventListener('click', function () {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});</script>
+<!-- [/JSMOD] p5q_返回主页按钮功能 -- 点击返回按钮平滑滚动回页面顶部 -->
+<!-- [JSMOD] r7s_滚动渐入动画功能 -->
+<script id='fadeInScript'>document.addEventListener('DOMContentLoaded', function () {
+  var fadeSections = document.querySelectorAll('.fade-section');
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+  fadeSections.forEach(function (section) {
+    observer.observe(section);
+  });
+});</script>
+<!-- [/JSMOD] r7s_滚动渐入动画功能 -- 实现页面元素随滚动逐渐淡入的动画效果 -->
+    </body>
+    </html>

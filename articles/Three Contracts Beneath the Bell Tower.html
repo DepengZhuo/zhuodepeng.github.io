@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+<head>
+    <meta charset='UTF-8'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+    <title>钟楼下的三份契约 - 沉浸式阅读</title>
+    <script src='https://cdn.tailwindcss.com'></script>
+    <link rel='stylesheet' href='https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css'/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tower: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a'
+                        },
+                        gold: {
+                            500: '#d97706',
+                            600: '#b45309'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Georgia', 'Times New Roman', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Noto Serif SC', Georgia, serif;
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(100, 116, 139, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(217, 119, 6, 0.03) 0%, transparent 40%);
+        }
+        
+        .prose-custom p {
+            line-height: 2;
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            color: #334155;
+        }
+        
+        .prose-custom blockquote {
+            border-left: 4px solid #475569;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #1e293b;
+            background-color: rgba(241, 245, 249, 0.5);
+            padding: 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        
+        .contract-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid #d97706;
+            padding: 1.5rem;
+            border-radius: 0.25rem;
+            margin: 1rem 0;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #cbd5e1, transparent);
+            margin: 4rem 0;
+            position: relative;
+        }
+        
+        .section-divider::after {
+            content: '🔔';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f8fafc;
+            padding: 0 1rem;
+            font-size: 1.25rem;
+        }
+        
+        .back-button {
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background-color: #475569;
+            color: white;
+            transform: translateX(-3px);
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(to right, #64748b, #d97706);
+            z-index: 50;
+            transition: width 0.1s ease;
+        }
+        
+        .fade-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .fade-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 结构化表格样式 - 极简B2B风格 */
+        .b2b-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background-color: white;
+        }
+        .b2b-table th {
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 2px solid #cbd5e1;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        .b2b-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #475569;
+        }
+        .b2b-table tr:hover td {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class='min-h-screen'>
+
+    <!-- 滚动进度条 -->
+    <div class='scroll-progress' id='scrollProgress'></div>
+
+    <!-- 返回主页按钮 -->
+    <a href='javascript:void(0);' class='back-button fixed top-6 left-6 z-50 p-3 rounded-full shadow-sm border border-tower-200' id='backHomeBtn'>
+        <i class='fas fa-arrow-left text-tower-700 text-lg'></i>
+    </a>
+
+    <!-- 主内容区域 -->
+    <main class='max-w-3xl mx-auto px-6 py-16 sm:py-24'>
+        
+        <!-- 故事页面:标题区域 -->
+        <header class='text-center mb-20 fade-section'>
+            <div class='mb-8 animate-float'>
+                <img src='https://images.unsplash.com/photo-1555448053-936b85b2e5db?auto=format&fit=crop&q=80&w=1000' alt='钟楼' class='w-full h-64 object-cover rounded shadow-sm mb-8 opacity-90'/>
+            </div>
+            <h1 class='text-[clamp(2rem,5vw,3.5rem)] font-bold text-tower-900 mb-6 leading-tight'>
+                钟楼下的三份契约
+            </h1>
+            <div class='w-24 h-1 bg-gold-500 mx-auto rounded-full mb-6'></div>
+            <p class='text-gray-600 text-lg'>
+                一个关于信息不对称、自我选择与人性的故事
+            </p>
+        </header>
+
+        <!-- 故事页面:故事正文 -->
+        <article class='prose-custom'>
+            <div class='fade-section'>
+                <p>很久以前，有一座坐落在两座山之间的城。</p>
+                <p>城里有一座很高的钟楼。每天清晨，钟声都会准时响起。</p>
+                <p>钟楼下面住着三位守钟人。他们的名字没人记得，只知道，一个叫石头，一个叫风，一个叫羽毛。三个人看起来没有什么不同。他们都年轻，都健壮，也都能爬上钟楼。</p>
+                <p>城主于是有一个麻烦。</p>
+                <p>守钟人的工钱不能太低，太低了没有人愿意爬那座又高又冷的塔。但工钱也不能太高，因为城主发现，有些守钟人其实只需要每天早晨拉一次绳子，剩下的时间都在楼顶晒太阳。而另一些人，则会在半夜检查齿轮、擦拭铜钟、修补被风吹松的木梁。</p>
+                <p>问题在于——<strong>城主不知道谁是哪一种人。</strong></p>
+                <p>面试的时候，所有人都说自己勤快。</p>
+                <blockquote>
+                    “我从不偷懒。”<br>
+                    “我小时候每天都帮父亲修钟。”<br>
+                    “您尽管放心，我最喜欢干活。”
+                </blockquote>
+                <p>说得都很好。可真正上钟楼以后，城主才发现，每个人的模样都变了。</p>
+            </div>
+
+            <div class='section-divider fade-section'></div>
+
+            <div class='fade-section'>
+                <h2 class='text-2xl font-semibold text-tower-800 mb-6'>无解的考问与三道门</h2>
+                <p>第一年，城主决定给所有人一样的工钱。结果，石头每天准时干活，风偶尔迟到，羽毛几乎从不维修齿轮。</p>
+                <p>第二年，城主提高了工钱。风开始认真起来，可羽毛仍然只做规定的事情。</p>
+                <p>到了第三年，财政官告诉城主：“我们必须知道他们究竟是什么样的人。” 城主把三个人叫到大厅，问他们是否愿意干更多的活。</p>
+                <p>石头的回答是愿意。风的回答是当然愿意。羽毛也说：“只要钱够，为什么不愿意？”</p>
+                <p>三个人的答案，还是一模一样。</p>
+                <p>第二天，城主突然宣布了一件奇怪的事情。从今以后，钟楼有三种契约：</p>
+                
+                <div class='contract-card'>
+                    <h3 class='text-lg font-bold text-tower-900 mb-2'>第一份契约：稳妥者</h3>
+                    <p class='mb-0 text-tower-700'>每个月固定拿十枚金币。每天只需要敲响清晨的钟。但若钟出了问题，必须自己承担修理费用。</p>
+                </div>
+                <div class='contract-card'>
+                    <h3 class='text-lg font-bold text-tower-900 mb-2'>第二份契约：平衡者</h3>
+                    <p class='mb-0 text-tower-700'>每个月只拿五枚金币底薪。但只要钟声准时、设备完好，每个月可以额外拿二十五枚金币。</p>
+                </div>
+                <div class='contract-card'>
+                    <h3 class='text-lg font-bold text-tower-900 mb-2'>第三份契约：破局者</h3>
+                    <p class='mb-0 text-tower-700'>一分钱固定工钱也没有。只有当整个月钟楼完全没有故障时，才能一次性拿四十枚金币。</p>
+                </div>
+
+                <p>城主什么也没有解释。他只是对三个守钟人说：“你们自己选。”</p>
+                <p>石头看了很久，拿走了第一份。风犹豫了一会儿，拿走了第二份。羽毛盯着第三份契约看了半天，然后也拿了第三份。</p>
+                <p>城里的人开始笑他给自己找麻烦，城主没有说话，只是在账本上写了一句话：<strong>“很好。”</strong></p>
+            </div>
+
+            <div class='section-divider fade-section'></div>
+
+            <div class='fade-section'>
+                <h2 class='text-2xl font-semibold text-tower-800 mb-6'>一年以后的账本</h2>
+                <p>一年以后，账本展现了截然不同的结果：</p>
+                <p><strong>第一位守钟人，石头。</strong>他每天只做必要的检查，钟偶尔有小问题，但他拿到的工资始终稳定。</p>
+                <p><strong>第二位守钟人，风。</strong>刚开始经常赌一把，后来为了拿到那二十五枚金币，他开始提前检查、加固窗户。</p>
+                <p><strong>第三位守钟人，羽毛。</strong>所有人都以为他会最惨，但他反而赚得最多。因为他是唯一一个每天晚上都爬上钟楼的人，因为他非常清楚：一旦钟坏了，他整个月的钱都会消失。</p>
+                
+                <p>一个年轻的学徒终于忍不住问城主：“您是不是早就知道，石头、风和羽毛分别是什么样的人？”</p>
+                <p>城主摇头：<strong>“我不知道。”</strong></p>
+                <p>学徒更加困惑：“那您怎么知道该给他们什么契约？”</p>
+                <blockquote>
+                    “不同的人，会害怕不同的东西，也会喜欢不同的东西。”<br><br>
+                    “所以，我不需要他们告诉我自己是谁。我只需要给他们几个不同的门。然后看他们自己走进哪一扇。”
+                </blockquote>
+                
+                <p>那天半夜，钟楼突然响了两声。学徒冲到窗边，只见羽毛正提着灯，独自爬上钟楼。</p>
+                <p>这时他终于明白了城主第三份契约真正的秘密。那四十枚金币从来不只是报酬，它还是一个不需要开口的问题：</p>
+                <p class='text-center text-2xl font-bold my-8 text-tower-900'>“你究竟相信自己有多大把握？”</p>
+            </div>
+        </article>
+
+        <!-- 经济学解析部分 (极简商务结构) -->
+        <section class='mt-24 fade-section'>
+            <div class='border-b-2 border-tower-800 pb-4 mb-10'>
+                <h2 class='text-2xl font-bold text-tower-900 tracking-wide'>经济学内核剖析：筛选机制 (Screening)</h2>
+            </div>
+            
+            <p class='text-lg text-tower-800 mb-10 leading-relaxed'>
+                这则寓言的核心是信息经济学中的<strong>筛选机制</strong>：如何通过设计契约菜单，让不同类型的人进行自我选择，从而间接获取真实的私人信息。
+            </p>
+
+            <!-- 1. 核心机制拆解 -->
+            <h3 class='text-lg font-bold text-tower-900 mb-4'>1. 破局信息不对称：契约菜单的自我选择</h3>
+            <p class='mb-6 text-tower-700'>雇主面对不同能力的工人，但无法直接看透其真实类型。因此，城主没有去“猜”，而是设计了一套契约菜单，让工人的风险偏好替他们做出选择。</p>
+            
+            <table class='b2b-table mb-12'>
+                <thead>
+                    <tr>
+                        <th>守钟人类型</th>
+                        <th>契约选择</th>
+                        <th>固定底薪</th>
+                        <th>达标收益</th>
+                        <th>承担风险</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>求稳避险型 (石头)</strong></td>
+                        <td>第一份契约</td>
+                        <td>高 (10枚)</td>
+                        <td>无</td>
+                        <td>低</td>
+                    </tr>
+                    <tr>
+                        <td><strong>意愿努力型 (风)</strong></td>
+                        <td>第二份契约</td>
+                        <td>中 (5枚)</td>
+                        <td>中 (25枚)</td>
+                        <td>中</td>
+                    </tr>
+                    <tr>
+                        <td><strong>高能强控型 (羽毛)</strong></td>
+                        <td>第三份契约</td>
+                        <td>无 (0枚)</td>
+                        <td>高 (40枚)</td>
+                        <td>高</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 2. 概念对比 -->
+            <h3 class='text-lg font-bold text-tower-900 mb-4'>2. 核心逻辑对比：筛选 vs 信号</h3>
+            <table class='b2b-table mb-12'>
+                <thead>
+                    <tr>
+                        <th width='50%'>筛选 (Screening)</th>
+                        <th width='50%' class='border-l border-tower-200'>信号发送 (Signaling)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class='align-top'>
+                            <p class='mb-2'><strong>无信息方主动设计选择</strong></p>
+                            <p class='text-sm text-tower-600'>例如：公司设计“高底薪低奖金”与“零底薪高提成”两套方案，观察员工的自主选择。</p>
+                            <p class='text-sm font-semibold mt-4 text-tower-800'>逻辑：“我给你选项，看你选哪个。”</p>
+                        </td>
+                        <td class='align-top border-l border-tower-200'>
+                            <p class='mb-2'><strong>有信息方主动释放信号</strong></p>
+                            <p class='text-sm text-tower-600'>例如：求职者主动考取高难度的资格证书，向企业证明自己的学习能力和自律性。</p>
+                            <p class='text-sm font-semibold mt-4 text-tower-800'>逻辑：“我用行为告诉你我是谁。”</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 3. 底层原理 -->
+            <h3 class='text-lg font-bold text-tower-900 mb-4'>3. 机制灵魂：激励相容 (Incentive Compatibility)</h3>
+            <p class='mb-4 text-tower-700'>这套机制之所以有效，是因为它满足了经济学上的“激励相容”原则：<strong>对于任意能力类型的候选人，选择为其量身定制的契约，就是其自身利益最大化的最优解。</strong></p>
+            
+            <div class='py-6 my-6 border-y border-tower-200 text-center'>
+                <span class='font-serif text-xl tracking-widest text-tower-900'>U<sub>i</sub>(C<sub>i</sub>) ≥ U<sub>i</sub>(C<sub>j</sub>)</span>
+                <p class='text-sm text-tower-500 mt-3'>类型 i 选择契约 C<sub>i</sub> 的效用，必定大于等于他冒充类型 j 选择契约 C<sub>j</sub> 的效用</p>
+            </div>
+
+            <p class='text-center text-lg font-bold text-tower-900 mt-16 tracking-widest'>
+                获得私人信息最好的方式，<br>不是去审视一个人，而是去改变他面前的选择。
+            </p>
+        </section>
+
+        <!-- 页脚区域 -->
+        <footer class='mt-24 text-center fade-section'>
+            <div class='w-16 h-1 bg-tower-300 mx-auto rounded-full mb-8'></div>
+            <p class='text-gray-600 mb-4 font-sans text-sm'>机制设计 · 信息经济学</p>
+            <p class='text-gray-400 text-xs font-sans'>用经济学视角，读懂人性的契约</p>
+        </footer>
+
+    </main>
+
+    <!-- 脚本功能区 -->
+    <script>
+        // 滚动进度条
+        window.addEventListener('scroll', function () {
+            var scrollTop = document.documentElement.scrollTop;
+            var scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var progress = (scrollTop / scrollHeight) * 100;
+            document.getElementById('scrollProgress').style.width = progress + '%';
+        });
+
+        // 返回顶部
+        document.getElementById('backHomeBtn').addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // 渐入动画观察者
+        document.addEventListener('DOMContentLoaded', function () {
+            var fadeSections = document.querySelectorAll('.fade-section');
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            fadeSections.forEach(function (section) { observer.observe(section); });
+        });
+    </script>
+</body>
+</html>
