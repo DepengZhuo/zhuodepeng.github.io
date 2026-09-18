@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《灯塔上的守夜人》 - 沉浸式阅读</title>
+    
+    <!-- 引入思源宋体与衬线英文字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 引入 Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 引入 Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: {
+                            50: '#f2f9f4',
+                            100: '#e1f2e6',
+                            200: '#c3e3cc',
+                            300: '#96cdab',
+                            400: '#63af82',
+                            500: '#409163',
+                            600: '#2e754d',
+                            700: '#265d3f',
+                            800: '#214a34',
+                            900: '#1c3d2c',
+                        },
+                        paper: {
+                            50: '#ffffff',
+                            100: '#fdfaf6',
+                            200: '#f7f2ea',
+                            300: '#ede6da',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Georgia', 'Cambria', '"Noto Serif SC"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义 CSS 样式与原生动画 -->
+    <style>
+        body {
+            background-color: #fdfaf6;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(150, 205, 171, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(99, 175, 130, 0.1) 0%, transparent 40%);
+            background-attachment: fixed;
+            font-family: Georgia, Cambria, "Noto Serif SC", serif;
+            color: #111827;
+        }
+
+        .text-shadow-sm {
+            text-shadow: 1px 1px 3px rgba(33, 74, 52, 0.15);
+        }
+
+        .prose-custom p {
+            line-height: 2;
+            font-size: 1.125rem;
+            margin-bottom: 1.5rem;
+            color: #4b5563;
+        }
+
+        .prose-custom blockquote {
+            border-left: 4px solid #2e754d;
+            background-color: rgba(150, 205, 171, 0.15);
+            font-style: italic;
+            border-radius: 0.375rem;
+            padding: 1.25rem 1.5rem;
+            margin: 2rem 0;
+            color: #265d3f;
+        }
+
+        .section-divider {
+            position: relative;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #96cdab, transparent);
+            margin: 4rem 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .section-divider::after {
+            content: "🕯️";
+            position: absolute;
+            background: #fdfaf6;
+            padding: 0 1rem;
+            font-size: 1.25rem;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            width: 3rem;
+            height: 3rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #409163;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            z-index: 50;
+            cursor: pointer;
+            text-decoration: none;
+            border: 1px solid rgba(150, 205, 171, 0.3);
+        }
+
+        .back-button:hover {
+            background: #409163;
+            color: #ffffff;
+            transform: translateX(-5px);
+        }
+
+        .math-formula {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            text-align: center;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            font-family: Georgia, Cambria, serif;
+            color: #1c3d2c;
+            max-width: 90%;
+            border: 1px solid rgba(150, 205, 171, 0.25);
+            font-size: 1.2rem;
+            letter-spacing: 0.03em;
+        }
+
+        #scrollProgress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(to right, #63af82, #2e754d);
+            width: 0%;
+            z-index: 100;
+        }
+
+        /* 原生封面浮动动画 */
+        @keyframes floatAnim {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: floatAnim 6s ease-in-out infinite;
+        }
+
+        /* 原生滚动渐入动画 */
+        @keyframes scrollFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes scrollSlide {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-section {
+            opacity: 0;
+            will-change: opacity, transform;
+        }
+
+        .animate-scroll-in {
+            animation: scrollFade 1s ease-out forwards, scrollSlide 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-forest-100 selection:text-forest-900">
+
+    <!-- 1. 顶部滚动进度条 -->
+    <div id="scrollProgress"></div>
+    
+    <!-- 2. 左上角返回个人主页按钮 -->
+    <a id="backHomeBtn" href="/" class="back-button" title="返回个人主页">
+        <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <!-- 3. main 主容器 -->
+    <main class="max-w-3xl mx-auto px-6 py-16 md:py-24">
+        
+        <!-- 头部标题区 -->
+        <header class="text-center mb-16 fade-section">
+            <div class="relative w-full h-64 md:h-80 rounded-2xl overflow-hidden shadow-sm mb-10 animate-float border border-forest-100">
+                <!-- 灯塔意境封面图（使用固定种子，兼具暖调滤镜） -->
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" 
+                     alt="孤海与灯塔" 
+                     class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-amber-700/15 mix-blend-multiply pointer-events-none"></div>
+            </div>
+            
+            <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold text-forest-900 text-shadow-sm leading-tight mb-6 tracking-wide">
+                《灯塔上的守夜人》
+            </h1>
+            
+            <div class="w-16 h-1.5 bg-forest-500 mx-auto rounded-full mb-6"></div>
+            
+            <p class="text-gray-500 text-base md:text-lg tracking-wider">
+                道德风险：当看不见行动时，理性的人会如何做出选择？
+            </p>
+        </header>
+
+        <!-- 故事正文内容 -->
+        <article class="prose-custom">
+            <div class="fade-section">
+                <p>海边有一座小城。</p>
+                <p>城外是一片非常危险的海域。那里礁石很多。每年都有船只在夜里撞上暗礁。</p>
+                <p>所以，城里最重要的建筑并不是城堡。而是海边那座高高的灯塔。</p>
+                <p>每天晚上，灯塔顶部都会亮起一盏巨大的白灯。只要船员看见它，就知道：</p>
+            </div>
+
+            <blockquote class="fade-section">
+                <p>这里有礁石，不可以继续往前。</p>
+            </blockquote>
+
+            <div class="fade-section">
+                <p>灯塔最重要的人，是守夜人。</p>
+                <p>他的工作看起来非常简单：每天黄昏之前，点燃灯火。午夜检查一次。凌晨再检查一次。只要灯一直亮着，船只就能安全经过。</p>
+                <p>城主给守夜人很高的工资。因为这份工作责任重大。</p>
+            </div>
+
+            <section class="section-divider fade-section"></section>
+
+            <div class="fade-section">
+                <p>第一任守夜人叫罗恩。他非常认真。</p>
+                <p>每天太阳刚落山，他就爬上塔顶。把灯芯擦干净。检查燃料。检查玻璃。检查备用火种。</p>
+                <p>半夜里，不管外面多冷，他都会准时起床。有时候暴风雨来了。海水打在灯塔上。雷声几乎让整座塔都在震动。罗恩还是会披上雨衣，爬上最高层。因为他知道：</p>
+            </div>
+
+            <blockquote class="fade-section">
+                <p>如果灯灭了，也许就会有人死。</p>
+            </blockquote>
+
+            <div class="fade-section">
+                <p>有一天，罗恩老了。城主决定找一个新的守夜人。</p>
+                <p>这一次来应聘的是一个年轻人。他的名字叫安德鲁。</p>
+                <p>城主对他说：“这份工作很轻松。你只需要让灯保持亮着。”</p>
+                <p>安德鲁点头。“我明白。”</p>
+                <p>“但是有一件事你必须记住。”城主指着远处的大海，“如果灯灭了，船可能会撞上礁石。”</p>
+                <p>安德鲁说：“放心，我会尽力。”</p>
+                <p>于是，他成为了新的守夜人。</p>
+            </div>
+
+            <section class="section-divider fade-section"></section>
+
+            <div class="fade-section">
+                <p>刚开始的几个月，安德鲁和罗恩一样认真。每天检查灯塔。每天擦玻璃。每天记录燃料。没有任何问题。</p>
+                <p>直到有一天，城里发生了一件小事。港口的一个商人找到城主。他说：“我们应该把守夜人的工资降低一点。”</p>
+                <p>城主问：“为什么？”</p>
+                <p>商人说：“这工作没什么技术含量。而且你怎么知道他晚上真的检查了灯？”</p>
+                <p>城主皱起眉头。“什么意思？”</p>
+                <p>商人说：</p>
+            </div>
+
+            <blockquote class="fade-section">
+                <p>“您白天看得到他工作。可是晚上呢？”</p>
+            </blockquote>
+
+            <div class="fade-section">
+                <p>城主想了一夜。第二天，他改变了制度。</p>
+                <p>从此以后，守夜人的工资分成两部分：<br>
+                固定工资：十枚金币。<br>
+                安全奖金：二十枚金币。<br>
+                只要一个月里没有船因为灯塔熄灭而发生事故，就能拿到全部奖金。如果发生事故：奖金全部取消。</p>
+                <p>城主觉得自己想到了一个很聪明的办法。“这样一来，”他说，“守夜人为了自己的奖金，就一定会努力工作。”</p>
+                <p>安德鲁也觉得这个办法合理。于是他开始工作。</p>
+            </div>
+
+            <section class="section-divider fade-section"></section>
+
+            <div class="fade-section">
+                <p>第一个月，没有事故。第二个月，没有事故。第三个月，没有事故。</p>
+                <p>第四个月，暴风雨来了。安德鲁站在窗边，看着外面的海。风非常大。灯塔剧烈摇晃。按照以前罗恩的习惯，他应该上去检查灯火。</p>
+                <p>可是安德鲁看了看床。又看了看外面。他最后没有起来。</p>
+                <p>“应该没事。”他说，“灯已经点好了。”</p>
+                <p>第二天早晨。灯还亮着。没有船出事。安德鲁松了一口气。他的奖金没有受到影响。</p>
+            </div>
+
+            <div class="fade-section">
+                <p>从那天以后，他开始尝试一些以前不会做的事情。</p>
+                <p>灯芯稍微脏一点？没关系。推迟两个小时换燃料？没关系。半夜的例行检查？偶尔少做一次，也不会有人知道。</p>
+                <p>只要最后灯还亮着。他就能拿到奖金。</p>
+                <p>慢慢地，他发现：认真工作的成本是确定的。但偷一点懒的收益也是确定的。至于事故——完全是一个概率问题。有时候会发生。有时候不会。而且，即使出了问题，也不一定能查到是谁偷懒。</p>
+            </div>
+
+            <section class="section-divider fade-section"></section>
+
+            <div class="fade-section">
+                <p>一年过去了。事故发生率稍微上升。但没有人特别在意。</p>
+                <p>两年过去。又上升了一些。城主开始抱怨：“为什么最近总有这么多险情？”</p>
+                <p>港口商人说：“可能只是天气不好。”<br>
+                船员说：“可能是船越来越多了。”<br>
+                有人责怪潮汐。有人责怪风向。还有人说：“现在的船，质量没有以前好了。”</p>
+                <p>没有人怀疑灯塔。</p>
+            </div>
+
+            <div class="fade-section">
+                <p>直到第三年冬天。一艘大船在夜里失去了方向。它看见了灯塔。但那一刻，灯光突然暗了一下。只是一瞬间。船长没有看清礁石的位置。船底撞了上去。整艘船沉了。二十七个人丧生。</p>
+                <p>安德鲁被带到了城主面前。城主愤怒地问：“为什么灯灭了？”</p>
+                <p>安德鲁说：“我不知道。”<br>
+                “你昨晚检查了吗？”<br>
+                “检查了。”<br>
+                “什么时候？”<br>
+                安德鲁沉默了一下。“凌晨。”</p>
+                <p>城主看着记录。确实有他的签名。但是后来，城主发现了一个奇怪的地方。那天晚上，安德鲁根本没有离开自己的房间。他在凌晨签完记录以后，又睡了回去。可他没有承认。</p>
+            </div>
+
+            <section class="section-divider fade-section"></section>
+
+            <div class="fade-section">
+                <p>于是城主找来了一个老船长。老船长听完以后，只说：</p>
+            </div>
+
+            <blockquote class="fade-section">
+                <p>“你们的制度出了问题。”<br>
+                “因为你以为自己买的是安全。实际上，你买的是一个结果。可这个人真正决定结果的，不只是他。还有天气、海流、船只、故障、运气。”</p>
+            </blockquote>
+
+            <div class="fade-section">
+                <p>城主不明白。“可如果没有事故，他就能拿奖金。”</p>
+                <p>老船长点头。“这正是问题。”</p>
+                <p>老船长带城主登上灯塔。他指着那盏灯。“假设有一天，灯塔出现了一点问题。守夜人发现了。他可以花三个小时修。也可以花十五分钟处理一下，让它暂时还能亮。”</p>
+                <p>城主点头。“当然应该彻底修好。”</p>
+                <p>老船长问：“谁承担那三个小时的成本？”<br>
+                “守夜人。”<br>
+                “谁得到彻底维修带来的全部收益？”<br>
+                城主想了一下。“所有船。”<br>
+                老船长又问：“如果守夜人偷懒十五分钟，而这一晚上刚好没有船撞礁呢？”<br>
+                城主沉默。“他什么也不会失去。”</p>
+                <p>老船长点头。“现在你明白了吗？”</p>
+            </div>
+
+            <section class="section-divider fade-section"></section>
+
+            <div class="fade-section">
+                <p>城主第一次认真地看向那盏灯。灯塔的高度很高。城里的人每天都能看见它。可是没有人知道：</p>
+            </div>
+
+            <blockquote class="fade-section">
+                <p>凌晨两点的时候，塔顶的人到底有没有起床。</p>
+            </blockquote>
+
+            <div class="fade-section">
+                <p>于是城主突然意识到：以前的罗恩为什么愿意一次次爬上塔顶？不完全是因为工资。而是因为——他认为那是自己的责任。</p>
+                <p>而安德鲁不一样。他也不是一个坏人。只是制度慢慢教会了他一件事：</p>
+                <p>“只要最后没有出事故，就算我今晚没检查，也没人知道。”</p>
+                <p>城主问：“那应该怎么办？”<br>
+                老船长回答：“不要只奖励结果。也要考虑那些真正决定结果的行为。”<br>
+                城主问：“可我们又看不见他的行为。”<br>
+                老船长笑了：“所以这才是难题。”</p>
+            </div>
+
+            <section class="section-divider fade-section"></section>
+
+            <div class="fade-section">
+                <p>后来，城主重新设计了制度。守夜人的收入不再完全取决于有没有事故。他们开始记录：</p>
+                <ul class="list-disc pl-8 mb-6 space-y-2 text-[#4b5563] text-[1.125rem] leading-[2]">
+                    <li>灯芯更换次数</li>
+                    <li>设备维护时间</li>
+                    <li>夜间检查记录</li>
+                    <li>燃料储备</li>
+                    <li>突发故障响应时间</li>
+                </ul>
+                <p>同时，他们建立了抽查制度。守夜人还可以获得长期奖金：如果一个季度内维护记录良好，即使中间出现了一次由暴风雨造成的事故，也不会直接失去全部收入。</p>
+                <p>几年以后，灯塔的事故率重新下降。有人问城主：“为什么新的制度这么复杂？”</p>
+                <p>城主没有回答。他只是看着远处的海。很久以后，他说：</p>
+            </div>
+
+            <blockquote class="fade-section">
+                <p>“以前我们以为，只要把后果交给一个人，他就会做正确的事情。”<br>
+                “后来我们才发现——当一个人不能控制全部结果，却必须为结果负责时，他最聪明的做法，有时候反而是不去做那些没人看得见的事情。”</p>
+            </blockquote>
+
+            <div class="fade-section">
+                <p>多年以后，安德鲁已经离开了灯塔。有人问他：“你后来后悔吗？”</p>
+                <p>他想了很久。最后说：“我不是因为奖金才偷懒的。”<br>
+                “那是为什么？”</p>
+                <p>安德鲁看着灯塔。他说：</p>
+            </div>
+
+            <blockquote class="fade-section">
+                <p>“因为我慢慢发现，我承担的代价是确定的，而别人承担的风险是隐藏的。”<br><br>
+                “一个制度如果让一个人承担努力的成本，却把努力带来的收益交给别人，那个人迟早会开始重新计算。”</p>
+            </blockquote>
+        </article>
+
+        <section class="section-divider fade-section"></section>
+
+        <!-- 拓展解读板块 -->
+        <section class="fade-section">
+            <h2 class="text-2xl md:text-3xl font-bold text-forest-800 mb-8 text-center tracking-wide">故事背后的科学：道德风险（Moral Hazard）</h2>
+            
+            <div class="prose-custom">
+                <p>这个故事讲的是：<strong>道德风险（Moral Hazard）</strong>。这个概念在经济学里特别重要。它和刚才的 Screening 恰好形成一种很漂亮的对照。</p>
+
+                <h3 class="text-xl font-bold text-forest-700 mt-10 mb-4">一句话区分</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+                    <div class="bg-white p-6 rounded-xl border border-forest-200 shadow-sm">
+                        <div class="text-xs font-bold uppercase tracking-wider text-forest-600 mb-2">Screening</div>
+                        <p class="text-gray-700 text-sm mb-0">我不知道你是什么人，所以我设计不同的选择，看你怎么选。<br><strong>重点是：信息发生在行动之前。</strong>（Hidden Information）</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-forest-200 shadow-sm">
+                        <div class="text-xs font-bold uppercase tracking-wider text-forest-600 mb-2">Moral Hazard</div>
+                        <p class="text-gray-700 text-sm mb-0">我已经和你合作了，但我看不见你到底有没有认真做事。<br><strong>重点是：信息问题发生在行动之后。</strong>（Hidden Action）</p>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-forest-700 mt-10 mb-4">为什么叫“道德风险”？</h3>
+                <p>这里的 moral 不一定是在骂一个人“道德败坏”。它更接近：<strong>当契约安排改变了一个人的激励以后，他的行为会不会发生变化。</strong></p>
+                <p>也就是说：安德鲁未必突然变坏了。只是原来的环境是：</p>
+                <div class="math-formula fade-section">
+                    偷懒的收益 &rarr; 自己得到<br>
+                    出事故的损失 &rarr; 很大程度由别人承担
+                </div>
+                <p>那么他的最优行为自然可能发生变化。这就是经济学真正关心的地方：<strong>不是“这个人是不是好人”，而是“在这个激励结构下，一个理性的人会怎么行动？”</strong></p>
+
+                <h3 class="text-xl font-bold text-forest-700 mt-10 mb-4">最经典的例子：保险</h3>
+                <p>假设你没有保险。手机摔坏了：你自己赔 $1,000。你可能会非常小心。</p>
+                <p>但假设保险公司承担了绝大部分损失：手机摔了，你只需要赔 $50。你的行为可能会发生变化。不一定是你突然变成一个粗心的人，而是：</p>
+                <div class="math-formula fade-section">
+                    小心的成本 &gt; 自己承担的边际损失
+                </div>
+                <p>于是你可能不会再像以前那么谨慎。这就是典型的道德风险。</p>
+
+                <h3 class="text-xl font-bold text-forest-700 mt-10 mb-4">公司里也一样</h3>
+                <p>假设老板无法完全观察员工工作过程。员工拿固定工资。老板只关心最终项目是否完成。那么：真正努力的人承担的是确定的努力成本。但是：偷懒的人可能获得几乎一样的工资，只要最后项目碰巧没出问题。这就是故事里的灯塔。</p>
+
+                <h3 class="text-xl font-bold text-forest-700 mt-10 mb-4">金融市场更明显</h3>
+                <p>想象一家银行：“如果你赚了很多钱，你拿奖金。”但是：“如果亏损了，公司承担绝大部分损失。”</p>
+                <p>那么交易员面对的不是收益等于自己的收益，而更像：</p>
+                <div class="math-formula fade-section">
+                    Payoff = 成功 (+&alpha;) &nbsp;|&nbsp; 失败 (&minus;&beta;)
+                </div>
+                <p>如果：<strong>&beta; &ll; 真正的社会损失</strong>，那么他承担的风险可能远远低于他制造的风险。于是就可能倾向于承担更大的风险。这也是金融机构薪酬设计、风险管理、公司治理里非常核心的问题。</p>
+
+                <h3 class="text-xl font-bold text-forest-700 mt-10 mb-4">制度的核心：激励相容</h3>
+                <p>而这个故事里最重要的一句话，其实是：“以前我们以为，只要把后果交给一个人，他就会做正确的事情。”</p>
+                <p>经济学真正会追问的是：“他到底承担了多少后果？”因为如果一个人：</p>
+                <div class="math-formula fade-section">
+                    获得收益 &ne; 承担损失
+                </div>
+                <p>两者不对称，那么他的行为就会发生变化。这又引出一个非常重要的概念：<strong>激励相容</strong>。</p>
+
+                <p>你现在已经连续碰到三个很重要的经济学思想了：</p>
+
+                <div class="fade-section overflow-x-auto my-6">
+                    <table class="w-full text-left border-collapse bg-white rounded-lg overflow-hidden shadow-sm">
+                        <thead>
+                            <tr>
+                                <th class="border-b-2 border-forest-300 py-3 px-6 text-forest-800 font-bold bg-forest-50">概念</th>
+                                <th class="border-b-2 border-forest-300 py-3 px-6 text-forest-800 font-bold bg-forest-50">核心问题</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border-b border-gray-100 py-3 px-6 text-forest-700 font-bold">Screening</td>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">我不知道你是什么类型，怎么让你自己暴露？</td>
+                            </tr>
+                            <tr>
+                                <td class="border-b border-gray-100 py-3 px-6 text-forest-700 font-bold">Winner’s Curse</td>
+                                <td class="border-b border-gray-100 py-3 px-6 text-gray-600">为什么“赢了”本身可能是坏消息？</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-6 text-forest-700 font-bold">Moral Hazard</td>
+                                <td class="py-3 px-6 text-gray-600">我看不到你真正的行动，你会不会改变行为？</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>它们其实都在讨论一个更大的问题：<strong>当信息不完整的时候，怎么设计一个制度，让人的行为尽量符合我们希望看到的结果？</strong> 这就是为什么现代经济学里，信息、激励与制度设计会这么重要。</p>
+
+                <blockquote class="fade-section">
+                    <p>而我觉得《灯塔上的守夜人》最值得记住的，不是“守夜人偷懒了”。<br>
+                    而是：<strong>一个制度可能并没有改变一个人的道德，却改变了一个人偷懒与尽责之间的经济账。</strong></p>
+                </blockquote>
+
+                <p>所以研究经济学的人经常会问的，不只是：“这个人是什么样的人？”<br>
+                还会问：“如果把这个人放进这样的规则里，他会变成什么样？”</p>
+                <p>这两句话，看起来很接近。实际上，是两种完全不同的思维方式。</p>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="mt-24 text-center fade-section pb-8">
+            <div class="w-12 h-1 bg-forest-300 mx-auto rounded-full mb-6"></div>
+            <p class="text-sm md:text-base text-gray-400 font-serif tracking-widest">
+                感谢您的沉浸式阅读 · 探寻制度与激励的真相
+            </p>
+        </footer>
+
+    </main>
+
+    <!-- 底部 JS 脚本 -->
+    <script>
+        // 1. 顶部固定滚动进度条
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+            document.getElementById('scrollProgress').style.width = progress + '%';
+        });
+
+        // 2. 滚动渐入动画 (IntersectionObserver)
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeSections = document.querySelectorAll('.fade-section');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px 0px -10% 0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-scroll-in');
+                        // 解除观察，确保动画只播放一次
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            fadeSections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html>
